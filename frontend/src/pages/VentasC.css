@@ -1,0 +1,609 @@
+.ventas-page {
+  min-height: 100vh;
+  background: #f4f7fb;
+  display: flex;
+  color: #09244a;
+}
+
+.ventas-sidebar {
+  width: 255px;
+  min-width: 255px;
+  min-height: 100vh;
+  background: #071d38;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 20;
+}
+
+.ventas-sidebar-logo {
+  height: 100px;
+  padding: 0 28px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.ventas-sidebar-logo img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.ventas-sidebar-logo span {
+  font-size: 23px;
+  font-weight: 800;
+}
+
+.ventas-menu {
+  padding: 24px 15px;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.ventas-menu-title {
+  margin: 0 12px 16px;
+  color: #7187a3;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.ventas-system {
+  margin-top: 28px;
+}
+
+.ventas-menu-item {
+  width: 100%;
+  height: 49px;
+  border: 0;
+  background: transparent;
+  color: #b9c7d9;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 700;
+  text-align: left;
+  transition: .2s;
+}
+
+.ventas-menu-item span {
+  width: 18px;
+  text-align: center;
+  font-size: 17px;
+}
+
+.ventas-menu-item:hover {
+  background: rgba(255,255,255,.07);
+  color: white;
+}
+
+.ventas-menu-item.active {
+  background: #1769e0;
+  color: white;
+  box-shadow: 0 8px 20px rgba(23,105,224,.28);
+}
+
+.ventas-logout {
+  margin: 0 15px 20px;
+  height: 55px;
+  border: 0;
+  border-top: 1px solid rgba(255,255,255,.08);
+  background: transparent;
+  color: #c5d0de;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 12px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ventas-main {
+  margin-left: 255px;
+  width: calc(100% - 255px);
+  padding: 38px 45px 60px;
+}
+
+.ventas-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.ventas-header-label {
+  margin: 0 0 5px;
+  color: #1769e0;
+  font-size: 12px;
+  font-weight: 900;
+  letter-spacing: 1.7px;
+}
+
+.ventas-header h1 {
+  margin: 0;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -1px;
+}
+
+.ventas-header-description {
+  margin: 8px 0 0;
+  color: #71829a;
+  font-size: 14px;
+}
+
+.ventas-user {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+}
+
+.ventas-notification {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: white;
+  border: 1px solid #e1e8f0;
+  box-shadow: 0 7px 20px rgba(10,35,70,.07);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  margin-right: 12px;
+}
+
+.ventas-notification span {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 6px;
+  height: 6px;
+  background: #1769e0;
+  border-radius: 50%;
+}
+
+.ventas-avatar {
+  width: 45px;
+  height: 45px;
+  background: #1769e0;
+  color: white;
+  border-radius: 11px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 800;
+  font-size: 18px;
+}
+
+.ventas-user strong,
+.ventas-user small {
+  display: block;
+}
+
+.ventas-user strong {
+  font-size: 14px;
+}
+
+.ventas-user small {
+  color: #7b8da3;
+  font-size: 11px;
+  font-weight: 700;
+  margin-top: 3px;
+}
+
+.ventas-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px;
+  margin-bottom: 25px;
+}
+
+.venta-stat-card {
+  background: white;
+  border: 1px solid #e4eaf1;
+  border-radius: 17px;
+  padding: 20px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  box-shadow: 0 8px 25px rgba(16,43,76,.04);
+}
+
+.venta-stat-icon {
+  width: 49px;
+  height: 49px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 21px;
+  font-weight: 800;
+}
+
+.venta-stat-icon.blue {
+  background: #eaf2ff;
+  color: #1769e0;
+}
+
+.venta-stat-icon.orange {
+  background: #fff3e4;
+  color: #ef8a16;
+}
+
+.venta-stat-icon.green {
+  background: #e8f9f0;
+  color: #16a463;
+}
+
+.venta-stat-icon.red {
+  background: #ffe9eb;
+  color: #d93b49;
+}
+
+.venta-stat-card span,
+.venta-stat-card small {
+  display: block;
+}
+
+.venta-stat-card span {
+  color: #70829b;
+  font-size: 12px;
+}
+
+.venta-stat-card strong {
+  display: block;
+  font-size: 22px;
+  margin: 2px 0;
+}
+
+.venta-stat-card small {
+  color: #9aa8b8;
+  font-size: 10px;
+}
+
+.ventas-panel {
+  background: white;
+  border: 1px solid #e2e9f1;
+  border-radius: 19px;
+  overflow: hidden;
+  box-shadow: 0 8px 30px rgba(16,43,76,.045);
+}
+
+.ventas-panel-header {
+  padding: 27px 28px 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ventas-panel-header > div > span {
+  color: #1769e0;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.ventas-panel-header h2 {
+  margin: 5px 0 0;
+  font-size: 21px;
+}
+
+.nueva-venta-button {
+  border: 0;
+  background: #1769e0;
+  color: white;
+  border-radius: 11px;
+  padding: 14px 20px;
+  font-size: 13px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(23,105,224,.2);
+}
+
+.nueva-venta-button:hover {
+  background: #0f5ccc;
+}
+
+.ventas-filtros {
+  padding: 0 28px 22px;
+  display: flex;
+  gap: 12px;
+}
+
+.ventas-search {
+  height: 43px;
+  flex: 1;
+  max-width: 550px;
+  border: 1px solid #dce4ed;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  padding: 0 14px;
+  color: #8ba0b7;
+}
+
+.ventas-search span {
+  margin-right: 9px;
+  font-size: 20px;
+}
+
+.ventas-search input {
+  border: 0;
+  outline: none;
+  width: 100%;
+  font-size: 13px;
+  color: #173557;
+}
+
+.ventas-search input::placeholder {
+  color: #9aabc0;
+}
+
+.ventas-filtros select {
+  height: 43px;
+  min-width: 190px;
+  padding: 0 13px;
+  border: 1px solid #dce4ed;
+  border-radius: 10px;
+  background: white;
+  color: #536a84;
+  outline: none;
+  cursor: pointer;
+}
+
+.ventas-table-wrapper {
+  overflow-x: auto;
+}
+
+.ventas-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ventas-table th {
+  background: #f8fafc;
+  color: #8191a6;
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-align: left;
+  padding: 15px 18px;
+  white-space: nowrap;
+  border-top: 1px solid #e9eef4;
+  border-bottom: 1px solid #e9eef4;
+}
+
+.ventas-table td {
+  padding: 15px 18px;
+  border-bottom: 1px solid #edf1f5;
+  color: #4f647e;
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.ventas-table tbody tr:hover {
+  background: #fbfdff;
+}
+
+.venta-number {
+  display: block;
+  color: #1769e0;
+  font-size: 12px;
+}
+
+.venta-date {
+  display: block;
+  color: #96a5b6;
+  font-size: 10px;
+  margin-top: 4px;
+}
+
+.venta-cliente {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.venta-cliente-avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 10px;
+  background: #eaf2ff;
+  color: #1769e0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 900;
+}
+
+.venta-cliente strong,
+.venta-cliente small,
+.venta-reparacion strong,
+.venta-reparacion small {
+  display: block;
+}
+
+.venta-cliente strong,
+.venta-reparacion strong {
+  color: #193a60;
+  font-size: 12px;
+}
+
+.venta-cliente small,
+.venta-reparacion small {
+  color: #96a5b6;
+  font-size: 10px;
+  margin-top: 3px;
+}
+
+.venta-money {
+  color: #4d6580;
+}
+
+.venta-total {
+  color: #1769e0;
+  font-size: 13px;
+}
+
+.venta-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.venta-status i {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.venta-status.pending {
+  background: #fff3dd;
+  color: #e58a10;
+}
+
+.venta-status.approved {
+  background: #e7f8ef;
+  color: #11965b;
+}
+
+.venta-status.rejected {
+  background: #ffe9eb;
+  color: #d93b49;
+}
+
+.venta-actions {
+  display: flex;
+  gap: 7px;
+}
+
+.approve-button,
+.reject-button {
+  width: 31px;
+  height: 31px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.approve-button {
+  border: 1px solid #bce8d0;
+  background: #edfaf3;
+  color: #11965b;
+}
+
+.reject-button {
+  border: 1px solid #f3c4ca;
+  background: #fff0f2;
+  color: #d93b49;
+}
+
+.approve-button:hover {
+  background: #dff7ea;
+}
+
+.reject-button:hover {
+  background: #ffe2e5;
+}
+
+.venta-completed {
+  color: #a1afbd;
+}
+
+.ventas-loading,
+.ventas-empty {
+  height: 180px;
+  text-align: center !important;
+}
+
+.ventas-empty > div {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 180px;
+}
+
+.ventas-empty span {
+  font-size: 32px;
+  margin-bottom: 8px;
+}
+
+.ventas-empty strong {
+  color: #49617b;
+  font-size: 14px;
+}
+
+.ventas-empty small {
+  color: #9aa9b9;
+  margin-top: 5px;
+}
+
+@media (max-width: 1150px) {
+
+  .ventas-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+}
+
+@media (max-width: 850px) {
+
+  .ventas-sidebar {
+    width: 210px;
+    min-width: 210px;
+  }
+
+  .ventas-main {
+    margin-left: 210px;
+    width: calc(100% - 210px);
+    padding: 30px 20px;
+  }
+
+}
+
+@media (max-width: 650px) {
+
+  .ventas-sidebar {
+    display: none;
+  }
+
+  .ventas-main {
+    margin-left: 0;
+    width: 100%;
+    padding: 25px 15px;
+  }
+
+  .ventas-user {
+    display: none;
+  }
+
+  .ventas-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .ventas-filtros {
+    flex-direction: column;
+  }
+
+  .ventas-search {
+    max-width: none;
+  }
+
+}
