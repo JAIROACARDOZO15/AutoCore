@@ -1,10 +1,10 @@
-## 🎓 Proyecto académico
+## Proyecto
 
 **Entornos de Programación (24542)**  
 **Universidad Industrial de Santander — UIS**  
 **Grupo F1 — 2026**
 
-# 🚗 AutoCore
+# AutoCore
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.4-6DB33F?logo=springboot&logoColor=white)
@@ -17,7 +17,7 @@
 
 Aplicación web para la **gestión de un taller de reparación automotriz**. AutoCore permite centralizar la información de clientes, vehículos, repuestos, reparaciones, cotizaciones y ventas, con diferentes interfaces según el rol del usuario.
 
-## Qué hace
+## ¿Qué hace?
 
 1. **Inicio de sesión y roles:** los usuarios ingresan mediante correo y contraseña. El sistema reconoce los roles `ADMIN`, `TECNICO` y `CLIENTE`.
 2. **Paneles por rol:** cada tipo de usuario cuenta con una interfaz orientada a sus funciones dentro del taller.
@@ -63,7 +63,7 @@ La documentación específica del backend, sus módulos, endpoints y flujo de re
 
 ## Roles
 
-### 👨‍💼 Administrador
+### Administrador
 
 El administrador tiene acceso a la gestión general del taller:
 
