@@ -42,6 +42,12 @@ public class Cotizacion {
     @Column(name = "mano_obra", nullable = false, precision = 12, scale = 2)
     private BigDecimal manoObra = BigDecimal.ZERO;
 
+    @Column(name = "iva_porcentaje", nullable = false, precision = 5, scale = 2)
+    private BigDecimal ivaPorcentaje = BigDecimal.ZERO;
+
+    @Column(name = "valor_iva", nullable = false, precision = 12, scale = 2)
+    private BigDecimal valorIva = BigDecimal.ZERO;
+
     @Column(nullable = false, precision = 12, scale = 2)
     private BigDecimal total = BigDecimal.ZERO;
 

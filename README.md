@@ -1,10 +1,4 @@
-## Proyecto
-
-**Entornos de Programación (24542)**  
-**Universidad Industrial de Santander — UIS**  
-**Grupo F1 — 2026**
-
-# AutoCore
+# 🚗 AutoCore
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.4-6DB33F?logo=springboot&logoColor=white)
@@ -13,386 +7,275 @@
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)
 
-**Entornos de Programación (24542)** · Universidad Industrial de Santander (UIS) · Grupo F1 · 2026
+**Proyecto académico:** Entornos de Programación (24542)
+**Institución:** Universidad Industrial de Santander (UIS)
+**Grupo:** F1 · **Año:** 2026
 
-Aplicación web para la **gestión de un taller de reparación automotriz**. AutoCore permite centralizar la información de clientes, vehículos, repuestos, reparaciones, cotizaciones y ventas, con diferentes interfaces según el rol del usuario.
+AutoCore es una aplicación web para gestionar un taller de reparación automotriz. Centraliza clientes, vehículos, repuestos, inventario, reparaciones, cotizaciones, pedidos y ventas, con vistas para los roles de administrador, técnico y cliente.
 
-## ¿Qué hace?
+## Contenido
 
-1. **Inicio de sesión y roles:** los usuarios ingresan mediante correo y contraseña. El sistema reconoce los roles `ADMIN`, `TECNICO` y `CLIENTE`.
-2. **Paneles por rol:** cada tipo de usuario cuenta con una interfaz orientada a sus funciones dentro del taller.
-3. **Clientes:** registro, consulta, actualización y eliminación de clientes.
-4. **Vehículos:** gestión de los equipos o vehículos asociados al taller.
-5. **Repuestos:** administración del catálogo de repuestos, precios, stock y estado.
-6. **Reparaciones:** creación y seguimiento de reparaciones, asignación de técnicos, diagnóstico, estados y repuestos utilizados.
-7. **Cotizaciones:** generación de cotizaciones a partir de una reparación, con mano de obra, repuestos, subtotales y total.
-8. **Ventas:** consulta de cotizaciones y seguimiento de estados aprobados, pendientes y rechazados.
-9. **Reportes:** consulta de indicadores de clientes, repuestos, reparaciones, cotizaciones, ventas e inventario.
-10. **Navegación web:** las diferentes pantallas se integran mediante React Router.
+- [Funcionalidades](#funcionalidades)
+- [Tecnologías](#tecnologías)
+- [Arquitectura](#arquitectura)
+- [Módulos y roles](#módulos-y-roles)
+- [Flujo de reparación y cotización](#flujo-de-reparación-y-cotización)
+- [Cotizaciones, IVA y factura imprimible](#cotizaciones-iva-y-factura-imprimible)
+- [Estructura del proyecto](#estructura-del-proyecto)
+- [Requisitos](#requisitos)
+- [Configuración y ejecución local](#configuración-y-ejecución-local)
+- [API y documentación](#api-y-documentación)
+- [Configuración sensible](#configuración-sensible)
+- [Equipo](#equipo)
+
+## Funcionalidades
+
+- Inicio de sesión y vistas diferenciadas por rol (`ADMIN`, `TECNICO` y `CLIENTE`).
+- Gestión de clientes y vehículos asociados.
+- Catálogo de repuestos con precios y estado.
+- Control de inventario: cantidades disponibles, entradas, salidas y stock mínimo.
+- Gestión de reparaciones, asignación de técnicos y registro de diagnósticos.
+- Registro de repuestos utilizados durante una reparación.
+- Creación y gestión de cotizaciones vinculadas a reparaciones.
+- Aprobación y rechazo de cotizaciones.
+- Pedidos asociados a cotizaciones y consulta de órdenes del taller.
+- Vista previa e impresión de documentos de cotización/factura de servicio.
+- Cálculo de subtotal, IVA y total cuando el desglose de IVA está habilitado y guardado en la cotización.
+- Reportes e indicadores generales del taller.
+
+> **Nota:** la factura imprimible del frontend es un documento de gestión. No constituye por sí sola una factura electrónica validada por la DIAN. El porcentaje de IVA debe configurarse de acuerdo con el tratamiento tributario que corresponda.
+
+## Tecnologías
+
+| Componente | Tecnología |
+|---|---|
+| Frontend | React 19, Vite 8, React Router |
+| Backend | Java 17, Spring Boot 3.3.4 |
+| API | REST |
+| Persistencia | Spring Data JPA, Hibernate |
+| Base de datos | MySQL |
+| Documentación de API | Swagger / OpenAPI |
+| Control de versiones | Git y GitHub |
 
 ## Arquitectura
 
 ```mermaid
-graph LR
-    U["Usuario<br/>Navegador"] --> FE["Frontend<br/>React + Vite"]
-    FE -->|"/api/..."| BE["Backend<br/>Spring Boot + REST"]
-    BE --> JPA["Spring Data JPA<br/>Hibernate"]
-    JPA --> DB[("MySQL<br/>taller_reparacion")]
-    BE --> SW["Swagger / OpenAPI"]
+flowchart LR
+    U[Usuario en navegador] --> FE[Frontend React + Vite]
+    FE -->|HTTP / JSON| API[API REST Spring Boot]
+    API --> JPA[Spring Data JPA / Hibernate]
+    JPA --> DB[(MySQL: taller_reparacion)]
+    API --> SW[Swagger / OpenAPI]
 ```
 
-El frontend se comunica con el backend mediante una API REST. El backend está desarrollado con Spring Boot, Spring Data JPA y Hibernate, y utiliza MySQL como sistema de persistencia.
+El frontend consume la API REST del backend. Spring Boot valida y procesa las operaciones y utiliza JPA/Hibernate para acceder a MySQL.
 
-La documentación específica del backend, sus módulos, endpoints y flujo de reparaciones se encuentra en [backend-spring/README.md](backend-spring/README.md).
-
-## Módulos
+## Módulos y roles
 
 | Módulo | Descripción |
 |---|---|
-| **Login** | Autenticación de usuarios y obtención del rol |
-| **Dashboard** | Panel inicial adaptado a cada rol |
-| **Clientes** | Gestión de clientes |
-| **Vehículos** | Gestión de equipos/vehículos |
-| **Repuestos** | Catálogo y administración de repuestos |
-| **Inventario** | Consulta del stock de repuestos |
-| **Reparaciones** | Gestión del proceso de reparación |
-| **Órdenes** | Consulta de órdenes asociadas a reparaciones |
-| **Ventas** | Gestión y consulta de cotizaciones |
-| **Reportes** | Indicadores generales del taller |
-| **Configuración** | Pantalla de configuración del sistema |
-
-## Roles
+| Login | Inicio de sesión y lectura del rol del usuario |
+| Dashboard | Panel de acuerdo con el rol |
+| Clientes | Datos de los clientes |
+| Vehículos | Vehículos asociados a los clientes |
+| Repuestos | Catálogo, precios y disponibilidad |
+| Inventario | Existencias, movimientos y stock mínimo |
+| Reparaciones | Diagnóstico, técnico asignado, estados y repuestos usados |
+| Órdenes | Consulta y seguimiento de órdenes de servicio |
+| Ventas | Cotizaciones, aprobación/rechazo, pedidos y documentos imprimibles |
+| Reportes | Indicadores operativos y comerciales |
+| Configuración | Opciones de configuración disponibles en la interfaz |
 
 ### Administrador
 
-El administrador tiene acceso a la gestión general del taller:
+Gestiona los módulos generales del taller: clientes, repuestos, inventario, reparaciones, órdenes, ventas, reportes y configuración.
 
-- Inicio
-- Clientes
-- Repuestos
-- Inventario
-- Reparaciones
-- Órdenes
-- Ventas
-- Reportes
-- Configuración
+### Técnico
 
-### 🔧 Técnico
+Consulta las reparaciones asignadas y la información necesaria para diagnosticar y realizar los trabajos.
 
-El técnico cuenta con una interfaz enfocada en el trabajo de taller:
+### Cliente
 
-- Inicio
-- Mis reparaciones
-- Clientes
-- Repuestos
-- Mi perfil
+Consulta la información de sus vehículos, reparaciones, cotizaciones y órdenes, según las pantallas habilitadas para su rol.
 
-Puede consultar las reparaciones asignadas y la información necesaria para realizar el diagnóstico y trabajo sobre los vehículos.
-
-### 👤 Cliente
-
-El cliente cuenta con un portal orientado a consultar sus servicios:
-
-- Inicio
-- Mis vehículos
-- Mis reparaciones
-- Mis cotizaciones
-- Mis órdenes
-- Catálogo de repuestos
-- Mi perfil
-
-## Flujo de una reparación
+## Flujo de reparación y cotización
 
 ```text
 RECIBIDO
-   │
-   ▼
+   |
+   v
 EN_DIAGNOSTICO
-   │
-   ▼
+   |
+   | Registrar diagnóstico
+   v
 COTIZACION_PENDIENTE
-   │
-   ▼
+   |
+   | Crear cotización
+   v
 ESPERANDO_APROBACION
-   │
-   ├───────────────┐
-   │               │
-   ▼               ▼
-APROBADA        RECHAZADA
-   │
-   ▼
-EN_REPARACION
-   │
-   ▼
+   |                    |
+   v                    v
+Aprobada              Rechazada
+   |                    |
+   v                    v
+EN_REPARACION         RECHAZADO
+   |
+   v
 FINALIZADA
-   │
-   ▼
+   |
+   v
 ENTREGADO
 ```
 
-El flujo también contempla el estado `RECHAZADO`.
+El backend controla las transiciones de estado. Registrar el diagnóstico habilita la creación de la cotización; la aprobación permite continuar con la reparación.
 
-Los repuestos utilizados durante una reparación pueden descontarse del stock y, si se elimina un repuesto utilizado, el stock puede ser devuelto según las reglas implementadas en el backend.
+### Edición y nueva aprobación
 
-## Cotizaciones y ventas
+Cuando una cotización se modifica, el subtotal, el IVA y el total deben recalcularse y la cotización debe volver a quedar pendiente de aprobación. La edición no debe alterar silenciosamente un pedido ya creado: si existe un pedido asociado, la operación debe bloquearse o gestionarse mediante un flujo explícito de revisión del pedido.
 
-Las cotizaciones se relacionan directamente con las reparaciones y contienen:
+## Cotizaciones, IVA y factura imprimible
 
-- Reparación asociada
-- Mano de obra
-- Repuestos
-- Detalles de cotización
-- Subtotales
-- Total
-- Estado de aprobación
+La cotización se relaciona con una reparación e incluye mano de obra y repuestos. Cuando el desglose tributario está habilitado, se almacenan:
 
-Los estados comerciales utilizados son:
+- `mano_obra`: valor de la mano de obra.
+- `iva_porcentaje`: porcentaje de IVA aplicado.
+- `valor_iva`: valor calculado del impuesto.
+- `total`: importe total de la cotización.
+
+El cálculo previsto es:
 
 ```text
-PENDIENTE
-APROBADA
-RECHAZADA
+Subtotal = mano de obra + suma de repuestos
+IVA      = subtotal × iva_porcentaje / 100
+Total    = subtotal + valor_iva
 ```
 
-Cuando una cotización es aprobada, la reparación puede continuar hacia el estado `EN_REPARACION`.
+La vista de factura puede mostrar el cliente, vehículo, técnico, reparación, detalle del servicio, subtotal, IVA y total, y permite imprimir o guardar el documento como PDF desde el navegador.
 
-## Reportes
+### Migración para bases de datos existentes
 
-El módulo de reportes permite consultar información general del taller a partir de los datos obtenidos desde la API.
+Si la base `taller_reparacion` ya existía antes de incorporar los campos de IVA, se deben agregar una sola vez. El script recomendado es `database/migration_iva_cotizacion.sql`:
 
-Actualmente incluye indicadores de:
+```sql
+USE taller_reparacion;
 
-- Clientes registrados
-- Repuestos
-- Reparaciones
-- Cotizaciones
-- Cotizaciones pendientes
-- Cotizaciones aprobadas
-- Cotizaciones rechazadas
-- Valor de ventas aprobadas
-- Repuestos disponibles
-- Repuestos con stock bajo
-- Repuestos agotados
-- Estado de las reparaciones
-- Indicadores comerciales
-- Últimas cotizaciones
+ALTER TABLE cotizacion
+    ADD COLUMN iva_porcentaje DECIMAL(5,2)
+        NOT NULL DEFAULT 0.00 AFTER mano_obra,
+    ADD COLUMN valor_iva DECIMAL(12,2)
+        NOT NULL DEFAULT 0.00 AFTER iva_porcentaje;
+```
 
-También permite seleccionar períodos como:
+Ejecuta esta migración una sola vez. Los registros anteriores quedan con IVA `0.00` por defecto; revisa y actualiza cada cotización según corresponda. Si las columnas ya existen, no vuelvas a ejecutar el `ALTER TABLE`.
 
-- Todo el historial
-- Este mes
-- Últimos 30 días
-- Últimos 90 días
-
-## Documentación
-
-| Documento | Contenido |
-|---|---|
-| [README principal](README.md) | Descripción general, arquitectura, módulos y ejecución |
-| [README del backend](backend-spring/README.md) | Módulos, endpoints, flujo de reparaciones, login y configuración del backend |
-| `backend-spring/src/main/resources/schema.sql` | Estructura de la base de datos |
-| `backend-spring/src/main/java/com/proyecto/clases/config/DatosIniciales.java` | Datos iniciales utilizados para las pruebas |
-| `frontend/src/services/api.js` | Funciones utilizadas por el frontend para comunicarse con la API |
-
-## Estructura del repositorio
+## Estructura del proyecto
 
 ```text
 AutoCore/
-│
 ├── backend-spring/
-│   ├── src/
-│   │   └── main/
-│   │       ├── java/
-│   │       └── resources/
-│   ├── .mvn/
+│   ├── src/main/java/com/proyecto/clases/
+│   ├── src/main/resources/
+│   │   ├── application.properties
+│   │   ├── application-local.properties.example
+│   │   └── schema.sql
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
 │   └── README.md
-│
 ├── frontend/
 │   ├── public/
 │   │   └── logo.png
 │   ├── src/
-│   │   ├── assets/
 │   │   ├── components/
 │   │   ├── pages/
-│   │   │   ├── Login.jsx
-│   │   │   ├── Dashboard.jsx
-│   │   │   ├── DashboardAdmin.jsx
-│   │   │   ├── DashboardTecnico.jsx
-│   │   │   ├── DashboardCliente.jsx
-│   │   │   ├── Clientes.jsx
-│   │   │   ├── Inventario.jsx
-│   │   │   ├── Reparaciones.jsx
-│   │   │   ├── Ordenes.jsx
-│   │   │   ├── Ventas.jsx
-│   │   │   ├── Reportes.jsx
-│   │   │   └── Configuracion.jsx
-│   │   ├── services/
-│   │   │   └── api.js
+│   │   ├── services/api.js
 │   │   ├── App.jsx
 │   │   └── index.css
 │   ├── package.json
 │   └── vite.config.js
-│
+├── database/
+│   └── migration_iva_cotizacion.sql
 ├── imagenes/
-├── logo.png
 ├── .gitignore
-├── .gitattributes
 └── README.md
 ```
 
-## Cómo ejecutar
+## Requisitos
 
-AutoCore utiliza tres componentes principales durante la ejecución local:
+- Java 17.
+- Node.js y npm compatibles con la versión de Vite del proyecto.
+- MySQL Server.
+- Git (opcional para ejecutar; necesario para contribuir al repositorio).
 
-| Pieza | Comando / servicio | Dirección |
-|---|---|---|
-| MySQL | Servicio local | `localhost:3306` |
-| Backend | `.\mvnw.cmd spring-boot:run` desde `backend-spring/` | `http://localhost:8080` |
-| Frontend | `npm run dev` desde `frontend/` | `http://localhost:5173` |
+## Configuración y ejecución local
 
 ### 1. Base de datos
 
-Es necesario tener MySQL ejecutándose localmente.
+Asegúrate de que el servicio MySQL esté iniciado y de que exista la base de datos `taller_reparacion`. La configuración del backend se realiza mediante las propiedades locales o las variables de entorno.
 
-La base de datos utilizada por AutoCore es:
+Para configurar credenciales locales:
 
-```text
-taller_reparacion
-```
+1. Copia `backend-spring/src/main/resources/application-local.properties.example`.
+2. Guárdalo como `application-local.properties` en la misma carpeta.
+3. Completa el usuario y la contraseña de MySQL.
+4. Si ya tienes una base de datos creada, comprueba que su esquema esté actualizado; ejecuta la migración de IVA solo si todavía no existen sus columnas.
 
-La configuración local se realiza a partir de:
-
-```text
-backend-spring/src/main/resources/application-local.properties.example
-```
-
-Copiar este archivo como:
-
-```text
-backend-spring/src/main/resources/application-local.properties
-```
-
-y configurar las credenciales locales de MySQL.
-
-> `application-local.properties` no debe subirse al repositorio porque contiene configuración local y credenciales.
+No subas el archivo `application-local.properties` ni contraseñas al repositorio.
 
 ### 2. Backend
 
-Entrar a:
-
-```bash
-cd backend-spring
-```
-
-Ejecutar en Windows:
+Abre una terminal en la carpeta raíz y ejecuta:
 
 ```powershell
+cd backend-spring
 .\mvnw.cmd spring-boot:run
 ```
 
-El backend estará disponible en:
+Backend: `http://localhost:8080`
 
-```text
-http://localhost:8080
-```
+Swagger/OpenAPI: `http://localhost:8080/swagger-ui/index.html`
 
-Swagger:
-
-```text
-http://localhost:8080/swagger-ui.html
-```
-
-En el primer arranque se crea la base `taller_reparacion`, sus tablas y los datos iniciales. El detalle está explicado en [backend-spring/README.md](backend-spring/README.md).
+Si Swagger no abre con esa dirección, revisa el mensaje de inicio de Spring Boot y la configuración de springdoc.
 
 ### 3. Frontend
 
-Abrir otra terminal y entrar a:
+Abre una segunda terminal en la raíz del proyecto:
 
-```bash
+```powershell
 cd frontend
-```
-
-Instalar las dependencias:
-
-```bash
 npm install
-```
-
-Ejecutar:
-
-```bash
 npm run dev
 ```
 
-Vite mostrará la dirección local, normalmente:
+Vite normalmente publica la aplicación en `http://localhost:5173`.
 
-```text
-http://localhost:5173
-```
-
-## API principal
+## API y documentación
 
 | Módulo | Endpoint base |
 |---|---|
-| Usuarios | `/api/usuarios` |
-| Login | `/api/usuarios/login` |
+| Usuarios y login | `/api/usuarios` |
 | Clientes | `/api/clientes` |
 | Vehículos | `/api/equipos` |
 | Repuestos | `/api/repuestos` |
-| Reparaciones | `/api/reparaciones` |
+| Inventario | `/api/inventarios` |
+| Reparaciones y diagnósticos | `/api/reparaciones` |
 | Cotizaciones | `/api/cotizaciones` |
+| Pedidos | `/api/pedidos` |
 
-El backend implementa operaciones CRUD para los módulos principales y operaciones específicas para asignación de técnicos, cambios de estado, diagnósticos, repuestos utilizados y aprobación/rechazo de cotizaciones.
+Los endpoints disponibles y sus métodos HTTP se pueden consultar en Swagger. Las rutas concretas pueden incluir operaciones específicas para asignar técnicos, registrar diagnósticos, cambiar estados, gestionar repuestos, aprobar/rechazar cotizaciones y consultar pedidos.
 
-## Estado
+Para más información sobre los controladores y el flujo del backend, consulta [backend-spring/README.md](backend-spring/README.md).
 
-### Backend
+## Configuración sensible
 
-- [x] API REST con Spring Boot
-- [x] Conexión con MySQL
-- [x] Spring Data JPA / Hibernate
-- [x] Swagger / OpenAPI
-- [x] CRUD de usuarios
-- [x] CRUD de clientes
-- [x] CRUD de vehículos
-- [x] CRUD de repuestos
-- [x] CRUD de reparaciones
-- [x] CRUD de cotizaciones
-- [x] Asignación de técnicos
-- [x] Cambio de estados de reparación
-- [x] Diagnóstico
-- [x] Registro de repuestos utilizados
-- [x] Aprobación y rechazo de cotizaciones
-- [x] Datos iniciales de prueba
+- No subas contraseñas, tokens ni archivos de configuración local.
+- Usa `application-local.properties` para las credenciales locales y mantenlo fuera de Git.
+- Antes de publicar el repositorio, revisa que no haya claves reales en archivos de configuración ni datos personales que no deban compartirse.
+- Los datos iniciales son para desarrollo/pruebas; cámbialos y aplica medidas de seguridad antes de cualquier despliegue real.
 
-### Frontend
+## Estado del proyecto
 
-- [x] Login conectado con el backend
-- [x] React + Vite
-- [x] React Router
-- [x] Dashboard de administrador
-- [x] Dashboard de técnico
-- [x] Dashboard de cliente
-- [x] Gestión de clientes
-- [x] Gestión de repuestos
-- [x] Inventario
-- [x] Reparaciones
-- [x] Órdenes
-- [x] Ventas
-- [x] Reportes
-- [x] Configuración
-
-### En desarrollo
-
-- [ ] Protección completa de rutas según rol
-- [ ] Separación completa entre el catálogo de repuestos y el inventario físico
-- [ ] Mejoras visuales y de responsive en algunos módulos
-- [ ] Mejoras de seguridad para las credenciales y contraseñas
-- [ ] Pruebas automatizadas
-- [ ] Documentación técnica adicional
+AutoCore integra frontend React, backend Spring Boot y persistencia MySQL. El alcance actual incluye gestión de clientes, vehículos, repuestos, inventario, reparaciones, cotizaciones, pedidos, ventas y reportes. La cobertura de pruebas automatizadas y el endurecimiento de seguridad continúan siendo áreas de mejora.
 
 ## Equipo
 
@@ -402,5 +285,4 @@ El backend implementa operaciones CRUD para los módulos principales y operacion
 | **Jose Fernando Estevez Cardenas** | Backend con Spring Boot |
 | **Alejandro Sarin** | Base de datos, órdenes, ventas y Node.js |
 
-Los integrantes trabajan de manera coordinada sobre el frontend, backend, base de datos y documentación del proyecto.
-
+Proyecto académico de **Entornos de Programación (24542)** · Universidad Industrial de Santander (UIS) · Grupo F1 · 2026.

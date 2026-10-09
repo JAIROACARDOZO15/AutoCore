@@ -40,6 +40,12 @@ CREATE TABLE IF NOT EXISTS equipo (
     CONSTRAINT fk_equipo_cliente FOREIGN KEY (cliente_id) REFERENCES cliente(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS categoria (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    descripcion VARCHAR(255)
+);
+
 CREATE TABLE IF NOT EXISTS repuesto (
     id BIGINT AUTO_INCREMENT PRIMARY KEY,
     nombre VARCHAR(150) NOT NULL,
@@ -47,6 +53,23 @@ CREATE TABLE IF NOT EXISTS repuesto (
     precio DECIMAL(12,2) NOT NULL,
     stock INT NOT NULL DEFAULT 0,
     activo BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+CREATE TABLE IF NOT EXISTS inventario (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    repuesto_id BIGINT NOT NULL UNIQUE,
+    cantidad_disponible INT NOT NULL DEFAULT 0,
+    stock_minimo INT NOT NULL DEFAULT 0,
+    ubicacion VARCHAR(100),
+    entradas INT NOT NULL DEFAULT 0,
+    salidas INT NOT NULL DEFAULT 0,
+    activo BOOLEAN NOT NULL DEFAULT TRUE,
+
+    CONSTRAINT fk_inventario_repuesto
+        FOREIGN KEY (repuesto_id)
+        REFERENCES repuesto(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS reparacion (
@@ -109,4 +132,58 @@ CREATE TABLE IF NOT EXISTS repuesto_reparacion (
     cantidad_usada INT NOT NULL DEFAULT 1,
     CONSTRAINT fk_reprep_reparacion FOREIGN KEY (reparacion_id) REFERENCES reparacion(id) ON DELETE CASCADE,
     CONSTRAINT fk_reprep_repuesto FOREIGN KEY (repuesto_id) REFERENCES repuesto(id) ON DELETE RESTRICT
+);
+
+
+CREATE TABLE IF NOT EXISTS pedido (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+    cliente_id BIGINT NOT NULL,
+    cotizacion_id BIGINT NOT NULL UNIQUE,
+
+    estado ENUM(
+        'PENDIENTE',
+        'CONFIRMADO',
+        'PROCESANDO',
+        'COMPLETADO',
+        'CANCELADO'
+    ) NOT NULL DEFAULT 'PENDIENTE',
+
+    total DECIMAL(12,2) NOT NULL DEFAULT 0.00,
+
+    fecha_pedido DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    fecha_actualizacion DATETIME,
+
+    observaciones TEXT,
+
+    CONSTRAINT fk_pedido_cliente
+        FOREIGN KEY (cliente_id)
+        REFERENCES cliente(id)
+        ON DELETE RESTRICT,
+
+    CONSTRAINT fk_pedido_cotizacion
+        FOREIGN KEY (cotizacion_id)
+        REFERENCES cotizacion(id)
+        ON DELETE RESTRICT
+);
+
+CREATE TABLE IF NOT EXISTS detalle_pedido (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+
+    pedido_id BIGINT NOT NULL,
+    repuesto_id BIGINT NOT NULL,
+
+    cantidad INT NOT NULL DEFAULT 1,
+    precio_unitario DECIMAL(12,2) NOT NULL,
+    subtotal DECIMAL(12,2) NOT NULL,
+
+    CONSTRAINT fk_detpedido_pedido
+        FOREIGN KEY (pedido_id)
+        REFERENCES pedido(id)
+        ON DELETE CASCADE,
+
+    CONSTRAINT fk_detpedido_repuesto
+        FOREIGN KEY (repuesto_id)
+        REFERENCES repuesto(id)
+        ON DELETE RESTRICT
 );

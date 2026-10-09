@@ -8,9 +8,9 @@ import {
   crearReparacion,
   actualizarReparacion,
   eliminarReparacion,
-  cambiarEstadoReparacion
+  cambiarEstadoReparacion,
+  registrarDiagnostico
 } from '../services/api'
-
 import './ReparacionesC.css'
 
 function Reparaciones() {
@@ -27,10 +27,29 @@ function Reparaciones() {
   const [filtroEstado, setFiltroEstado] = useState('TODOS')
 
   const [cargando, setCargando] = useState(true)
-  const [guardando, setGuardando] = useState(false)
+const [guardando, setGuardando] = useState(false)
 
-  const [modalAbierto, setModalAbierto] = useState(false)
-  const [modoEdicion, setModoEdicion] = useState(false)
+const [modalAbierto, setModalAbierto] = useState(false)
+const [modoEdicion, setModoEdicion] = useState(false)
+
+/* =========================
+   DIAGNÓSTICO
+========================= */
+
+const [modalDiagnosticoAbierto, setModalDiagnosticoAbierto] =
+  useState(false)
+
+const [guardandoDiagnostico, setGuardandoDiagnostico] =
+  useState(false)
+
+const [reparacionDiagnostico, setReparacionDiagnostico] =
+  useState(null)
+
+const [formularioDiagnostico, setFormularioDiagnostico] =
+  useState({
+    hallazgos: '',
+    solucionPropuesta: ''
+  })
 
   const [reparacionSeleccionada, setReparacionSeleccionada] =
     useState(null)
@@ -175,6 +194,118 @@ function Reparaciones() {
       null
     )
   }
+
+  /* =========================
+   DIAGNÓSTICO
+========================= */
+
+const abrirModalDiagnostico = (reparacion) => {
+
+  setReparacionDiagnostico(reparacion)
+
+  setFormularioDiagnostico({
+    hallazgos:
+      reparacion.diagnostico?.hallazgos || '',
+
+    solucionPropuesta:
+      reparacion.diagnostico?.solucionPropuesta || ''
+  })
+
+  setModalDiagnosticoAbierto(true)
+}
+
+
+const cerrarModalDiagnostico = () => {
+
+  if (guardandoDiagnostico) {
+    return
+  }
+
+  setModalDiagnosticoAbierto(false)
+
+  setReparacionDiagnostico(null)
+
+  setFormularioDiagnostico({
+    hallazgos: '',
+    solucionPropuesta: ''
+  })
+}
+
+
+const manejarCambioDiagnostico = (e) => {
+
+  const {
+    name,
+    value
+  } = e.target
+
+  setFormularioDiagnostico(
+    anterior => ({
+      ...anterior,
+      [name]: value
+    })
+  )
+}
+
+
+const guardarDiagnostico = async (e) => {
+
+  e.preventDefault()
+
+  if (!reparacionDiagnostico) {
+    return
+  }
+
+  if (!formularioDiagnostico.hallazgos.trim()) {
+
+    alert(
+      'Los hallazgos del diagnóstico son obligatorios.'
+    )
+
+    return
+  }
+
+  try {
+
+    setGuardandoDiagnostico(true)
+
+    await registrarDiagnostico(
+      reparacionDiagnostico.id,
+      {
+        hallazgos:
+          formularioDiagnostico.hallazgos.trim(),
+
+        solucionPropuesta:
+          formularioDiagnostico.solucionPropuesta.trim()
+      }
+    )
+
+    cerrarModalDiagnostico()
+
+    await cargarDatos()
+
+    alert(
+      'Diagnóstico registrado correctamente. La reparación pasó a COTIZACIÓN PENDIENTE.'
+    )
+
+  } catch (error) {
+
+    console.error(
+      'Error registrando diagnóstico:',
+      error
+    )
+
+    alert(
+      error.message ||
+      'No fue posible registrar el diagnóstico.'
+    )
+
+  } finally {
+
+    setGuardandoDiagnostico(false)
+
+  }
+}
 
   const guardarReparacion = async (e) => {
 
@@ -1050,17 +1181,49 @@ function Reparaciones() {
                               ✎
                             </button>
 
-                            <button
-                              className="repair-action next"
-                              title="Avanzar estado"
-                              onClick={() =>
-                                avanzarEstado(
-                                  reparacion
-                                )
-                              }
-                            >
-                              →
-                            </button>
+                            {reparacion.estado === 'EN_DIAGNOSTICO' ? (
+
+  <button
+    className="repair-action diagnosis"
+    title="Registrar diagnóstico"
+    onClick={() =>
+      abrirModalDiagnostico(
+        reparacion
+      )
+    }
+  >
+    📝
+  </button>
+
+) : reparacion.estado === 'COTIZACION_PENDIENTE' ? (
+
+  <button
+    className="repair-action quote"
+    title="Crear cotización"
+    onClick={() =>
+      navigate(
+        `/ventas?reparacionId=${reparacion.id}`
+      )
+    }
+  >
+    💰
+  </button>
+
+) : (
+
+  <button
+    className="repair-action next"
+    title="Avanzar estado"
+    onClick={() =>
+      avanzarEstado(
+        reparacion
+      )
+    }
+  >
+    →
+  </button>
+
+)}
 
                             <button
                               className="repair-action delete"
@@ -1114,6 +1277,171 @@ function Reparaciones() {
         </section>
 
       </main>
+
+{modalDiagnosticoAbierto &&
+  reparacionDiagnostico && (
+
+  <div
+    className="diagnostico-modal-overlay"
+    onClick={cerrarModalDiagnostico}
+  >
+
+    <div
+      className="diagnostico-modal"
+      onClick={e => e.stopPropagation()}
+    >
+
+      <div className="diagnostico-modal-header">
+
+        <div>
+
+          <span>
+            DIAGNÓSTICO
+          </span>
+
+          <h2>
+            Registrar diagnóstico
+          </h2>
+
+          <p>
+            Reparación #{reparacionDiagnostico.id}
+            {' — '}
+            {reparacionDiagnostico.clienteNombre}
+          </p>
+
+        </div>
+
+        <button
+          type="button"
+          className="diagnostico-modal-close"
+          onClick={cerrarModalDiagnostico}
+          disabled={guardandoDiagnostico}
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <form onSubmit={guardarDiagnostico}>
+
+        <div className="diagnostico-form">
+
+          <div className="diagnostico-vehicle">
+
+            <div>
+              <span>
+                VEHÍCULO
+              </span>
+
+              <strong>
+                {reparacionDiagnostico.equipoMarca}
+                {' '}
+                {reparacionDiagnostico.equipoModelo}
+              </strong>
+            </div>
+
+
+            <div>
+              <span>
+                FALLA REPORTADA
+              </span>
+
+              <strong>
+                {reparacionDiagnostico.fallaReportada}
+              </strong>
+            </div>
+
+          </div>
+
+
+          <div className="diagnostico-form-group">
+
+            <label>
+              Hallazgos *
+            </label>
+
+            <textarea
+              name="hallazgos"
+              rows="5"
+              placeholder="Describe lo encontrado durante la revisión del vehículo..."
+              value={formularioDiagnostico.hallazgos}
+              onChange={manejarCambioDiagnostico}
+              disabled={guardandoDiagnostico}
+            />
+
+          </div>
+
+
+          <div className="diagnostico-form-group">
+
+            <label>
+              Solución propuesta
+            </label>
+
+            <textarea
+              name="solucionPropuesta"
+              rows="5"
+              placeholder="Describe la reparación que se propone realizar..."
+              value={formularioDiagnostico.solucionPropuesta}
+              onChange={manejarCambioDiagnostico}
+              disabled={guardandoDiagnostico}
+            />
+
+          </div>
+
+
+          <div className="diagnostico-info">
+
+            <span>
+              💡
+            </span>
+
+            <p>
+              Al guardar el diagnóstico,
+              la reparación pasará automáticamente a
+              <strong> COTIZACIÓN PENDIENTE</strong>.
+              Después podrás crear la cotización.
+            </p>
+
+          </div>
+
+        </div>
+
+
+        <div className="diagnostico-modal-actions">
+
+          <button
+            type="button"
+            className="diagnostico-cancel-button"
+            onClick={cerrarModalDiagnostico}
+            disabled={guardandoDiagnostico}
+          >
+            Cancelar
+          </button>
+
+
+          <button
+            type="submit"
+            className="diagnostico-save-button"
+            disabled={guardandoDiagnostico}
+          >
+
+            {guardandoDiagnostico
+              ? 'Guardando...'
+              : 'Guardar diagnóstico'}
+
+          </button>
+
+        </div>
+
+      </form>
+
+    </div>
+
+  </div>
+
+)}
 
       {modalAbierto && (
 

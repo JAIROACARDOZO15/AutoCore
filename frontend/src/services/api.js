@@ -1,3 +1,4 @@
+
 const API_URL = 'http://localhost:8080/api'
 
 async function request(endpoint, options = {}) {
@@ -10,18 +11,17 @@ async function request(endpoint, options = {}) {
   })
 
   if (!respuesta.ok) {
-    let mensaje = 'Error en la solicitud'
+    let mensaje = `Error ${respuesta.status}`
 
     try {
       const error = await respuesta.json()
-
       mensaje =
         error.message ||
         error.Mensaje ||
         error.error ||
         mensaje
     } catch {
-      mensaje = `Error ${respuesta.status}`
+      // La respuesta del servidor no contiene JSON.
     }
 
     throw new Error(mensaje)
@@ -41,19 +41,24 @@ async function request(endpoint, options = {}) {
 export async function login(email, password) {
   return request('/usuarios/login', {
     method: 'POST',
-    body: JSON.stringify({
-      email,
-      password
-    })
+    body: JSON.stringify({ email, password })
   })
 }
 
 /* =========================
-   USUARIOS
+   USUARIOS Y TÉCNICOS
 ========================= */
 
 export async function obtenerUsuarios() {
   return request('/usuarios')
+}
+
+export async function obtenerUsuario(id) {
+  return request(`/usuarios/${id}`)
+}
+
+export async function obtenerTecnicos() {
+  return request('/usuarios?rol=TECNICO')
 }
 
 export async function crearUsuario(usuario) {
@@ -67,6 +72,12 @@ export async function actualizarUsuario(id, usuario) {
   return request(`/usuarios/${id}`, {
     method: 'PUT',
     body: JSON.stringify(usuario)
+  })
+}
+
+export async function eliminarUsuario(id) {
+  return request(`/usuarios/${id}`, {
+    method: 'DELETE'
   })
 }
 
@@ -107,11 +118,43 @@ export async function eliminarCliente(id) {
 }
 
 /* =========================
+   EQUIPOS / VEHÍCULOS
+========================= */
+
+export async function obtenerEquipos() {
+  return request('/equipos')
+}
+
+export async function obtenerEquipo(id) {
+  return request(`/equipos/${id}`)
+}
+
+export async function crearEquipo(equipo) {
+  return request('/equipos', {
+    method: 'POST',
+    body: JSON.stringify(equipo)
+  })
+}
+
+export async function actualizarEquipo(id, equipo) {
+  return request(`/equipos/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(equipo)
+  })
+}
+
+export async function eliminarEquipo(id) {
+  return request(`/equipos/${id}`, {
+    method: 'DELETE'
+  })
+}
+
+/* =========================
    REPUESTOS
 ========================= */
 
 export async function obtenerRepuestos() {
-  return request('/repuestos?soloActivos=true')
+  return request('/repuestos')
 }
 
 export async function obtenerRepuesto(id) {
@@ -139,6 +182,42 @@ export async function eliminarRepuesto(id) {
 }
 
 /* =========================
+   INVENTARIO
+========================= */
+
+export async function obtenerInventarios() {
+  return request('/inventarios')
+}
+
+export async function obtenerInventario(id) {
+  return request(`/inventarios/${id}`)
+}
+
+export async function obtenerInventarioPorRepuesto(repuestoId) {
+  return request(`/inventarios/repuesto/${repuestoId}`)
+}
+
+export async function crearInventario(inventario) {
+  return request('/inventarios', {
+    method: 'POST',
+    body: JSON.stringify(inventario)
+  })
+}
+
+export async function actualizarInventario(id, inventario) {
+  return request(`/inventarios/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(inventario)
+  })
+}
+
+export async function eliminarInventario(id) {
+  return request(`/inventarios/${id}`, {
+    method: 'DELETE'
+  })
+}
+
+/* =========================
    REPARACIONES
 ========================= */
 
@@ -157,10 +236,7 @@ export async function crearReparacion(reparacion) {
   })
 }
 
-export async function actualizarReparacion(
-  id,
-  reparacion
-) {
+export async function actualizarReparacion(id, reparacion) {
   return request(`/reparaciones/${id}`, {
     method: 'PUT',
     body: JSON.stringify(reparacion)
@@ -173,56 +249,49 @@ export async function eliminarReparacion(id) {
   })
 }
 
-export async function asignarTecnico(
-  reparacionId,
-  tecnicoId
-) {
+export async function asignarTecnico(reparacionId, tecnicoId) {
   return request(
     `/reparaciones/${reparacionId}/tecnico/${tecnicoId}`,
-    {
-      method: 'PATCH'
-    }
+    { method: 'PATCH' }
   )
 }
 
-export async function cambiarEstadoReparacion(
-  id,
-  estado
+export async function cambiarEstadoReparacion(id, estado) {
+  return request(`/reparaciones/${id}/estado`, {
+    method: 'PATCH',
+    body: JSON.stringify({ estado })
+  })
+}
+
+export async function registrarDiagnostico(id, diagnostico) {
+  return request(`/reparaciones/${id}/diagnostico`, {
+    method: 'PUT',
+    body: JSON.stringify(diagnostico)
+  })
+}
+
+export async function agregarRepuestoUsado(
+  reparacionId,
+  repuestoUsado
+) {
+  return request(`/reparaciones/${reparacionId}/repuestos`, {
+    method: 'POST',
+    body: JSON.stringify(repuestoUsado)
+  })
+}
+
+export async function quitarRepuestoUsado(
+  reparacionId,
+  repuestoUsadoId
 ) {
   return request(
-    `/reparaciones/${id}/estado`,
-    {
-      method: 'PATCH',
-      body: JSON.stringify({
-        estado
-      })
-    }
+    `/reparaciones/${reparacionId}/repuestos/${repuestoUsadoId}`,
+    { method: 'DELETE' }
   )
 }
 
-export async function obtenerOrdenes() {
-  return request('/reparaciones')
-}
-
-
 /* =========================
-   EQUIPOS / VEHÍCULOS
-========================= */
-
-export async function obtenerEquipos() {
-  return request('/equipos')
-}
-
-/* =========================
-   TÉCNICOS
-========================= */
-
-export async function obtenerTecnicos() {
-  return request('/usuarios?rol=TECNICO')
-}
-
-/* =========================
-   COTIZACIONES / VENTAS
+   COTIZACIONES
 ========================= */
 
 export async function obtenerCotizaciones() {
@@ -263,4 +332,65 @@ export async function eliminarCotizacion(id) {
   return request(`/cotizaciones/${id}`, {
     method: 'DELETE'
   })
+}
+
+/* =========================
+   PEDIDOS
+========================= */
+
+export async function obtenerPedidos() {
+  return request('/pedidos')
+}
+
+export async function obtenerPedido(id) {
+  return request(`/pedidos/${id}`)
+}
+
+export async function obtenerPedidoPorCotizacion(cotizacionId) {
+  return request(`/pedidos/cotizacion/${cotizacionId}`)
+}
+
+export async function crearPedido(pedido) {
+  return request('/pedidos', {
+    method: 'POST',
+    body: JSON.stringify(pedido)
+  })
+}
+
+export async function actualizarPedido(id, pedido) {
+  return request(`/pedidos/${id}`, {
+    method: 'PUT',
+    body: JSON.stringify(pedido)
+  })
+}
+
+export async function eliminarPedido(id) {
+  return request(`/pedidos/${id}`, {
+    method: 'DELETE'
+  })
+}
+
+export async function obtenerDetallesPedido(pedidoId) {
+  return request(`/pedidos/${pedidoId}/detalles`)
+}
+
+export async function agregarDetallePedido(pedidoId, detalle) {
+  return request(`/pedidos/${pedidoId}/detalles`, {
+    method: 'POST',
+    body: JSON.stringify(detalle)
+  })
+}
+
+export async function eliminarDetallePedido(detalleId) {
+  return request(`/pedidos/detalles/${detalleId}`, {
+    method: 'DELETE'
+  })
+}
+
+/* =========================
+   ÓRDENES
+========================= */
+
+export async function obtenerOrdenes() {
+  return request('/reparaciones')
 }

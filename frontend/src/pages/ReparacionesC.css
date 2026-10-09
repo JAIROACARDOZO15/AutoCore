@@ -821,3 +821,268 @@
     width: 100%;
   }
 }
+
+/* =========================================================
+   BOTÓN DE DIAGNÓSTICO
+========================================================= */
+
+.repair-action.diagnosis {
+  border-color: #c9dafa;
+  background: #edf5ff;
+  color: #1769e0;
+}
+
+.repair-action.diagnosis:hover {
+  background: #dcecff;
+  border-color: #1769e0;
+}
+
+
+/* =========================================================
+   BOTÓN DE COTIZACIÓN
+========================================================= */
+
+.repair-action.quote {
+  border-color: #bde6ce;
+  background: #eefaf3;
+  color: #1d9b56;
+}
+
+.repair-action.quote:hover {
+  background: #dff6e9;
+  border-color: #1d9b56;
+}
+
+
+/* =========================================================
+   MODAL DIAGNÓSTICO
+========================================================= */
+
+.diagnostico-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(7, 29, 56, 0.55);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 25px;
+  z-index: 200;
+}
+
+.diagnostico-modal {
+  width: min(720px, 100%);
+  max-height: 90vh;
+  overflow-y: auto;
+  background: white;
+  border-radius: 18px;
+  box-shadow: 0 25px 70px rgba(7, 29, 56, 0.25);
+}
+
+.diagnostico-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 25px 28px 20px;
+  border-bottom: 1px solid #e7edf3;
+}
+
+.diagnostico-modal-header span {
+  color: #1769e0;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: 1.4px;
+}
+
+.diagnostico-modal-header h2 {
+  margin: 5px 0;
+  color: #193a60;
+  font-size: 22px;
+}
+
+.diagnostico-modal-header p {
+  margin: 0;
+  color: #8191a6;
+  font-size: 11px;
+}
+
+.diagnostico-modal-close {
+  width: 35px;
+  height: 35px;
+  border: 0;
+  border-radius: 8px;
+  background: #f1f5f9;
+  color: #60758e;
+  font-size: 23px;
+  cursor: pointer;
+}
+
+.diagnostico-modal-close:hover {
+  background: #e8eef5;
+}
+
+.diagnostico-form {
+  padding: 25px 28px;
+}
+
+.diagnostico-vehicle {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 22px;
+}
+
+.diagnostico-vehicle > div {
+  padding: 13px;
+  background: #f7faff;
+  border: 1px solid #e1ebf7;
+  border-radius: 10px;
+}
+
+.diagnostico-vehicle span {
+  display: block;
+  margin-bottom: 5px;
+  color: #8a9aab;
+  font-size: 8px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+
+.diagnostico-vehicle strong {
+  display: block;
+  color: #284765;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.diagnostico-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 18px;
+}
+
+.diagnostico-form-group label {
+  color: #536a84;
+  font-size: 11px;
+  font-weight: 800;
+}
+
+.diagnostico-form-group textarea {
+  width: 100%;
+  resize: vertical;
+  min-height: 110px;
+  padding: 11px 12px;
+  border: 1px solid #dce4ed;
+  border-radius: 9px;
+  outline: none;
+  color: #193a60;
+  background: white;
+  font-family: inherit;
+  font-size: 11px;
+  line-height: 1.5;
+}
+
+.diagnostico-form-group textarea:focus {
+  border-color: #1769e0;
+  box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.08);
+}
+
+.diagnostico-form-group textarea:disabled {
+  background: #f7f9fc;
+}
+
+.diagnostico-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 13px;
+  background: #edf5ff;
+  border: 1px solid #d8e8fb;
+  border-radius: 10px;
+}
+
+.diagnostico-info span {
+  font-size: 17px;
+}
+
+.diagnostico-info p {
+  margin: 0;
+  color: #647b94;
+  font-size: 9px;
+  line-height: 1.6;
+}
+
+.diagnostico-info strong {
+  color: #1769e0;
+}
+
+.diagnostico-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 28px 25px;
+  border-top: 1px solid #e7edf3;
+}
+
+.diagnostico-cancel-button,
+.diagnostico-save-button {
+  min-width: 140px;
+  height: 40px;
+  border-radius: 8px;
+  padding: 0 18px;
+  font-size: 10px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+.diagnostico-cancel-button {
+  background: white;
+  border: 1px solid #dce4ed;
+  color: #536a84;
+}
+
+.diagnostico-cancel-button:hover {
+  background: #f7f9fc;
+}
+
+.diagnostico-save-button {
+  background: #1769e0;
+  border: 0;
+  color: white;
+}
+
+.diagnostico-save-button:hover {
+  background: #0f5ccc;
+}
+
+.diagnostico-cancel-button:disabled,
+.diagnostico-save-button:disabled,
+.diagnostico-modal-close:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 700px) {
+
+  .diagnostico-modal-overlay {
+    padding: 12px;
+  }
+
+  .diagnostico-vehicle {
+    grid-template-columns: 1fr;
+  }
+
+  .diagnostico-modal-actions {
+    flex-direction: column-reverse;
+  }
+
+  .diagnostico-cancel-button,
+  .diagnostico-save-button {
+    width: 100%;
+  }
+}

@@ -607,3 +607,86 @@
   }
 
 }
+
+/* Botón para consultar e imprimir la factura */
+.invoice-button { width:31px; height:31px; border:1px solid #c7d9fb; border-radius:8px; background:#edf4ff; color:#1769e0; cursor:pointer; font-size:15px; font-weight:800; display:inline-flex; align-items:center; justify-content:center; transition:background .2s ease,transform .2s ease; }
+.invoice-button:hover { background:#dceaff; transform:translateY(-1px); }
+.invoice-button:focus-visible { outline:2px solid #1769e0; outline-offset:2px; }
+
+
+/* Modal de cotizaciones: creación y edición */
+.cotizacion-modal-overlay {
+  position: fixed; inset: 0; z-index: 1000; display: flex; align-items: center; justify-content: center;
+  padding: 20px; background: rgba(5, 20, 42, .62); overflow-y: auto;
+}
+.cotizacion-modal {
+  width: min(900px, 100%); max-height: calc(100vh - 40px); overflow-y: auto; background: #fff;
+  border: 1px solid #dbe5f0; border-radius: 18px; padding: 28px; box-shadow: 0 24px 80px rgba(0,0,0,.25);
+}
+.cotizacion-modal-header { display:flex; justify-content:space-between; align-items:flex-start; gap:20px; margin-bottom:22px; }
+.cotizacion-modal-header h2 { margin:7px 0; color:#09244a; font-size:24px; }
+.cotizacion-modal-header p { margin:0; color:#71839a; font-size:13px; }
+.cotizacion-modal-label { color:#1769e0; font-size:10px; font-weight:800; letter-spacing:1.5px; }
+.cotizacion-modal-close { width:36px; height:36px; border:0; border-radius:9px; background:#edf2f7; color:#34465d; font-size:24px; cursor:pointer; }
+.cotizacion-form-group { display:flex; flex-direction:column; gap:7px; min-width:0; }
+.cotizacion-form-group.full { margin:16px 0; }
+.cotizacion-form-group label { color:#3d536e; font-size:12px; font-weight:700; }
+.cotizacion-form-group input,.cotizacion-form-group select { width:100%; min-height:42px; padding:10px 12px; border:1px solid #d7e1ed; border-radius:9px; background:#fff; color:#102b4c; outline:none; }
+.cotizacion-form-group input:focus,.cotizacion-form-group select:focus { border-color:#1769e0; box-shadow:0 0 0 3px rgba(23,105,224,.1); }
+.cotizacion-reparacion-info,.cotizacion-edit-context { display:flex; flex-wrap:wrap; gap:10px; padding:14px; margin:14px 0; border:1px solid #dce7f3; border-radius:10px; background:#f7faff; }
+.cotizacion-edit-context { flex-direction:column; gap:5px; color:#526780; font-size:13px; }
+.cotizacion-edit-context strong { color:#0c2b50; }
+.cotizacion-detalles-header { display:flex; justify-content:space-between; align-items:center; gap:15px; margin:24px 0 12px; }
+.cotizacion-detalles-header h3 { margin:0 0 5px; font-size:16px; color:#102b4c; }
+.cotizacion-detalles-header p { margin:0; font-size:12px; color:#71839a; }
+.cotizacion-add-detail { border:1px solid #bfd4f5; border-radius:8px; background:#edf4ff; color:#1769e0; padding:9px 12px; font-weight:700; cursor:pointer; white-space:nowrap; }
+.cotizacion-detalles { display:flex; flex-direction:column; gap:10px; }
+.cotizacion-detalle-row { display:grid; grid-template-columns:minmax(180px,1fr) 100px 130px 34px; align-items:end; gap:12px; padding:12px; border:1px solid #e2eaf3; border-radius:10px; }
+.cotizacion-detalle-row .cotizacion-form-group { min-width:0; }
+.cotizacion-detalle-subtotal { display:flex; flex-direction:column; gap:7px; padding-bottom:11px; font-size:11px; color:#71839a; }
+.cotizacion-detalle-subtotal strong { color:#102b4c; font-size:13px; }
+.cotizacion-remove-detail { width:32px; height:34px; border:1px solid #f2c8ce; border-radius:8px; background:#fff1f2; color:#c62836; font-size:20px; cursor:pointer; }
+.cotizacion-total-box { display:flex; justify-content:space-between; align-items:center; gap:15px; margin-top:20px; padding:16px; border-radius:10px; background:#f2f7ff; color:#4c6380; font-size:13px; }
+.cotizacion-total-box strong { color:#1769e0; font-size:22px; }
+.cotizacion-form-actions { display:flex; justify-content:flex-end; gap:10px; margin-top:22px; }
+.cotizacion-secondary-button,.cotizacion-primary-button { min-height:42px; padding:0 17px; border-radius:9px; font-weight:700; cursor:pointer; }
+.cotizacion-secondary-button { border:1px solid #d5dfeb; background:#fff; color:#455a73; }
+.cotizacion-primary-button { border:1px solid #1769e0; background:#1769e0; color:#fff; }
+.cotizacion-primary-button:disabled,.cotizacion-secondary-button:disabled,.cotizacion-add-detail:disabled,.cotizacion-remove-detail:disabled { opacity:.55; cursor:not-allowed; }
+.edit-button { width:31px; height:31px; border:1px solid #c8d9f3; border-radius:8px; background:#eff6ff; color:#1769e0; cursor:pointer; font-size:14px; display:inline-flex; align-items:center; justify-content:center; }
+.edit-button:hover { background:#dceaff; }
+.rejected-document-button { border-color:#f0c4ca; background:#fff0f1; color:#c62836; }
+@media(max-width:650px) {
+  .cotizacion-modal { padding:18px; }
+  .cotizacion-detalle-row { grid-template-columns:1fr 90px; }
+  .cotizacion-detalle-subtotal { grid-column:1; }
+  .cotizacion-remove-detail { grid-column:2; justify-self:end; }
+  .cotizacion-detalles-header { align-items:flex-start; flex-direction:column; }
+  .cotizacion-form-actions { flex-direction:column-reverse; }
+  .cotizacion-form-actions button { width:100%; }
+}
+
+/* El botón de edición se muestra en todas las filas; solo se habilita en cotizaciones pendientes. */
+.edit-button:disabled {
+  opacity: .38;
+  cursor: not-allowed;
+  filter: grayscale(1);
+}
+.edit-button:disabled:hover {
+  background: #eff6ff;
+}
+
+
+/* Desglose de subtotal, IVA y total para las cotizaciones */
+.cotizacion-total-breakdown { display:flex; flex-direction:column; align-items:stretch; gap:0; }
+.cotizacion-total-breakdown > div { display:flex; align-items:center; justify-content:space-between; gap:16px; padding:8px 0; border-bottom:1px solid #dce7f7; }
+.cotizacion-total-breakdown > div:last-child { border-bottom:0; }
+.cotizacion-total-breakdown > div > span { color:#4c6380; }
+.cotizacion-total-breakdown > div > strong { color:#263b57; font-size:15px; }
+.cotizacion-total-breakdown .cotizacion-grand-total { margin-top:4px; padding-top:12px; }
+.cotizacion-total-breakdown .cotizacion-grand-total > span { color:#1769e0; font-weight:800; }
+.cotizacion-total-breakdown .cotizacion-grand-total > strong { color:#1769e0; font-size:24px; }
+.cotizacion-iva-field { margin-top:14px; }
+.cotizacion-iva-field small, .cotizacion-form-group.full small { display:block; margin-top:6px; color:#64748b; font-size:12px; line-height:1.4; }
+.cotizacion-edit-actions { flex-wrap:wrap; }
+.cotizacion-edit-actions button:first-child { margin-right:auto; }
