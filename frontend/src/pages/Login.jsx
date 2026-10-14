@@ -45,6 +45,7 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false)
   const navigate = useNavigate()
 
+
 const handleSubmit = async (e) => {
   e.preventDefault()
 
@@ -52,16 +53,19 @@ const handleSubmit = async (e) => {
   setLoading(true)
 
   try {
+    // Evitar conservar una sesión anterior.
+    localStorage.removeItem('token')
+    localStorage.removeItem('usuario')
+
     const respuesta = await login(email, password)
-
-    console.log('RESPUESTA DEL LOGIN:', respuesta)
-    console.log('USUARIO RECIBIDO:', respuesta?.usuario)
-    console.log('ROL RECIBIDO:', respuesta?.usuario?.rol)
-
+console.log('RESPUESTA COMPLETA DEL LOGIN:', respuesta)
+console.log('USUARIO RECIBIDO:', respuesta?.Usuario)
     const datosUsuario =
       respuesta?.Usuario ??
-      respuesta?.data ??
-      respuesta
+      respuesta?.usuario ??
+      respuesta?.data
+
+    const token = respuesta?.token
 
     if (!datosUsuario?.rol) {
       throw new Error(
@@ -69,31 +73,30 @@ const handleSubmit = async (e) => {
       )
     }
 
+    if (!token) {
+      throw new Error(
+        'El servidor no devolvió el token JWT.'
+      )
+    }
+
+    localStorage.setItem('token', token)
     localStorage.setItem(
       'usuario',
       JSON.stringify(datosUsuario)
     )
 
-    console.log('USUARIO GUARDADO:', datosUsuario)
-    console.log('ROL:', datosUsuario.rol)
-
     navigate('/dashboard')
-
   } catch (error) {
-    console.error(
-      'Error al iniciar sesión:',
-      error
-    )
+    localStorage.removeItem('token')
+    localStorage.removeItem('usuario')
 
-    setError(
-      error.message ||
-      'Error al iniciar sesión'
-    )
-
+    console.error('Error al iniciar sesión:', error)
+    setError(error.message || 'Error al iniciar sesión')
   } finally {
     setLoading(false)
   }
 }
+
   return (
     <div className="login-page">
       <div className="login-background-shape shape-one"></div>

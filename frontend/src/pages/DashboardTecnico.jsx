@@ -92,16 +92,6 @@ function DashboardTecnico() {
           <button
             className="tech-menu"
             onClick={() =>
-              navigate('/clientes')
-            }
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="tech-menu"
-            onClick={() =>
               navigate('/repuestos')
             }
           >

@@ -9,4 +9,5 @@ import org.springframework.stereotype.Repository;
 public interface PedidoRepository extends JpaRepository<Pedido, Long> {
 
     Optional<Pedido> findByCotizacionId(Long cotizacionId);
+    Optional<Pedido> findByCotizacion_Reparacion_Id(Long reparacionId);
 }

@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
+import com.proyecto.clases.pedido.Pedido;
 import com.proyecto.clases.pedido.PedidoRepository;
 import com.proyecto.clases.reparacion.EstadoReparacion;
 import com.proyecto.clases.reparacion.Reparacion;
@@ -115,10 +116,34 @@ public class CotizacionService {
     private CotizacionResponse responder(Long id, boolean aprobada) {
         Cotizacion cotizacion = getOrThrow(id);
         verificarPendiente(cotizacion, "responder");
+
+        LocalDateTime ahora = LocalDateTime.now();
         cotizacion.setAprobada(aprobada);
-        cotizacion.setFechaRespuesta(LocalDateTime.now());
-        cotizacion.getReparacion()
-                .setEstado(aprobada ? EstadoReparacion.EN_REPARACION : EstadoReparacion.RECHAZADO);
+        cotizacion.setFechaRespuesta(ahora);
+
+        Reparacion reparacion = cotizacion.getReparacion();
+        reparacion.setEstado(
+                aprobada ? EstadoReparacion.EN_REPARACION : EstadoReparacion.RECHAZADO);
+
+        if (aprobada) {
+            // Al aprobar la cotización se genera automáticamente una orden para el cliente.
+            // La restricción única en pedido.cotizacion_id y esta comprobación evitan duplicados.
+            if (pedidoRepository.findByCotizacionId(cotizacion.getId()).isEmpty()) {
+                Pedido pedido = new Pedido();
+                pedido.setCliente(reparacion.getEquipo().getCliente());
+                pedido.setCotizacion(cotizacion);
+                pedido.setEstado(Pedido.EstadoPedido.PROCESANDO);
+                pedido.setTotal(cotizacion.getTotal() != null
+                        ? cotizacion.getTotal()
+                        : BigDecimal.ZERO);
+                pedido.setFechaPedido(ahora);
+                pedido.setFechaActualizacion(ahora);
+                pedido.setObservaciones(
+                        "Orden creada automáticamente al aprobar la cotización #" + cotizacion.getId());
+                pedidoRepository.save(pedido);
+            }
+        }
+
         return toResponse(cotizacion);
     }
 

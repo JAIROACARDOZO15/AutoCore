@@ -16,6 +16,8 @@ import com.proyecto.clases.repuesto.Repuesto;
 import com.proyecto.clases.repuesto.RepuestoRepository;
 import com.proyecto.clases.usuario.Tecnico;
 import com.proyecto.clases.usuario.TecnicoRepository;
+import com.proyecto.clases.pedido.Pedido;
+import com.proyecto.clases.pedido.PedidoRepository;
 
 @Service
 @Transactional
@@ -33,14 +35,21 @@ public class ReparacionService {
     private final EquipoRepository equipoRepository;
     private final TecnicoRepository tecnicoRepository;
     private final RepuestoRepository repuestoRepository;
+    private final PedidoRepository pedidoRepository;
 
-    public ReparacionService(ReparacionRepository repository, EquipoRepository equipoRepository,
-            TecnicoRepository tecnicoRepository, RepuestoRepository repuestoRepository) {
-        this.repository = repository;
-        this.equipoRepository = equipoRepository;
-        this.tecnicoRepository = tecnicoRepository;
-        this.repuestoRepository = repuestoRepository;
-    }
+    public ReparacionService(
+        ReparacionRepository repository,
+        EquipoRepository equipoRepository,
+        TecnicoRepository tecnicoRepository,
+        RepuestoRepository repuestoRepository,
+        PedidoRepository pedidoRepository) {
+
+    this.repository = repository;
+    this.equipoRepository = equipoRepository;
+    this.tecnicoRepository = tecnicoRepository;
+    this.repuestoRepository = repuestoRepository;
+    this.pedidoRepository = pedidoRepository;
+}
 
     @Transactional(readOnly = true)
     public List<ReparacionResponse> findAll(EstadoReparacion estado, Long tecnicoId, Long clienteId) {
@@ -81,24 +90,44 @@ public class ReparacionService {
         return toResponse(reparacion);
     }
 
-    public ReparacionResponse cambiarEstado(Long id, CambiarEstadoRequest request) {
-        Reparacion reparacion = getOrThrow(id);
-        EstadoReparacion actual = reparacion.getEstado();
-        EstadoReparacion nuevo = request.estado();
+public ReparacionResponse cambiarEstado(
+        Long id,
+        CambiarEstadoRequest request) {
 
-        if (AVANCE_MANUAL.get(actual) != nuevo) {
-            throw new BadRequestException(
-                    "Transicion no permitida: " + actual + " -> " + nuevo + ". " + ayuda(actual));
-        }
-        if (nuevo == EstadoReparacion.EN_DIAGNOSTICO && reparacion.getTecnico() == null) {
-            throw new BadRequestException("Asigne un tecnico antes de iniciar el diagnostico");
-        }
-        if (nuevo == EstadoReparacion.ENTREGADO) {
-            reparacion.setFechaEntrega(LocalDateTime.now());
-        }
-        reparacion.setEstado(nuevo);
-        return toResponse(reparacion);
+    Reparacion reparacion = getOrThrow(id);
+    EstadoReparacion actual = reparacion.getEstado();
+    EstadoReparacion nuevo = request.estado();
+
+    if (AVANCE_MANUAL.get(actual) != nuevo) {
+        throw new BadRequestException(
+                "Transicion no permitida: " + actual + " -> " + nuevo
+                        + ". " + ayuda(actual));
     }
+
+    if (nuevo == EstadoReparacion.EN_DIAGNOSTICO
+            && reparacion.getTecnico() == null) {
+        throw new BadRequestException(
+                "Asigne un tecnico antes de iniciar el diagnostico");
+    }
+
+    if (nuevo == EstadoReparacion.ENTREGADO) {
+        reparacion.setFechaEntrega(LocalDateTime.now());
+
+        pedidoRepository
+                .findByCotizacion_Reparacion_Id(reparacion.getId())
+                .ifPresent(pedido -> {
+                    pedido.setEstado(Pedido.EstadoPedido.COMPLETADO);
+                    pedido.setFechaActualizacion(LocalDateTime.now());
+                    pedido.setObservaciones(
+                            "Vehiculo entregado al cliente.");
+                });
+    }
+
+    reparacion.setEstado(nuevo);
+
+    return toResponse(reparacion);
+}
+
 
     public ReparacionResponse registrarDiagnostico(Long id, DiagnosticoRequest request) {
         Reparacion reparacion = getOrThrow(id);

@@ -13,21 +13,27 @@ import org.springframework.transaction.annotation.Transactional;
 import com.proyecto.clases.cliente.ClienteRepository;
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
+import com.proyecto.clases.security.JwtService;
 
 @Service
 @Transactional
 public class UsuarioService implements IUsuarioService {
 
-    private final UsuarioRepository repository;
-    private final TecnicoRepository tecnicoRepository;
-    private final ClienteRepository clienteRepository;
+private final UsuarioRepository repository;
+private final TecnicoRepository tecnicoRepository;
+private final ClienteRepository clienteRepository;
+private final JwtService jwtService;
 
-    public UsuarioService(UsuarioRepository repository, TecnicoRepository tecnicoRepository,
-            ClienteRepository clienteRepository) {
-        this.repository = repository;
-        this.tecnicoRepository = tecnicoRepository;
-        this.clienteRepository = clienteRepository;
-    }
+public UsuarioService(
+        UsuarioRepository repository,
+        TecnicoRepository tecnicoRepository,
+        ClienteRepository clienteRepository,
+        JwtService jwtService) {
+    this.repository = repository;
+    this.tecnicoRepository = tecnicoRepository;
+    this.clienteRepository = clienteRepository;
+    this.jwtService = jwtService;
+}
 
     @Override
     @Transactional(readOnly = true)
@@ -100,10 +106,13 @@ public class UsuarioService implements IUsuarioService {
                 response.put("statusCode", HttpStatus.NOT_FOUND.value());
                 return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
             }
-            response.put("Usuario", toResponse(usuario));
-            response.put("Mensaje", "Datos correctos");
-            response.put("statusCode", HttpStatus.OK.value());
-            return new ResponseEntity<>(response, HttpStatus.OK);
+
+response.put("Usuario", toResponse(usuario));
+response.put("token", jwtService.generarToken(usuario));
+response.put("Mensaje", "Datos correctos");
+response.put("statusCode", HttpStatus.OK.value());
+return new ResponseEntity<>(response, HttpStatus.OK);
+
         } catch (Exception e) {
             response.put("Usuario", null);
             response.put("Mensaje", "Ha ocurrido un error");

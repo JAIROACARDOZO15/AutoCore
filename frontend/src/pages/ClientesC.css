@@ -1179,3 +1179,161 @@
   }
 
 }
+
+
+/* =========================================
+   BARRA LATERAL UNIFICADA CON DASHBOARD
+========================================= */
+
+.clientes-page .sidebar {
+  width: 255px;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 100;
+  background:
+    radial-gradient(
+      circle at 30% 10%,
+      rgba(23, 105, 224, 0.18),
+      transparent 30%
+    ),
+    linear-gradient(160deg, #0b1f3a 0%, #07172d 100%);
+  color: white;
+  box-shadow: 8px 0 30px rgba(11, 31, 58, 0.08);
+}
+
+.clientes-page .sidebar-logo {
+  height: 100px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 25px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.clientes-page .sidebar-logo img {
+  width: 48px;
+  height: 48px;
+  object-fit: contain;
+}
+
+.clientes-page .sidebar-logo span {
+  color: white;
+  font-size: 23px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+}
+
+.clientes-page .sidebar-menu {
+  flex: 1;
+  min-height: 0;
+  padding: 25px 15px;
+  overflow-y: auto;
+}
+
+.clientes-page .menu-title {
+  margin: 0 12px 12px;
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+}
+
+.clientes-page .menu-title-bottom {
+  margin-top: 28px;
+}
+
+.clientes-page .menu-item {
+  width: 100%;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 5px;
+  padding: 0 14px;
+  border: none;
+  border-radius: 10px;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.clientes-page .menu-item span {
+  width: 24px;
+  flex-shrink: 0;
+  text-align: center;
+  font-size: 18px;
+}
+
+.clientes-page .menu-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  color: white;
+  transform: translateX(2px);
+}
+
+.clientes-page .menu-item.active {
+  background: linear-gradient(135deg, #1769e0, #0d58c7);
+  color: white;
+  box-shadow: 0 8px 20px rgba(23, 105, 224, 0.25);
+}
+
+.clientes-page .logout-button {
+  min-height: 60px;
+  flex-shrink: 0;
+  margin: 0 15px 20px;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  padding: 0 14px;
+  border: none;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.65);
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  text-align: left;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.clientes-page .logout-button span {
+  font-size: 20px;
+}
+
+.clientes-page .logout-button:hover {
+  color: #ff7777;
+}
+
+/* Evitar que el contenido quede debajo de la barra lateral */
+
+.clientes-page .clientes-main {
+  width: calc(100% - 255px);
+  margin-left: 255px;
+  box-sizing: border-box;
+}
+
+@media (max-width: 768px) {
+  .clientes-page .sidebar {
+    width: 220px;
+  }
+
+  .clientes-page .clientes-main {
+    width: calc(100% - 220px);
+    margin-left: 220px;
+    padding: 24px 18px;
+  }
+}

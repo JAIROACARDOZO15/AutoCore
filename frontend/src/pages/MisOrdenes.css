@@ -1,0 +1,108 @@
+/* Estilos exclusivos de Mis órdenes: no alteran las demás pantallas */
+.orders-page .orders-main {
+  background:
+    radial-gradient(circle at 95% 0%, rgba(23, 105, 224, .06), transparent 28%),
+    #f4f7fb;
+}
+.orders-page .orders-header { margin-bottom: 25px; }
+.orders-hero {
+  position: relative; display: flex; align-items: center; justify-content: space-between;
+  min-height: 220px; overflow: hidden; padding: 30px 38px; margin-bottom: 22px;
+  border-radius: 22px; color: #fff;
+  background: radial-gradient(circle at 78% 20%, rgba(65, 153, 255, .36), transparent 30%),
+    linear-gradient(115deg, #0b1f3a 0%, #103a6b 58%, #1769e0 100%);
+  box-shadow: 0 18px 38px rgba(11,31,58,.15);
+}
+.orders-hero-copy { position: relative; z-index: 2; max-width: 620px; }
+.orders-kicker { display: inline-block; margin-bottom: 12px; color: #b9d7ff; font-size: 10px; font-weight: 800; letter-spacing: 1.7px; }
+.orders-hero h2 { margin: 0; color: #fff; font-size: clamp(23px, 2.4vw, 32px); letter-spacing: -.7px; line-height: 1.2; }
+.orders-hero p { max-width: 480px; margin: 10px 0 18px; color: rgba(255,255,255,.77); font-size: 13px; line-height: 1.7; }
+.orders-hero-copy button, .orders-message button {
+  display: inline-flex; align-items: center; gap: 12px; border: 0; border-radius: 10px;
+  padding: 11px 15px; background: #fff; color: #145dc3; font: inherit; font-size: 12px;
+  font-weight: 800; cursor: pointer; transition: transform .18s ease, box-shadow .18s ease;
+}
+.orders-hero-copy button:hover, .orders-message button:hover { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(0,0,0,.12); }
+.orders-hero-car { position: relative; display: flex; flex: 0 0 235px; height: 170px; align-items: center; justify-content: center; flex-direction: column; }
+.orders-hero-car > span { position: relative; z-index: 1; font-size: 83px; filter: drop-shadow(0 14px 12px rgba(0,0,0,.25)); }
+.orders-hero-car small { position: relative; z-index: 1; margin-top: 2px; color: rgba(255,255,255,.75); font-size: 10px; letter-spacing: .7px; }
+.orders-orbit { position: absolute; width: 175px; height: 175px; border: 1px solid rgba(255,255,255,.17); border-radius: 50%; }
+.orders-orbit-one { transform: scaleX(1.3) rotate(-18deg); }
+.orders-orbit-two { width: 125px; height: 125px; border-style: dashed; }
+.orders-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 15px; margin-bottom: 24px; }
+.orders-stat { display: flex; align-items: center; gap: 13px; min-width: 0; padding: 18px 17px; border: 1px solid #e6ebf2; border-radius: 16px; background: #fff; box-shadow: 0 7px 20px rgba(11,31,58,.04); }
+.orders-stat-icon { display: flex; flex: 0 0 43px; width: 43px; height: 43px; align-items: center; justify-content: center; border-radius: 13px; font-size: 19px; font-weight: 800; }
+.orders-stat-icon.blue { color: #1769e0; background: #edf5ff; }
+.orders-stat-icon.amber { color: #b97811; background: #fff4dc; }
+.orders-stat-icon.green { color: #168557; background: #e7f8ef; }
+.orders-stat-icon.navy { color: #173e70; background: #eaf0f8; }
+.orders-stat span { display: block; color: #78879a; font-size: 10px; line-height: 1.4; }
+.orders-stat strong { display: block; margin-top: 4px; color: #102542; font-size: clamp(17px, 1.7vw, 24px); line-height: 1.2; overflow-wrap: anywhere; }
+.orders-stat small { display: block; margin-top: 5px; color: #a0aaba; font-size: 9px; line-height: 1.4; }
+.orders-panel { overflow: hidden; }
+.orders-panel-header { align-items: center; }
+.orders-panel-header h2 { margin: 0; }
+.orders-panel-header p { margin: 6px 0 0; color: #8794a6; font-size: 11px; }
+.orders-panel-header > strong { display: inline-flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; border-radius: 11px; background: #edf5ff; color: #1769e0; font-size: 14px; }
+.orders-message { padding: 48px 24px; text-align: center; }
+.orders-empty-icon { display: flex; align-items: center; justify-content: center; width: 76px; height: 76px; margin: 0 auto 16px; border-radius: 23px; background: linear-gradient(145deg, #edf5ff, #e0edff); font-size: 35px; }
+.orders-message h3 { margin: 0 0 8px; color: #172b4d; font-size: 18px; }
+.orders-message p { max-width: 490px; margin: 0 auto 18px; color: #8391a4; font-size: 12px; line-height: 1.7; }
+.orders-message button { background: #1769e0; color: #fff; }
+.orders-error .orders-empty-icon { background: #feeceb; color: #b42318; font-size: 30px; font-weight: 800; }
+.orders-spinner { width: 34px; height: 34px; margin: 0 auto 17px; border: 3px solid #e1edff; border-top-color: #1769e0; border-radius: 50%; animation: orders-spin .8s linear infinite; }
+@keyframes orders-spin { to { transform: rotate(360deg); } }
+.orders-list { padding: 18px; display: grid; gap: 16px; }
+.order-card { min-width: 0; padding: 22px; border: 1px solid #e5ebf3; border-radius: 17px; background: linear-gradient(180deg, #fff, #fcfdff); box-shadow: 0 6px 18px rgba(11,31,58,.035); transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease; }
+.order-card:hover { transform: translateY(-2px); border-color: #cbdcf5; box-shadow: 0 12px 26px rgba(11,31,58,.075); }
+.order-card-top { display: flex; align-items: center; justify-content: space-between; gap: 15px; padding-bottom: 18px; border-bottom: 1px solid #edf1f6; }
+.order-number-wrap { display: flex; align-items: center; gap: 14px; min-width: 0; }
+.order-car-art { display: flex; flex: 0 0 62px; width: 62px; height: 62px; align-items: center; justify-content: center; border-radius: 17px; background: radial-gradient(circle at 30% 20%, #fff, transparent 50%), linear-gradient(145deg, #edf5ff, #dceaff); }
+.order-car-art span { font-size: 31px; filter: drop-shadow(0 4px 3px rgba(23,105,224,.12)); }
+.order-overline { display: block; margin-bottom: 4px; color: #1769e0; font-size: 9px; font-weight: 800; letter-spacing: 1.25px; }
+.order-number-wrap h3 { margin: 0; color: #102542; font-size: 17px; }
+.order-number-wrap p { margin: 5px 0 0; color: #7b899c; font-size: 11px; }
+.order-status { display: inline-flex; align-items: center; gap: 7px; flex-shrink: 0; padding: 8px 11px; border-radius: 30px; font-size: 10px; font-weight: 800; }
+.order-status i { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+.order-status.progress { color: #1759b5; background: #e8f1ff; }
+.order-status.pending { color: #925b09; background: #fff4d8; }
+.order-status.done { color: #137548; background: #e2f7eb; }
+.order-status.cancelled { color: #b42318; background: #feeceb; }
+.order-details-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; padding: 19px 0; }
+.order-detail { display: flex; align-items: center; gap: 11px; min-width: 0; padding: 12px; border: 1px solid #edf1f6; border-radius: 12px; background: #fbfcfe; }
+.order-detail-icon { display: flex; flex: 0 0 36px; width: 36px; height: 36px; align-items: center; justify-content: center; border-radius: 10px; background: #edf5ff; font-size: 16px; }
+.order-detail small { display: block; margin-bottom: 5px; color: #8794a6; font-size: 10px; }
+.order-detail strong { display: block; color: #293b52; font-size: 12px; line-height: 1.45; overflow-wrap: anywhere; }
+.order-detail strong.order-price { color: #145dc3; font-size: 15px; }
+.order-progress { display: flex; align-items: flex-start; padding: 17px 8px 8px; border-top: 1px solid #edf1f6; }
+.order-progress-step { display: flex; flex: 0 0 auto; align-items: center; flex-direction: column; gap: 7px; width: 94px; text-align: center; color: #a1adbc; }
+.order-progress-step > span { display: flex; align-items: center; justify-content: center; width: 29px; height: 29px; border: 2px solid #dce3ec; border-radius: 50%; background: #fff; font-size: 11px; font-weight: 800; }
+.order-progress-step small { font-size: 9px; line-height: 1.4; }
+.order-progress-step.is-done { color: #168557; }
+.order-progress-step.is-done > span { border-color: #168557; background: #e7f8ef; }
+.order-progress-step.is-current { color: #1769e0; }
+.order-progress-step.is-current > span { border-color: #1769e0; background: #edf5ff; box-shadow: 0 0 0 4px #edf5ff; }
+.order-progress-line { height: 2px; flex: 1; margin-top: 14px; background: #e2e8f0; }
+.order-progress-line.is-done { background: #168557; }
+.order-notes { margin-top: 12px; padding: 13px 15px; border-radius: 11px; background: #f5f8fc; }
+.order-notes strong { color: #526174; font-size: 10px; }
+.order-notes p { margin: 5px 0 0; color: #6d7c90; font-size: 11px; line-height: 1.6; overflow-wrap: anywhere; }
+.order-card-footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; margin-top: 16px; padding-top: 12px; border-top: 1px dashed #e4eaf2; color: #9aa6b5; font-size: 9px; }
+@media (max-width: 1150px) { .orders-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 800px) { .orders-hero { padding: 25px; } .orders-hero-car { flex-basis: 150px; } .orders-hero-car > span { font-size: 62px; } .orders-stat-total strong { font-size: 19px; } }
+@media (max-width: 650px) {
+  .orders-hero { min-height: 0; padding: 23px; }
+  .orders-hero-car { display: none; }
+  .orders-stats { grid-template-columns: 1fr; gap: 10px; }
+  .orders-stat { padding: 15px; }
+  .orders-panel-header { align-items: flex-start; }
+  .orders-list { padding: 11px; }
+  .order-card { padding: 15px; }
+  .order-card-top { align-items: flex-start; flex-direction: column; }
+  .order-details-grid { grid-template-columns: 1fr; }
+  .order-progress { padding-right: 0; padding-left: 0; }
+  .order-progress-step { width: 75px; }
+  .order-progress-step small { font-size: 8px; }
+  .order-card-footer { flex-direction: column; }
+}
+@media (prefers-reduced-motion: reduce) { .orders-spinner { animation: none; } .order-card, .orders-hero-copy button, .orders-message button { transition: none; } }

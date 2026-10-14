@@ -1,13 +1,24 @@
-
 const API_URL = 'http://localhost:8080/api'
 
 async function request(endpoint, options = {}) {
+  const token = localStorage.getItem('token')
+
+  const esLogin =
+    endpoint === '/usuarios/login' ||
+    endpoint === '/usuarios/loginclient'
+
+  const headers = {
+    'Content-Type': 'application/json',
+    ...(options.headers || {}),
+  }
+
+  if (token && !esLogin) {
+    headers.Authorization = `Bearer ${token}`
+  }
+
   const respuesta = await fetch(`${API_URL}${endpoint}`, {
     ...options,
-    headers: {
-      'Content-Type': 'application/json',
-      ...(options.headers || {})
-    }
+    headers,
   })
 
   if (!respuesta.ok) {
@@ -20,8 +31,11 @@ async function request(endpoint, options = {}) {
         error.Mensaje ||
         error.error ||
         mensaje
-    } catch {
-      // La respuesta del servidor no contiene JSON.
+    } catch {}
+
+    if (respuesta.status === 401 && token && !esLogin) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('usuario')
     }
 
     throw new Error(mensaje)

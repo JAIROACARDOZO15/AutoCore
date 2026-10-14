@@ -843,3 +843,474 @@ body {
   }
 
 }
+
+/* ==========================================
+   MIS REPARACIONES - ESTILO MODERNO
+   Estos estilos solo afectan a esta pantalla.
+========================================== */
+
+.repairs-main {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(23, 105, 224, 0.045), transparent 28%),
+    #f4f7fb;
+}
+
+.repairs-main .client-header {
+  margin-bottom: 25px;
+}
+
+.repairs-main .client-header h1 {
+  letter-spacing: -0.7px;
+}
+
+.repairs-summary {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 18px;
+  margin: 0 0 24px;
+}
+
+.repairs-stat {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  min-width: 0;
+  padding: 21px 23px;
+  background: #fff;
+  border: 1px solid #e6ebf2;
+  border-radius: 17px;
+  box-shadow: 0 7px 22px rgba(11, 31, 58, 0.045);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.repairs-stat:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 28px rgba(11, 31, 58, 0.08);
+}
+
+.repairs-stat-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 49px;
+  width: 49px;
+  height: 49px;
+  border-radius: 14px;
+  background: linear-gradient(145deg, #edf5ff, #e4efff);
+  font-size: 22px;
+}
+
+.repairs-stat p {
+  margin: 0 0 5px;
+  color: #8190a4;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.repairs-stat strong {
+  display: block;
+  color: #102542;
+  font-size: 28px;
+  line-height: 1.1;
+  font-weight: 800;
+}
+
+.repairs-panel {
+  overflow: hidden;
+}
+
+.repairs-main .repairs-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 17px 24px;
+  border-bottom: 1px solid #edf1f6;
+}
+
+.repairs-main .repairs-actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 42px;
+  border-radius: 10px;
+  box-shadow: 0 6px 14px rgba(23, 100, 216, 0.16);
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+}
+
+.repairs-main .repairs-actions button:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 9px 18px rgba(23, 100, 216, 0.23);
+}
+
+.repairs-main .repairs-actions button:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+  box-shadow: none;
+}
+
+.repairs-main .repair-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 17px;
+  min-height: auto;
+  padding: 23px 25px;
+  border-bottom: 1px solid #edf1f6;
+  transition: background 0.2s ease;
+}
+
+.repairs-main .repair-card:last-child {
+  border-bottom: 0;
+}
+
+.repairs-main .repair-card:hover {
+  background: #fbfdff;
+}
+
+.repairs-main .repair-card .client-car-icon {
+  flex: 0 0 55px;
+  margin-top: 2px;
+  color: #1769e0;
+}
+
+.repairs-main .repair-card > div:last-child {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  flex: 1;
+}
+
+.repairs-main .repair-card strong {
+  color: #26384f;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.repairs-main .repair-card span:not(.repair-status) {
+  margin-top: 5px;
+}
+
+.repairs-main .repair-card small {
+  color: #718096;
+  font-size: 11px;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+
+.repair-status {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  max-width: 100%;
+  margin-top: 10px;
+  padding: 7px 11px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.repair-status-recibido,
+.repair-status-en_diagnostico,
+.repair-status-cotizacion_pendiente,
+.repair-status-esperando_aprobacion {
+  color: #925b09;
+  background: #fff4d8;
+}
+
+.repair-status-en_reparacion {
+  color: #1759b5;
+  background: #e8f1ff;
+}
+
+.repair-status-finalizada {
+  color: #137548;
+  background: #e2f7eb;
+}
+
+.repair-status-entregado {
+  color: #526174;
+  background: #edf1f5;
+}
+
+.repair-status-rechazado {
+  color: #b42318;
+  background: #feeceb;
+}
+
+.repair-status-sin_estado {
+  color: #526174;
+  background: #edf1f5;
+}
+
+.repairs-empty {
+  padding: 45px 24px;
+  text-align: center;
+}
+
+.repairs-empty-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 22px;
+  background: #edf5ff;
+  font-size: 34px;
+}
+
+.repairs-empty h3 {
+  margin: 0 0 8px;
+  color: #172b4d;
+  font-size: 18px;
+}
+
+.repairs-empty p {
+  max-width: 420px;
+  margin: 0 auto;
+  color: #8190a4;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.repairs-main .client-panel-header > strong {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 11px;
+  background: #edf5ff;
+  color: #1769e0;
+  font-size: 14px;
+}
+
+.repairs-modal-backdrop {
+  backdrop-filter: blur(5px);
+}
+
+.repairs-modal {
+  border: 1px solid rgba(255, 255, 255, 0.75);
+  box-shadow: 0 24px 70px rgba(4, 18, 39, 0.28);
+}
+
+.repairs-modal h2 {
+  margin-bottom: 0;
+  color: #102542;
+  letter-spacing: -0.4px;
+}
+
+.repairs-modal label {
+  display: block;
+  color: #34445b;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+
+.repairs-modal input,
+.repairs-modal select,
+.repairs-modal textarea {
+  transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+.repairs-modal input:focus,
+.repairs-modal select:focus,
+.repairs-modal textarea:focus {
+  outline: none;
+  border-color: #1769e0 !important;
+  box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.12);
+}
+
+.repairs-modal button {
+  transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+.repairs-modal button:hover:not(:disabled) {
+  transform: translateY(-1px);
+}
+
+.repairs-modal button:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@media (max-width: 950px) {
+  .repairs-summary {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .repairs-stat:last-child {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (max-width: 650px) {
+  .repairs-summary {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .repairs-stat:last-child {
+    grid-column: auto;
+  }
+
+  .repairs-stat {
+    padding: 17px;
+  }
+
+  .repairs-main .repairs-actions {
+    align-items: flex-start;
+    flex-direction: column;
+    padding: 16px;
+  }
+
+  .repairs-main .repair-card {
+    padding: 18px 15px;
+    gap: 12px;
+  }
+
+  .repairs-main .repair-card .client-car-icon {
+    flex-basis: 48px;
+    width: 48px;
+    height: 48px;
+    font-size: 23px;
+  }
+
+  .repairs-empty {
+    padding: 35px 18px;
+  }
+}
+
+
+/* =========================================================
+   MIS VEHICULOS - TARJETAS MODERNAS
+   ========================================================= */
+.vehicles-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 440px), 1fr));
+  gap: 20px;
+  padding: 22px 24px 26px;
+}
+.vehicle-card {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #e4eaf2;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 8px 24px rgba(11, 31, 58, .055);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.vehicle-card:hover {
+  transform: translateY(-3px);
+  border-color: #cbdcf5;
+  box-shadow: 0 15px 32px rgba(11, 31, 58, .10);
+}
+.vehicle-brand-art {
+  position: relative;
+  display: flex;
+  min-height: 145px;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  gap: 7px;
+  overflow: hidden;
+  color: white;
+  background: radial-gradient(circle at 50% 15%, rgba(255,255,255,.2), transparent 42%), linear-gradient(135deg, #102542, #1769e0);
+}
+.vehicle-brand-art::before,
+.vehicle-brand-art::after {
+  position: absolute;
+  content: "";
+  width: 170px;
+  height: 170px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%;
+}
+.vehicle-brand-art::before { transform: translate(-50%, 42%); left: 50%; top: 0; }
+.vehicle-brand-art::after { width: 230px; height: 230px; transform: translate(35%, -40%); right: 0; top: 0; }
+.vehicle-brand-mark {
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border: 1px solid rgba(255,255,255,.55);
+  border-radius: 50%;
+  background: rgba(255,255,255,.13);
+  box-shadow: 0 8px 24px rgba(0,0,0,.12), inset 0 0 0 5px rgba(255,255,255,.06);
+  font-size: 22px;
+  font-weight: 900;
+  letter-spacing: 1px;
+}
+.vehicle-brand-caption {
+  z-index: 1;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+.vehicle-brand-mazda { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #20252d, #555e6c); }
+.vehicle-brand-chevrolet { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.25), transparent 40%), linear-gradient(135deg, #56300c, #d58b1d); }
+.vehicle-brand-toyota { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #681e27, #c73742); }
+.vehicle-brand-renault { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #18345b, #3975bd); }
+.vehicle-brand-nissan { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #202a36, #667585); }
+.vehicle-brand-hyundai { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #003e68, #1683ba); }
+.vehicle-brand-kia { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #2c2632, #8a3048); }
+.vehicle-brand-ford { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #092c5a, #1769e0); }
+.vehicle-brand-volkswagen { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #123a5b, #3d83ad); }
+.vehicle-brand-suzuki { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #6d1019, #c3323c); }
+.vehicle-brand-bmw { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #152b43, #3f80b7); }
+.vehicle-brand-mercedes-benz { background: radial-gradient(circle at 50% 10%, rgba(255,255,255,.2), transparent 40%), linear-gradient(135deg, #1b222b, #65717d); }
+.vehicle-brand-generica { background: linear-gradient(135deg, #102542, #1769e0); }
+.vehicle-card-content { padding: 21px 22px 18px; }
+.vehicle-card-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.vehicle-eyebrow { display: block; margin-bottom: 7px; color: #1769e0; font-size: 9px; font-weight: 800; letter-spacing: 1.35px; }
+.vehicle-card-heading h3 { margin: 0; color: #102542; font-size: 20px; line-height: 1.3; overflow-wrap: anywhere; }
+.vehicle-id { flex-shrink: 0; padding: 6px 9px; border-radius: 9px; color: #607087; background: #f1f5f9; font-size: 11px; font-weight: 700; }
+.vehicle-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 11px; margin-top: 19px; }
+.vehicle-detail { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 12px; border: 1px solid #edf1f6; border-radius: 12px; background: #fbfcfe; }
+.vehicle-detail-icon { display: flex; flex: 0 0 35px; width: 35px; height: 35px; align-items: center; justify-content: center; border-radius: 10px; background: #edf5ff; font-size: 16px; }
+.vehicle-detail small { display: block; margin-bottom: 4px; color: #8794a6; font-size: 10px; }
+.vehicle-detail strong { display: block; color: #293b52; font-size: 12px; overflow-wrap: anywhere; }
+.vehicle-description { margin: 14px 0 0; color: #6e7e92; font-size: 12px; line-height: 1.6; overflow-wrap: anywhere; }
+.vehicle-card-actions { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-top: 19px; padding-top: 15px; border-top: 1px solid #edf1f6; }
+.vehicle-record-label { display: flex; align-items: center; gap: 7px; color: #7b899a; font-size: 10px; font-weight: 600; }
+.vehicle-record-dot { width: 7px; height: 7px; border-radius: 50%; background: #1aa36f; box-shadow: 0 0 0 3px #e5f8ef; }
+.vehicle-edit-button { display: inline-flex; align-items: center; gap: 7px; border: 1px solid #1769e0; border-radius: 9px; padding: 9px 12px; color: #1769e0; background: #fff; font-family: inherit; font-size: 12px; font-weight: 700; cursor: pointer; transition: color .18s ease, background .18s ease, transform .18s ease; }
+.vehicle-edit-button:hover { color: #fff; background: #1769e0; transform: translateY(-1px); }
+.vehicle-modal-backdrop { backdrop-filter: blur(5px); }
+.vehicle-modal { border: 1px solid #e5ebf3; box-shadow: 0 24px 70px rgba(4,18,39,.28); }
+.vehicle-modal label { color: #34445b; font-size: 12px; font-weight: 700; line-height: 1.6; }
+.vehicle-modal input:focus, .vehicle-modal select:focus, .vehicle-modal textarea:focus { outline: none; border-color: #1769e0 !important; box-shadow: 0 0 0 3px rgba(23,105,224,.12); }
+
+@media (max-width: 650px) {
+  .vehicles-grid { grid-template-columns: 1fr; padding: 15px; gap: 15px; }
+  .vehicle-brand-art { min-height: 120px; }
+  .vehicle-card-content { padding: 17px; }
+  .vehicle-card-heading h3 { font-size: 18px; }
+  .vehicle-details { grid-template-columns: 1fr; }
+  .vehicle-card-actions { align-items: flex-start; flex-direction: column; }
+  .vehicle-edit-button { width: 100%; justify-content: center; }
+}
+
+/* Estados de aprobación/rechazo para Mis reparaciones */
+.repair-status-aprobado,
+.repair-status-aprobada,
+.repair-status-aceptado,
+.repair-status-aceptada {
+  color: #137548;
+  background: #e2f7eb;
+  border: 1px solid #b8ebce;
+}
+.repair-status-rechazado,
+.repair-status-rechazada {
+  color: #b42318;
+  background: #feeceb;
+  border: 1px solid #f8c9c5;
+}

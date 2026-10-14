@@ -431,122 +431,97 @@ function Clientes() {
           SIDEBAR
       ========================= */}
 
-      <aside className="clientes-sidebar">
 
-        <div className="clientes-logo">
+      <aside className="sidebar">
 
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-
+        <div className="sidebar-logo">
+          <img src="/logo.png" alt="AutoCore" />
+          <span>AutoCore</span>
         </div>
 
-        <nav className="clientes-menu">
+        <nav className="sidebar-menu">
 
-          <p className="clientes-menu-title">
-            MENÚ PRINCIPAL
+          <p className="menu-title">
+            ADMINISTRACIÓN
           </p>
 
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/dashboard')
-            }
+            className="menu-item"
+            onClick={() => navigate('/dashboard')}
           >
             <span>⌂</span>
             Inicio
           </button>
 
+          <button className="menu-item active">
+            <span>👥</span>
+            Clientes
+          </button>
+
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/inventario')
-            }
+            className="menu-item"
+            onClick={() => navigate('/repuestos')}
           >
-            <span>▣</span>
+            <span>⚙️</span>
+            Repuestos
+          </button>
+
+          <button
+            className="menu-item"
+            onClick={() => navigate('/inventario')}
+          >
+            <span>📦</span>
             Inventario
           </button>
 
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/reparaciones')
-            }
+            className="menu-item"
+            onClick={() => navigate('/reparaciones')}
           >
             <span>🔧</span>
             Reparaciones
           </button>
 
           <button
-            className="clientes-menu-item active"
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/ordenes')
-            }
+            className="menu-item"
+            onClick={() => navigate('/ordenes')}
           >
             <span>▤</span>
             Órdenes
           </button>
 
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/ventas')
-            }
+            className="menu-item"
+            onClick={() => navigate('/ventas')}
           >
             <span>▥</span>
             Ventas
           </button>
 
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/reportes')
-            }
+            className="menu-item"
+            onClick={() => navigate('/reportes')}
           >
             <span>▦</span>
             Reportes
           </button>
 
-          <p className="clientes-menu-title clientes-system">
+          <p className="menu-title menu-title-bottom">
             SISTEMA
           </p>
 
           <button
-            className="clientes-menu-item"
-            onClick={() =>
-              navigate('/configuracion')
-            }
+            className="menu-item"
+            onClick={() => navigate('/configuracion')}
           >
-            <span>⚙</span>
+            <span>⚙️</span>
             Configuración
           </button>
 
         </nav>
 
         <button
-          className="clientes-logout"
+          className="logout-button"
           onClick={cerrarSesion}
         >
           <span>↪</span>
@@ -554,6 +529,7 @@ function Clientes() {
         </button>
 
       </aside>
+
 
       {/* =========================
           MAIN

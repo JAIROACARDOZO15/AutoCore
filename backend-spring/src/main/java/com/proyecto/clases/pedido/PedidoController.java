@@ -32,30 +32,40 @@ public class PedidoController {
     }
 
     // Obtener todos los pedidos
-    @GetMapping
-    public ResponseEntity<List<Pedido>> findAll() {
-        return ResponseEntity.ok(service.findAll());
-    }
 
-    // Obtener un pedido por ID
-    @GetMapping("/{id}")
-    public ResponseEntity<Pedido> findById(
-            @PathVariable Long id) {
+@GetMapping
+public ResponseEntity<List<PedidoResponse>> findAll() {
+    List<PedidoResponse> pedidos = service.findAll()
+            .stream()
+            .map(PedidoResponse::from)
+            .toList();
 
-        return ResponseEntity.ok(
-            service.findById(id)
-        );
-    }
+    return ResponseEntity.ok(pedidos);
+}
+
+@GetMapping("/{id}")
+public ResponseEntity<PedidoResponse> findById(
+        @PathVariable Long id) {
+
+    return ResponseEntity.ok(
+            PedidoResponse.from(service.findById(id))
+    );
+}
+
 
     // Obtener pedido por cotización
-    @GetMapping("/cotizacion/{cotizacionId}")
-    public ResponseEntity<Pedido> findByCotizacion(
-            @PathVariable Long cotizacionId) {
 
-        return ResponseEntity.ok(
-            service.findByCotizacionId(cotizacionId)
-        );
-    }
+@GetMapping("/cotizacion/{cotizacionId}")
+public ResponseEntity<PedidoResponse> findByCotizacion(
+        @PathVariable Long cotizacionId) {
+
+    return ResponseEntity.ok(
+            PedidoResponse.from(
+                    service.findByCotizacionId(cotizacionId)
+            )
+    );
+}
+
 
     // Crear pedido
     @PostMapping

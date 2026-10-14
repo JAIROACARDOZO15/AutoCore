@@ -1,0 +1,130 @@
+/* Estilos aislados para Mis cotizaciones */
+.quotes-main {
+  background: radial-gradient(circle at 92% 0%, rgba(23,105,224,.06), transparent 28%), #f4f7fb;
+}
+.quotes-main .client-header { margin-bottom: 24px; }
+.quotes-main .client-header h1 { letter-spacing: -.7px; }
+.quotes-intro {
+  display:flex; align-items:center; gap:20px; padding:25px 28px; margin-bottom:22px;
+  color:#fff; border-radius:18px; background:linear-gradient(115deg,#0b1f3a,#124b91 68%,#1769e0);
+  box-shadow:0 12px 28px rgba(11,31,58,.12);
+}
+.quotes-intro-icon {
+  flex:0 0 58px; width:58px; height:58px; display:grid; place-items:center; border-radius:16px;
+  background:rgba(255,255,255,.13); border:1px solid rgba(255,255,255,.18); font-size:28px;
+}
+.quotes-intro span { font-size:9px; letter-spacing:1.5px; font-weight:800; color:#c7ddff; }
+.quotes-intro h2 { margin:5px 0 7px; font-size:22px; }
+.quotes-intro p { max-width:850px; margin:0; color:rgba(255,255,255,.82); font-size:12px; line-height:1.7; }
+.quotes-summary { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-bottom:23px; }
+.quotes-summary article {
+  display:flex; align-items:center; gap:13px; padding:18px 20px; background:#fff; border:1px solid #e5ebf3;
+  border-radius:15px; box-shadow:0 6px 18px rgba(11,31,58,.035);
+}
+.quotes-summary-icon { width:44px; height:44px; flex:0 0 44px; display:grid; place-items:center; border-radius:13px; font-size:23px; font-weight:800; }
+.quotes-summary-icon.pending { color:#a76a08; background:#fff4d8; }
+.quotes-summary-icon.approved { color:#167548; background:#e3f8ec; }
+.quotes-summary-icon.rejected { color:#b42318; background:#feeceb; }
+.quotes-summary small { display:block; color:#718096; font-size:11px; }
+.quotes-summary strong { display:block; margin-top:4px; color:#102542; font-size:25px; line-height:1.1; }
+.quotes-alert { padding:13px 16px; margin-bottom:16px; border-radius:11px; font-size:13px; line-height:1.5; }
+.quotes-alert.success { color:#17643d; background:#e8f8ef; border:1px solid #b9e8cb; }
+.quotes-alert.error { color:#a61b1b; background:#fff0f0; border:1px solid #f2c6c6; }
+.quotes-alert button { float:right; border:0; background:transparent; color:inherit; text-decoration:underline; cursor:pointer; }
+.quotes-panel { overflow:hidden; }
+.quotes-list { display:grid; gap:0; }
+.quote-card { padding:23px 25px; border-bottom:1px solid #edf1f6; transition:background .2s ease; }
+.quote-card:last-child { border-bottom:0; }
+.quote-card:hover { background:#fcfdff; }
+.quote-card-top { display:flex; align-items:center; gap:15px; }
+.quote-document-icon { display:grid; place-items:center; width:52px; height:52px; flex:0 0 52px; border-radius:15px; color:#1769e0; background:#edf5ff; font-size:24px; }
+.quote-card-title { min-width:0; flex:1; }
+.quote-eyebrow { color:#1769e0; font-size:9px; font-weight:800; letter-spacing:1.3px; }
+.quote-card-title h3 { margin:5px 0 3px; color:#172b4d; font-size:16px; }
+.quote-card-title small { color:#8290a3; font-size:11px; }
+.quote-status { display:inline-flex; align-items:center; gap:7px; padding:7px 11px; border-radius:30px; font-size:10px; font-weight:800; white-space:nowrap; }
+.quote-status i { width:7px; height:7px; display:inline-block; border-radius:50%; background:currentColor; }
+.quote-status.pendiente { color:#925b09; background:#fff4d8; }
+.quote-status.aprobada { color:#137548; background:#e2f7eb; }
+.quote-status.rechazada { color:#b42318; background:#feeceb; }
+.quote-card-total { display:flex; align-items:center; justify-content:space-between; gap:15px; margin:20px 0 14px 67px; padding:15px 17px; border:1px solid #e9eef5; border-radius:12px; background:#f8faff; }
+.quote-card-total small { display:block; margin-bottom:4px; color:#718096; font-size:11px; }
+.quote-card-total strong { color:#102542; font-size:23px; letter-spacing:-.4px; }
+.quote-pending-note,.quote-result-note { display:flex; flex-direction:column; gap:4px; margin-left:67px; padding:11px 13px; border-radius:10px; font-size:11px; line-height:1.5; }
+.quote-pending-note { color:#7c560d; background:#fff8e7; border:1px solid #f7e6b9; }
+.quote-result-note.approved { color:#17643d; background:#edf9f1; border:1px solid #c8ecd5; }
+.quote-result-note.rejected { color:#a61b1b; background:#fff1f0; border:1px solid #f3d0cd; }
+.quote-card-actions { display:flex; justify-content:flex-end; gap:9px; margin:15px 0 0 67px; }
+.quotes-button { display:inline-flex; align-items:center; justify-content:center; min-height:39px; padding:10px 14px; border-radius:9px; border:1px solid transparent; font:inherit; font-size:12px; font-weight:750; cursor:pointer; transition:transform .16s ease, box-shadow .16s ease, opacity .16s ease; }
+.quotes-button:hover:not(:disabled) { transform:translateY(-1px); }
+.quotes-button:disabled { opacity:.55; cursor:not-allowed; }
+.quotes-button.secondary { color:#24528c; background:#fff; border-color:#cbdcf4; }
+.quotes-button.approve { color:#fff; background:#16834a; box-shadow:0 5px 12px rgba(22,131,74,.15); }
+.quotes-button.reject { color:#b42318; background:#fff; border-color:#efb5b1; }
+.quote-processing { margin:10px 0 0 67px; color:#64748b; font-size:11px; }
+.quotes-empty { padding:46px 22px; text-align:center; color:#718096; }
+.quotes-empty-icon { display:grid; place-items:center; width:68px; height:68px; margin:0 auto 14px; border-radius:20px; background:#edf5ff; color:#1769e0; font-size:30px; }
+.quotes-empty h3 { margin:0 0 8px; color:#172b4d; font-size:17px; }
+.quotes-empty p { max-width:470px; margin:0 auto; font-size:12px; line-height:1.7; }
+.quotes-loader { width:25px; height:25px; margin:0 auto 13px; border:3px solid #dce8f8; border-top-color:#1769e0; border-radius:50%; animation:quote-spin .75s linear infinite; }
+@keyframes quote-spin { to { transform:rotate(360deg); } }
+
+/* Vista de cotización detallada, lista para revisar antes de autorizar */
+.quote-modal-backdrop { position:fixed; inset:0; z-index:1200; display:flex; justify-content:center; align-items:flex-start; overflow-y:auto; padding:28px 16px; background:rgba(5,18,36,.68); backdrop-filter:blur(5px); }
+.quote-invoice { width:min(850px,100%); margin:auto; padding:27px; color:#172b4d; background:#fff; border:1px solid rgba(255,255,255,.8); border-radius:19px; box-shadow:0 25px 75px rgba(0,0,0,.28); }
+.quote-invoice-header { display:flex; align-items:flex-start; justify-content:space-between; gap:18px; padding-bottom:20px; border-bottom:1px solid #e8edf4; }
+.quote-invoice-header span { color:#1769e0; font-size:9px; font-weight:850; letter-spacing:1.4px; }
+.quote-invoice-header h2 { margin:7px 0 5px; font-size:24px; letter-spacing:-.5px; }
+.quote-invoice-header p { margin:0; color:#718096; font-size:11px; }
+.quote-modal-close { width:35px; height:35px; border:0; border-radius:10px; color:#64748b; background:#f1f5f9; font-size:25px; cursor:pointer; }
+.quote-invoice-meta { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; padding:17px 0; border-bottom:1px solid #e8edf4; }
+.quote-invoice-meta > div { display:flex; flex-direction:column; gap:5px; min-width:0; }
+.quote-invoice-meta small { color:#8290a3; font-size:10px; }
+.quote-invoice-meta strong { font-size:12px; }
+.quote-invoice-state.pendiente { color:#925b09; }
+.quote-invoice-state.aprobada { color:#137548; }
+.quote-invoice-state.rechazada { color:#b42318; }
+.quote-invoice-section-title { margin:20px 0 12px; }
+.quote-invoice-section-title h3 { margin:0 0 5px; font-size:15px; }
+.quote-invoice-section-title p { margin:0; color:#718096; font-size:11px; }
+.quote-table-wrap { overflow-x:auto; border:1px solid #e7edf5; border-radius:10px; }
+.quote-table { width:100%; border-collapse:collapse; font-size:11px; }
+.quote-table th { padding:12px 13px; color:#617188; background:#f5f8fc; text-align:left; font-size:10px; white-space:nowrap; }
+.quote-table td { padding:13px; border-top:1px solid #edf1f6; color:#4a5b72; }
+.quote-table td:first-child { color:#172b4d; }
+.quote-table td:not(:first-child),.quote-table th:not(:first-child) { text-align:right; white-space:nowrap; }
+.quote-no-parts { text-align:center!important; white-space:normal!important; line-height:1.6; }
+.quote-invoice-totals { display:grid; gap:11px; width:min(390px,100%); margin:20px 0 0 auto; }
+.quote-invoice-totals > div { display:flex; justify-content:space-between; gap:16px; color:#617188; font-size:11px; }
+.quote-invoice-totals strong { color:#26384f; white-space:nowrap; }
+.quote-invoice-totals .quote-grand-total { align-items:center; padding-top:13px; margin-top:2px; border-top:1px solid #dfe6ef; color:#102542; font-size:13px; font-weight:800; }
+.quote-invoice-totals .quote-grand-total strong { color:#1769e0; font-size:23px; }
+.quote-invoice-disclaimer { margin:20px 0 0; padding:12px 14px; color:#5c6d82; background:#f4f7fb; border-radius:9px; font-size:10px; line-height:1.6; }
+.quote-invoice-actions { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:10px; margin-top:18px; padding-top:17px; border-top:1px solid #e8edf4; }
+.quote-confirmation { margin-top:18px; padding:15px; border:1px solid #dce6f3; border-radius:12px; background:#f8faff; }
+.quote-confirmation.aprobar { border-color:#b9e8cb; background:#f0fbf4; }
+.quote-confirmation.rechazar { border-color:#f1c5c2; background:#fff5f4; }
+.quote-confirmation > strong { font-size:13px; }
+.quote-confirmation p { margin:6px 0 13px; color:#617188; font-size:11px; line-height:1.6; }
+.quote-confirmation > div { display:flex; justify-content:flex-end; flex-wrap:wrap; gap:9px; }
+@media (max-width:900px) {
+  .quotes-summary { grid-template-columns:1fr; gap:10px; }
+  .quotes-summary article { padding:14px 17px; }
+}
+@media (max-width:650px) {
+  .quotes-intro { align-items:flex-start; padding:20px; gap:13px; }
+  .quotes-intro-icon { width:44px; height:44px; flex-basis:44px; font-size:22px; }
+  .quotes-intro h2 { font-size:18px; }
+  .quote-card { padding:18px 15px; }
+  .quote-card-top { align-items:flex-start; flex-wrap:wrap; }
+  .quote-status { margin-left:67px; }
+  .quote-card-total,.quote-pending-note,.quote-result-note,.quote-card-actions,.quote-processing { margin-left:0; }
+  .quote-card-total { align-items:flex-start; flex-direction:column; }
+  .quote-card-actions { flex-wrap:wrap; justify-content:flex-start; }
+  .quote-invoice { padding:18px 14px; border-radius:14px; }
+  .quote-invoice-header h2 { font-size:20px; }
+  .quote-invoice-meta { grid-template-columns:1fr; gap:10px; }
+  .quote-invoice-actions { flex-direction:column-reverse; }
+  .quote-invoice-actions .quotes-button,.quote-confirmation .quotes-button { width:100%; }
+  .quote-confirmation > div { flex-direction:column-reverse; }
+}
