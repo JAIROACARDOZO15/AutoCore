@@ -3,8 +3,6 @@ package com.proyecto.clases.cliente;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 import com.proyecto.clases.usuario.Rol;
@@ -12,7 +10,6 @@ import com.proyecto.clases.usuario.Usuario;
 import com.proyecto.clases.usuario.UsuarioRepository;
 
 @Service
-@Transactional
 public class ClienteService {
 
     private final ClienteRepository repository;
@@ -23,17 +20,14 @@ public class ClienteService {
         this.usuarioRepository = usuarioRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<ClienteResponse> findAll() {
         return repository.findAll().stream().map(this::toResponse).toList();
     }
 
-    @Transactional(readOnly = true)
     public ClienteResponse findById(Long id) {
         return toResponse(getOrThrow(id));
     }
 
-    @Transactional(readOnly = true)
     public ClienteResponse findByUsuarioId(Long usuarioId) {
         return repository.findByUsuarioId(usuarioId).map(this::toResponse)
                 .orElseThrow(() -> new ResourceNotFoundException(
@@ -72,7 +66,7 @@ public class ClienteService {
         cliente.setTelefono(request.telefono());
         cliente.setDireccion(request.direccion());
         cliente.setDocumento(request.documento());
-        return toResponse(cliente);
+        return toResponse(repository.save(cliente));
     }
 
     public void delete(Long id) {

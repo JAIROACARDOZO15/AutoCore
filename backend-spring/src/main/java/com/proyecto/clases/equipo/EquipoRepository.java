@@ -2,11 +2,14 @@ package com.proyecto.clases.equipo;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface EquipoRepository extends JpaRepository<Equipo, Long> {
+public interface EquipoRepository extends MongoRepository<Equipo, Long> {
 
-    List<Equipo> findByClienteId(Long clienteId);
+    default List<Equipo> findByClienteId(Long clienteId) {
+        return findAll().stream().filter(e -> e.getCliente() != null
+                && clienteId.equals(e.getCliente().getId())).toList();
+    }
 
     boolean existsBySerial(String serial);
 

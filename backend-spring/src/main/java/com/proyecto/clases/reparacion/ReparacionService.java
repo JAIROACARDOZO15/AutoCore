@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.cliente.Cliente;
 import com.proyecto.clases.equipo.Equipo;
 import com.proyecto.clases.equipo.EquipoRepository;
@@ -20,7 +18,6 @@ import com.proyecto.clases.pedido.Pedido;
 import com.proyecto.clases.pedido.PedidoRepository;
 
 @Service
-@Transactional
 public class ReparacionService {
 
     // Cambios de estado que se hacen a mano. Los demas ocurren solos: el diagnostico lleva a
@@ -51,12 +48,10 @@ public class ReparacionService {
     this.pedidoRepository = pedidoRepository;
 }
 
-    @Transactional(readOnly = true)
     public List<ReparacionResponse> findAll(EstadoReparacion estado, Long tecnicoId, Long clienteId) {
         return repository.buscar(estado, tecnicoId, clienteId).stream().map(this::toResponse).toList();
     }
 
-    @Transactional(readOnly = true)
     public ReparacionResponse findById(Long id) {
         return toResponse(getOrThrow(id));
     }
@@ -80,14 +75,14 @@ public class ReparacionService {
         }
         reparacion.setFallaReportada(request.fallaReportada());
         reparacion.setObservaciones(request.observaciones());
-        return toResponse(reparacion);
+        return toResponse(repository.save(reparacion));
     }
 
     public ReparacionResponse asignarTecnico(Long id, Long tecnicoId) {
         Reparacion reparacion = getOrThrow(id);
         verificarEditable(reparacion);
         reparacion.setTecnico(buscarTecnico(tecnicoId));
-        return toResponse(reparacion);
+        return toResponse(repository.save(reparacion));
     }
 
 public ReparacionResponse cambiarEstado(
@@ -118,14 +113,14 @@ public ReparacionResponse cambiarEstado(
                 .ifPresent(pedido -> {
                     pedido.setEstado(Pedido.EstadoPedido.COMPLETADO);
                     pedido.setFechaActualizacion(LocalDateTime.now());
-                    pedido.setObservaciones(
-                            "Vehiculo entregado al cliente.");
+                    pedido.setObservaciones("Vehiculo entregado al cliente.");
+                    pedidoRepository.save(pedido);
                 });
     }
 
     reparacion.setEstado(nuevo);
 
-    return toResponse(reparacion);
+    return toResponse(repository.save(reparacion));
 }
 
 
@@ -148,7 +143,10 @@ public ReparacionResponse cambiarEstado(
         if (estado == EstadoReparacion.EN_DIAGNOSTICO) {
             reparacion.setEstado(EstadoReparacion.COTIZACION_PENDIENTE);
         }
-        repository.flush();
+        if (diagnostico.getFechaDiagnostico() == null) {
+            diagnostico.setFechaDiagnostico(LocalDateTime.now());
+        }
+        repository.save(reparacion);
         return toResponse(reparacion);
     }
 
@@ -166,13 +164,14 @@ public ReparacionResponse cambiarEstado(
                     + repuesto.getStock() + ", solicitado " + request.cantidadUsada());
         }
         repuesto.setStock(repuesto.getStock() - request.cantidadUsada());
+        repuestoRepository.save(repuesto);
 
         RepuestoReparacion linea = new RepuestoReparacion();
         linea.setReparacion(reparacion);
         linea.setRepuesto(repuesto);
         linea.setCantidadUsada(request.cantidadUsada());
         reparacion.getRepuestosUsados().add(linea);
-        repository.flush();
+        repository.save(reparacion);
         return toResponse(reparacion);
     }
 
@@ -186,8 +185,9 @@ public ReparacionResponse cambiarEstado(
                         "Repuesto usado no encontrado con id " + repuestoUsadoId + " en la reparacion " + id));
         Repuesto repuesto = linea.getRepuesto();
         repuesto.setStock(repuesto.getStock() + linea.getCantidadUsada());
+        repuestoRepository.save(repuesto);
         reparacion.getRepuestosUsados().remove(linea);
-        return toResponse(reparacion);
+        return toResponse(repository.save(reparacion));
     }
 
     public void delete(Long id) {
@@ -195,6 +195,7 @@ public ReparacionResponse cambiarEstado(
         for (RepuestoReparacion linea : reparacion.getRepuestosUsados()) {
             Repuesto repuesto = linea.getRepuesto();
             repuesto.setStock(repuesto.getStock() + linea.getCantidadUsada());
+            repuestoRepository.save(repuesto);
         }
         repository.delete(reparacion);
     }

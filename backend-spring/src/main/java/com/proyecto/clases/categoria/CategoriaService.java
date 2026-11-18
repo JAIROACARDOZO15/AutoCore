@@ -3,13 +3,10 @@ package com.proyecto.clases.categoria;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 
 @Service
-@Transactional
 public class CategoriaService {
 
     private final CategoriaRepository repository;
@@ -18,12 +15,10 @@ public class CategoriaService {
         this.repository = repository;
     }
 
-    @Transactional(readOnly = true)
     public List<Categoria> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Categoria findById(Long id) {
         return getOrThrow(id);
     }
@@ -56,7 +51,7 @@ public class CategoriaService {
         categoria.setNombre(datos.getNombre());
         categoria.setDescripcion(datos.getDescripcion());
 
-        return categoria;
+        return repository.save(categoria);
     }
 
     public void delete(Long id) {

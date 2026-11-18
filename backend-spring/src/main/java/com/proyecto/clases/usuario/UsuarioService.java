@@ -8,15 +8,12 @@ import java.util.Optional;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.cliente.ClienteRepository;
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 import com.proyecto.clases.security.JwtService;
 
 @Service
-@Transactional
 public class UsuarioService implements IUsuarioService {
 
 private final UsuarioRepository repository;
@@ -36,14 +33,12 @@ public UsuarioService(
 }
 
     @Override
-    @Transactional(readOnly = true)
     public List<UsuarioResponse> findAll(Rol rol) {
         List<Usuario> usuarios = rol == null ? repository.findAll() : repository.findByRol(rol);
         return usuarios.stream().map(this::toResponse).toList();
     }
 
     @Override
-    @Transactional(readOnly = true)
     public UsuarioResponse findById(Long id) {
         return toResponse(getOrThrow(id));
     }
@@ -78,6 +73,7 @@ public UsuarioService(
         if (request.password() != null && !request.password().isBlank()) {
             usuario.setPassword(request.password());
         }
+        usuario = repository.save(usuario);
         sincronizarTecnico(usuario, request);
         return toResponse(usuario);
     }
@@ -88,13 +84,11 @@ public UsuarioService(
     }
 
     @Override
-    @Transactional(readOnly = true)
     public int login(LoginDto loginDto) {
         return repository.contarCredenciales(loginDto.email(), loginDto.password());
     }
 
     @Override
-    @Transactional(readOnly = true)
     public ResponseEntity<?> ingresar(LoginDto loginDto) {
         Map<String, Object> response = new HashMap<>();
         try {

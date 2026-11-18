@@ -6,8 +6,6 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 import com.proyecto.clases.pedido.Pedido;
@@ -19,7 +17,6 @@ import com.proyecto.clases.repuesto.Repuesto;
 import com.proyecto.clases.repuesto.RepuestoRepository;
 
 @Service
-@Transactional
 public class CotizacionService {
 
     private final CotizacionRepository repository;
@@ -38,12 +35,10 @@ public class CotizacionService {
         this.pedidoRepository = pedidoRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<CotizacionResponse> findAll(Long reparacionId, Long clienteId) {
         return repository.buscar(reparacionId, clienteId).stream().map(this::toResponse).toList();
     }
 
-    @Transactional(readOnly = true)
     public CotizacionResponse findById(Long id) {
         return toResponse(getOrThrow(id));
     }
@@ -64,7 +59,8 @@ public class CotizacionService {
         cotizacion.setReparacion(reparacion);
         aplicar(cotizacion, request);
         reparacion.setEstado(EstadoReparacion.ESPERANDO_APROBACION);
-        return toResponse(repository.saveAndFlush(cotizacion));
+        reparacionRepository.save(reparacion);
+        return toResponse(repository.save(cotizacion));
     }
 
     public CotizacionResponse update(Long id, CotizacionRequest request) {
@@ -94,8 +90,10 @@ public class CotizacionService {
             cotizacion.getReparacion().setEstado(EstadoReparacion.ESPERANDO_APROBACION);
         }
 
-        repository.flush();
-        return toResponse(cotizacion);
+        if (debeVolverARevision) {
+            reparacionRepository.save(cotizacion.getReparacion());
+        }
+        return toResponse(repository.save(cotizacion));
     }
 
     public CotizacionResponse aprobar(Long id) {
@@ -110,6 +108,7 @@ public class CotizacionService {
         Cotizacion cotizacion = getOrThrow(id);
         verificarPendiente(cotizacion, "eliminar");
         cotizacion.getReparacion().setEstado(EstadoReparacion.COTIZACION_PENDIENTE);
+        reparacionRepository.save(cotizacion.getReparacion());
         repository.delete(cotizacion);
     }
 
@@ -124,6 +123,7 @@ public class CotizacionService {
         Reparacion reparacion = cotizacion.getReparacion();
         reparacion.setEstado(
                 aprobada ? EstadoReparacion.EN_REPARACION : EstadoReparacion.RECHAZADO);
+        reparacionRepository.save(reparacion);
 
         if (aprobada) {
             // Al aprobar la cotización se genera automáticamente una orden para el cliente.
@@ -144,7 +144,7 @@ public class CotizacionService {
             }
         }
 
-        return toResponse(cotizacion);
+        return toResponse(repository.save(cotizacion));
     }
 
     private void verificarPendiente(Cotizacion cotizacion, String accion) {

@@ -2,7 +2,7 @@
 
 ![Java](https://img.shields.io/badge/Java-17-ED8B00?logo=openjdk&logoColor=white)
 ![Spring Boot](https://img.shields.io/badge/Spring_Boot-3.3.4-6DB33F?logo=springboot&logoColor=white)
-![MySQL](https://img.shields.io/badge/MySQL-8-4479A1?logo=mysql&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-Atlas-47A248?logo=mongodb&logoColor=white)
 ![React](https://img.shields.io/badge/React-19-61DAFB?logo=react&logoColor=black)
 ![Vite](https://img.shields.io/badge/Vite-8-646CFF?logo=vite&logoColor=white)
 ![Swagger](https://img.shields.io/badge/Swagger-OpenAPI-85EA2D?logo=swagger&logoColor=black)
@@ -52,8 +52,8 @@ AutoCore es una aplicación web para gestionar un taller de reparación automotr
 | Frontend | React 19, Vite 8, React Router |
 | Backend | Java 17, Spring Boot 3.3.4 |
 | API | REST |
-| Persistencia | Spring Data JPA, Hibernate |
-| Base de datos | MySQL |
+| Persistencia | Spring Data MongoDB |
+| Base de datos | MongoDB Atlas |
 | Documentación de API | Swagger / OpenAPI |
 | Control de versiones | Git y GitHub |
 
@@ -63,12 +63,12 @@ AutoCore es una aplicación web para gestionar un taller de reparación automotr
 flowchart LR
     U[Usuario en navegador] --> FE[Frontend React + Vite]
     FE -->|HTTP / JSON| API[API REST Spring Boot]
-    API --> JPA[Spring Data JPA / Hibernate]
-    JPA --> DB[(MySQL: taller_reparacion)]
+    API --> MDB[Spring Data MongoDB]
+    MDB --> DB[(MongoDB Atlas: autocore)]
     API --> SW[Swagger / OpenAPI]
 ```
 
-El frontend consume la API REST del backend. Spring Boot valida y procesa las operaciones y utiliza JPA/Hibernate para acceder a MySQL.
+El frontend consume la API REST del backend. Spring Boot valida y procesa las operaciones y utiliza Spring Data MongoDB para acceder a MongoDB Atlas.
 
 ## Módulos y roles
 
@@ -152,22 +152,6 @@ Total    = subtotal + valor_iva
 
 La vista de factura puede mostrar el cliente, vehículo, técnico, reparación, detalle del servicio, subtotal, IVA y total, y permite imprimir o guardar el documento como PDF desde el navegador.
 
-### Migración para bases de datos existentes
-
-Si la base `taller_reparacion` ya existía antes de incorporar los campos de IVA, se deben agregar una sola vez. El script recomendado es `database/migration_iva_cotizacion.sql`:
-
-```sql
-USE taller_reparacion;
-
-ALTER TABLE cotizacion
-    ADD COLUMN iva_porcentaje DECIMAL(5,2)
-        NOT NULL DEFAULT 0.00 AFTER mano_obra,
-    ADD COLUMN valor_iva DECIMAL(12,2)
-        NOT NULL DEFAULT 0.00 AFTER iva_porcentaje;
-```
-
-Ejecuta esta migración una sola vez. Los registros anteriores quedan con IVA `0.00` por defecto; revisa y actualiza cada cotización según corresponda. Si las columnas ya existen, no vuelvas a ejecutar el `ALTER TABLE`.
-
 ## Estructura del proyecto
 
 ```text
@@ -177,7 +161,6 @@ AutoCore/
 │   ├── src/main/resources/
 │   │   ├── application.properties
 │   │   ├── application-local.properties.example
-│   │   └── schema.sql
 │   ├── mvnw
 │   ├── mvnw.cmd
 │   ├── pom.xml
@@ -193,8 +176,6 @@ AutoCore/
 │   │   └── index.css
 │   ├── package.json
 │   └── vite.config.js
-├── database/
-│   └── migration_iva_cotizacion.sql
 ├── imagenes/
 ├── .gitignore
 └── README.md
@@ -204,23 +185,14 @@ AutoCore/
 
 - Java 17.
 - Node.js y npm compatibles con la versión de Vite del proyecto.
-- MySQL Server.
+- Una cuenta de MongoDB Atlas y un clúster gratuito (no hace falta descargar MongoDB).
 - Git (opcional para ejecutar; necesario para contribuir al repositorio).
 
 ## Configuración y ejecución local
 
-### 1. Base de datos
+### 1. Base de datos MongoDB Atlas
 
-Asegúrate de que el servicio MySQL esté iniciado y de que exista la base de datos `taller_reparacion`. La configuración del backend se realiza mediante las propiedades locales o las variables de entorno.
-
-Para configurar credenciales locales:
-
-1. Copia `backend-spring/src/main/resources/application-local.properties.example`.
-2. Guárdalo como `application-local.properties` en la misma carpeta.
-3. Completa el usuario y la contraseña de MySQL.
-4. Si ya tienes una base de datos creada, comprueba que su esquema esté actualizado; ejecuta la migración de IVA solo si todavía no existen sus columnas.
-
-No subas el archivo `application-local.properties` ni contraseñas al repositorio.
+En Atlas, crea un usuario de base de datos y autoriza la IP desde la que usarás la aplicación. Copia `backend-spring/src/main/resources/application-local.properties.example` como `application-local.properties` en esa misma carpeta y reemplaza la URI de ejemplo por la URI Java de Atlas. No subas ese archivo ni compartas contraseñas.
 
 ### 2. Backend
 
@@ -269,13 +241,13 @@ Para más información sobre los controladores y el flujo del backend, consulta 
 ## Configuración sensible
 
 - No subas contraseñas, tokens ni archivos de configuración local.
-- Usa `application-local.properties` para las credenciales locales y mantenlo fuera de Git.
+- Usa `application-local.properties` para la URI de MongoDB Atlas y la clave JWT local; el archivo está fuera de Git.
 - Antes de publicar el repositorio, revisa que no haya claves reales en archivos de configuración ni datos personales que no deban compartirse.
 - Los datos iniciales son para desarrollo/pruebas; cámbialos y aplica medidas de seguridad antes de cualquier despliegue real.
 
 ## Estado del proyecto
 
-AutoCore integra frontend React, backend Spring Boot y persistencia MySQL. El alcance actual incluye gestión de clientes, vehículos, repuestos, inventario, reparaciones, cotizaciones, pedidos, ventas y reportes. La cobertura de pruebas automatizadas y el endurecimiento de seguridad continúan siendo áreas de mejora.
+AutoCore integra frontend React, backend Spring Boot y persistencia MongoDB Atlas. El alcance incluye gestión de clientes, vehículos, repuestos, inventario, reparaciones, cotizaciones, pedidos, ventas y reportes. La cobertura de pruebas automatizadas y el endurecimiento de seguridad continúan siendo áreas de mejora.
 
 ## Equipo
 

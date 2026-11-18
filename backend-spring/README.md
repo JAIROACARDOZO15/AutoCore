@@ -1,57 +1,59 @@
-# Backend - Taller de Reparacion
+# Backend AutoCore
 
-Spring Boot 3 + Java 17 + Maven, JPA/Hibernate sobre MySQL (base `taller_reparacion`) y Swagger (springdoc-openapi).
+Backend REST con Spring Boot 3, Java 17, Spring Data MongoDB y Swagger. Se conecta a MongoDB Atlas mediante una URI local; no requiere instalar MongoDB en el computador.
 
-## Modulos (un CRUD por cada uno)
+## Módulos
 
-| # | Modulo | Endpoint base | Tablas que maneja |
-|---|---|---|---|
-| 1 | Usuario | `/api/usuarios` | `usuario`, `tecnico` (se crea/actualiza cuando rol = TECNICO) |
-| 2 | Cliente | `/api/clientes` | `cliente` |
-| 3 | Equipo | `/api/equipos` | `equipo` |
-| 4 | Repuesto | `/api/repuestos` | `repuesto` |
-| 5 | Reparacion | `/api/reparaciones` | `reparacion`, `diagnostico`, `repuesto_reparacion` |
-| 6 | Cotizacion | `/api/cotizaciones` | `cotizacion`, `detalle_cotizacion` |
+| Módulo | Endpoint | Colecciones principales |
+|---|---|---|
+| Usuarios y login | `/api/usuarios` | `usuario`, `tecnico` |
+| Clientes | `/api/clientes` | `cliente` |
+| Equipos | `/api/equipos` | `equipo` |
+| Repuestos e inventario | `/api/repuestos`, `/api/inventarios` | `repuesto`, `inventario` |
+| Reparaciones | `/api/reparaciones` | `reparacion` (diagnóstico y repuestos usados embebidos) |
+| Cotizaciones | `/api/cotizaciones` | `cotizacion` (detalles embebidos) |
+| Pedidos | `/api/pedidos` | `pedido`, `detalle_pedido` |
 
-Codigo en `src/main/java/com/proyecto/clases/<modulo>` (entity, repository, service, controller, request/response).
+Las relaciones entre documentos usan referencias MongoDB; los detalles que pertenecen a una cotización o reparación se guardan dentro de su documento.
 
-## Flujo de una reparacion
+## Preparar MongoDB Atlas
 
+1. Crea o reanuda un clúster gratuito en Atlas.
+2. En **Network Access**, autoriza la IP desde la que ejecutarás el backend.
+3. En **Database Access**, crea un usuario y contraseña de base de datos.
+4. En el proyecto, copia `src/main/resources/application-local.properties.example` como `application-local.properties`.
+5. Reemplaza la URI de ejemplo por la URI Java de Atlas y cambia el marcador por el nombre de la base, por ejemplo `autocore`.
+6. Usa una clave JWT local de al menos 32 caracteres. No guardes credenciales reales en Git ni las compartas en chats.
+
+El archivo `application-local.properties` está excluido de Git. También se puede definir `MONGODB_URI` y `JWT_SECRET` como variables de entorno.
+
+## Ejecutar
+
+Desde `backend-spring`:
+
+```powershell
+.\mvnw.cmd spring-boot:run
 ```
-RECIBIDO --(PATCH /estado, requiere tecnico)--> EN_DIAGNOSTICO
-EN_DIAGNOSTICO --(PUT /{id}/diagnostico)--> COTIZACION_PENDIENTE
-COTIZACION_PENDIENTE --(POST /api/cotizaciones)--> ESPERANDO_APROBACION
-ESPERANDO_APROBACION --(PATCH /api/cotizaciones/{id}/aprobar)--> EN_REPARACION
-                     --(PATCH /api/cotizaciones/{id}/rechazar)--> RECHAZADO
-EN_REPARACION --(PATCH /estado)--> FINALIZADA --(PATCH /estado)--> ENTREGADO
+
+API: `http://localhost:8080`
+Swagger: `http://localhost:8080/swagger-ui.html`
+
+La aplicación agrega datos de demostración cuando la colección de usuarios está vacía. Usuarios de demostración: `admin@taller.com / admin123`, `carlos@taller.com / tec123`, `juan@mail.com / cli123`.
+
+Los IDs numéricos se conservan para las rutas existentes y se generan usando la colección `mongo_sequences`.
+
+## Flujo de reparación
+
+```text
+RECIBIDO → EN_DIAGNOSTICO → COTIZACION_PENDIENTE → ESPERANDO_APROBACION
+                                      ├→ EN_REPARACION → FINALIZADA → ENTREGADO
+                                      └→ RECHAZADO
 ```
 
-- Repuestos usados: `POST /api/reparaciones/{id}/repuestos` (solo en EN_REPARACION) descuenta stock; `DELETE .../repuestos/{repuestoUsadoId}` lo devuelve.
-- Cotizacion: el servidor calcula precios, subtotales y total a partir de los repuestos y la mano de obra.
-
-## Login
-
-`POST /api/usuarios/login` con `{"email": "...", "password": "..."}` devuelve el usuario (con su `rol`) o 404.
-`POST /api/usuarios/loginclient` devuelve `1` o `0`.
-Usuarios de prueba: `admin@taller.com / admin123`, `carlos@taller.com / tec123`, `juan@mail.com / cli123`.
-
-## Como correrlo
-
-1. Tener MySQL corriendo. Copiar `src/main/resources/application-local.properties.example` como `application-local.properties` y poner tu usuario/clave de MySQL (ese archivo no se sube a git; tambien sirven las variables de entorno `DB_USERNAME` y `DB_PASSWORD`).
-2. Ejecutar (no hace falta tener Maven instalado):
-   ```
-   ./mvnw.cmd spring-boot:run
-   ```
-3. Swagger: http://localhost:8080/swagger-ui.html
-
-No hay que crear nada a mano. En el **primer arranque** la app crea la base `taller_reparacion`, las tablas (`src/main/resources/schema.sql`) y carga los datos de prueba (`config/DatosIniciales.java`). En los siguientes arranques no borra ni recarga nada: `schema.sql` usa `CREATE TABLE IF NOT EXISTS` y los datos de prueba solo se cargan si no hay ningun usuario.
-
-Para empezar de cero: `DROP DATABASE taller_reparacion;` en MySQL y volver a arrancar.
-
-Al arrancar, `ddl-auto=validate` comprueba que las entidades coincidan con las tablas; si cambia `schema.sql`, hay que actualizar las entidades.
+El backend valida transiciones y calcula subtotales, IVA y totales de las cotizaciones.
 
 ## Notas
 
-- Las claves se guardan y comparan en texto plano (como en la guia del curso y los datos de prueba).
-- Los roles se devuelven en el login, pero los endpoints aun no restringen el acceso por rol (no hay Spring Security).
-- Los borrados respetan las FK del script: eliminar un usuario/cliente/equipo borra en cascada lo que depende de el; los repuestos no se borran, se desactivan.
+- Las contraseñas de los usuarios de demostración se guardan en texto plano, por el comportamiento heredado del proyecto académico. No uses contraseñas reales.
+- Los endpoints no tienen autorización por rol; el login emite JWT, pero el control de roles todavía debe añadirse.
+- `src/main/resources/schema.sql` es un archivo legado de MySQL y ya no participa en el arranque.

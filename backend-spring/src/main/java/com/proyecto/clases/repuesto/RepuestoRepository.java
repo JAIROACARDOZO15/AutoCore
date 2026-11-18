@@ -2,9 +2,9 @@ package com.proyecto.clases.repuesto;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface RepuestoRepository extends JpaRepository<Repuesto, Long> {
+public interface RepuestoRepository extends MongoRepository<Repuesto, Long> {
 
     List<Repuesto> findByActivoTrue();
 

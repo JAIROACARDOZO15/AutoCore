@@ -5,15 +5,12 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 import com.proyecto.clases.repuesto.Repuesto;
 import com.proyecto.clases.repuesto.RepuestoRepository;
 
 @Service
-@Transactional
 public class PedidoService {
 
     private final PedidoRepository pedidoRepository;
@@ -30,17 +27,14 @@ public class PedidoService {
         this.repuestoRepository = repuestoRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<Pedido> findAll() {
         return pedidoRepository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Pedido findById(Long id) {
         return getOrThrow(id);
     }
 
-    @Transactional(readOnly = true)
     public Pedido findByCotizacionId(Long cotizacionId) {
         return pedidoRepository.findByCotizacionId(cotizacionId)
                 .orElseThrow(() ->

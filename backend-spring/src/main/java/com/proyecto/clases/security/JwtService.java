@@ -14,6 +14,7 @@ import com.proyecto.clases.usuario.Usuario;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
+import io.jsonwebtoken.io.DecodingException;
 import io.jsonwebtoken.security.Keys;
 
 @Service
@@ -28,7 +29,7 @@ public class JwtService {
         byte[] keyBytes;
         try {
             keyBytes = Decoders.BASE64.decode(secret);
-        } catch (IllegalArgumentException ex) {
+        } catch (IllegalArgumentException | DecodingException ex) {
             keyBytes = secret.getBytes(StandardCharsets.UTF_8);
         }
         if (keyBytes.length < 32) {

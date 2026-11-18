@@ -3,15 +3,12 @@ package com.proyecto.clases.inventario;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 import com.proyecto.clases.repuesto.Repuesto;
 import com.proyecto.clases.repuesto.RepuestoRepository;
 
 @Service
-@Transactional
 public class InventarioService {
 
     private final InventarioRepository repository;
@@ -25,17 +22,14 @@ public class InventarioService {
         this.repuestoRepository = repuestoRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<Inventario> findAll() {
         return repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Inventario findById(Long id) {
         return getOrThrow(id);
     }
 
-    @Transactional(readOnly = true)
     public Inventario findByRepuestoId(Long repuestoId) {
 
         return repository.findByRepuestoId(repuestoId)
@@ -115,7 +109,7 @@ public class InventarioService {
 
         repuestoRepository.save(repuesto);
 
-        return inventario;
+        return repository.save(inventario);
     }
 
     public void delete(Long id) {

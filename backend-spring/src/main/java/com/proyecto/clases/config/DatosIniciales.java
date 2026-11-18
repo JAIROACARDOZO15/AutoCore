@@ -5,8 +5,6 @@ import java.math.BigDecimal;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.cliente.Cliente;
 import com.proyecto.clases.cliente.ClienteRepository;
 import com.proyecto.clases.equipo.Equipo;
@@ -45,7 +43,6 @@ public class DatosIniciales implements ApplicationRunner {
     }
 
     @Override
-    @Transactional
     public void run(ApplicationArguments args) {
         if (usuarioRepository.count() > 0) {
             return;

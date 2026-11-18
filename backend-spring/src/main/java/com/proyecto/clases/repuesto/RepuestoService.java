@@ -3,12 +3,9 @@ package com.proyecto.clases.repuesto;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.exception.ResourceNotFoundException;
 
 @Service
-@Transactional
 public class RepuestoService {
 
     private final RepuestoRepository repository;
@@ -17,12 +14,10 @@ public class RepuestoService {
         this.repository = repository;
     }
 
-    @Transactional(readOnly = true)
     public List<Repuesto> findAll(boolean soloActivos) {
         return soloActivos ? repository.findByActivoTrue() : repository.findAll();
     }
 
-    @Transactional(readOnly = true)
     public Repuesto findById(Long id) {
         return getOrThrow(id);
     }
@@ -44,14 +39,14 @@ public class RepuestoService {
         if (datos.getActivo() != null) {
             repuesto.setActivo(datos.getActivo());
         }
-        return repuesto;
+        return repository.save(repuesto);
     }
 
-    // El repuesto puede estar en cotizaciones o reparaciones (FK RESTRICT): no se borra, se desactiva
+    // Se conserva el repuesto relacionado; en lugar de borrarlo se desactiva.
     public Repuesto desactivar(Long id) {
         Repuesto repuesto = getOrThrow(id);
         repuesto.setActivo(false);
-        return repuesto;
+        return repository.save(repuesto);
     }
 
     private Repuesto getOrThrow(Long id) {

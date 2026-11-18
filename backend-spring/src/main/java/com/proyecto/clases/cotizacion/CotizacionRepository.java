@@ -2,20 +2,26 @@ package com.proyecto.clases.cotizacion;
 
 import java.util.List;
 
-import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
+import org.springframework.data.mongodb.repository.MongoRepository;
+public interface CotizacionRepository extends MongoRepository<Cotizacion, Long> {
 
-public interface CotizacionRepository extends JpaRepository<Cotizacion, Long> {
+    default boolean existsByReparacionId(Long reparacionId) {
+        return findAll().stream().anyMatch(c -> c.getReparacion() != null
+                && reparacionId.equals(c.getReparacion().getId()));
+    }
 
-    boolean existsByReparacionId(Long reparacionId);
-
-    @Query("""
-            select c from Cotizacion c
-            where (:reparacionId is null or c.reparacion.id = :reparacionId)
-              and (:clienteId is null or c.reparacion.equipo.cliente.id = :clienteId)
-            order by c.fechaCotizacion desc
-            """)
-    List<Cotizacion> buscar(@Param("reparacionId") Long reparacionId, @Param("clienteId") Long clienteId);
+    default List<Cotizacion> buscar(Long reparacionId, Long clienteId) {
+        return findAll().stream()
+                .filter(c -> reparacionId == null || (c.getReparacion() != null
+                        && reparacionId.equals(c.getReparacion().getId())))
+                .filter(c -> clienteId == null || (c.getReparacion() != null
+                        && c.getReparacion().getEquipo() != null
+                        && c.getReparacion().getEquipo().getCliente() != null
+                        && clienteId.equals(c.getReparacion().getEquipo().getCliente().getId())))
+                .sorted((a, b) -> java.util.Comparator.nullsLast(java.util.Comparator
+                        .<java.time.LocalDateTime>naturalOrder()).reversed()
+                        .compare(a.getFechaCotizacion(), b.getFechaCotizacion()))
+                .toList();
+    }
 
 }

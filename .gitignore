@@ -1,8 +1,11 @@
 # Compilados
 target/
 
-# Credenciales locales (clave de MySQL de cada integrante)
+# Credenciales y configuración local
 application-local.properties
+.env
+.env.*
+!.env.example
 
 # IDEs y herramientas locales
 .idea/
@@ -16,5 +19,6 @@ application-local.properties
 
 # Node (frontend)
 node_modules/
+.pnpm-store/
 
 *.log

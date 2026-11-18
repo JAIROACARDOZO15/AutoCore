@@ -3,15 +3,12 @@ package com.proyecto.clases.equipo;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.proyecto.clases.cliente.Cliente;
 import com.proyecto.clases.cliente.ClienteRepository;
 import com.proyecto.clases.exception.BadRequestException;
 import com.proyecto.clases.exception.ResourceNotFoundException;
 
 @Service
-@Transactional
 public class EquipoService {
 
     private final EquipoRepository repository;
@@ -22,13 +19,11 @@ public class EquipoService {
         this.clienteRepository = clienteRepository;
     }
 
-    @Transactional(readOnly = true)
     public List<EquipoResponse> findAll(Long clienteId) {
         List<Equipo> equipos = clienteId == null ? repository.findAll() : repository.findByClienteId(clienteId);
         return equipos.stream().map(this::toResponse).toList();
     }
 
-    @Transactional(readOnly = true)
     public EquipoResponse findById(Long id) {
         return toResponse(getOrThrow(id));
     }
@@ -50,7 +45,7 @@ public class EquipoService {
             throw new BadRequestException("Ya existe un equipo con el serial " + serial);
         }
         aplicar(equipo, request, serial);
-        return toResponse(equipo);
+        return toResponse(repository.save(equipo));
     }
 
     public void delete(Long id) {

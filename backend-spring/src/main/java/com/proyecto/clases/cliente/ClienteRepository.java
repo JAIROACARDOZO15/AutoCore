@@ -2,13 +2,18 @@ package com.proyecto.clases.cliente;
 
 import java.util.Optional;
 
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
-public interface ClienteRepository extends JpaRepository<Cliente, Long> {
+public interface ClienteRepository extends MongoRepository<Cliente, Long> {
 
-    Optional<Cliente> findByUsuarioId(Long usuarioId);
+    default Optional<Cliente> findByUsuarioId(Long usuarioId) {
+        return findAll().stream().filter(c -> c.getUsuario() != null
+                && usuarioId.equals(c.getUsuario().getId())).findFirst();
+    }
 
-    boolean existsByUsuarioId(Long usuarioId);
+    default boolean existsByUsuarioId(Long usuarioId) {
+        return findByUsuarioId(usuarioId).isPresent();
+    }
 
     boolean existsByDocumento(String documento);
 
