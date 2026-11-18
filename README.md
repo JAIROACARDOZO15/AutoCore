@@ -574,6 +574,6 @@ Próximos pasos:
 |---|---|
 | **Jairo Armando Cardozo Mendoza** | Frontend, inventario, interfaz de usuario y Jira |
 | **Jose Fernando Estevez Cardenas** | Backend con Spring Boot |
-| **Alejandro Sarin** | Base de datos, órdenes, ventas y Node.js |
+| **Alejandro Salazar Rincón** | Base de datos, órdenes, ventas y Node.js |
 
 Proyecto académico de **Entornos de Programación (24542)** · Universidad Industrial de Santander (UIS) · Grupo F1 · 2026.
