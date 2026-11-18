@@ -346,6 +346,7 @@ Ejemplo de cuerpo para crear un cliente:
 | Reparaciones | Diagnóstico, técnico asignado, estados y repuestos usados |
 | Órdenes | Consulta y seguimiento de órdenes de servicio |
 | Ventas | Cotizaciones, aprobación/rechazo, pedidos y documentos imprimibles |
+| Estado de mi vehículo | Línea de tiempo de eventos de cada reparación (`/estado-vehiculo`) |
 | Reportes | Indicadores operativos y comerciales |
 | Configuración | Opciones de configuración disponibles en la interfaz |
 
@@ -354,7 +355,7 @@ flowchart TB
     L[Login] --> R{Rol del token}
     R -->|ADMIN| AD[Panel administrador<br/>clientes, repuestos, inventario,<br/>reparaciones, órdenes, ventas,<br/>reportes, configuración]
     R -->|TECNICO| TE[Panel técnico<br/>reparaciones asignadas<br/>y diagnósticos]
-    R -->|CLIENTE| CL[Portal del cliente<br/>mis vehículos, mis reparaciones,<br/>mis cotizaciones, mis órdenes]
+    R -->|CLIENTE| CL[Portal del cliente<br/>mis vehículos, estado del vehículo,<br/>mis reparaciones, cotizaciones y órdenes]
 ```
 
 ### Administrador
@@ -367,7 +368,11 @@ Consulta las reparaciones asignadas y la información necesaria para diagnostica
 
 ### Cliente
 
-Consulta sus vehículos, el estado de sus reparaciones, aprueba o rechaza cotizaciones y revisa sus órdenes.
+Consulta sus vehículos y el estado de sus reparaciones, aprueba o rechaza cotizaciones y revisa sus órdenes. En **Estado de mi vehículo** puede seguir la barra de avance y el historial cronológico de cada servicio.
+
+### Historial y barra de estado del vehículo
+
+Cada reparación conserva eventos con fecha y hora, descripción y actor cuando esa información está disponible. Por ejemplo: el técnico registra el diagnóstico, el taller envía una cotización y el cliente la aprueba. El portal ordena estos eventos cronológicamente, muestra la hora en la zona de Colombia y actualiza la barra según el estado real de la reparación. Los eventos anteriores a esta funcionalidad pueden no tener actor registrado.
 
 ## Flujo de reparación y cotización
 
@@ -491,7 +496,7 @@ Abre una segunda terminal en la raíz del proyecto:
 
 ```powershell
 cd frontend
-npm install
+npm ci
 npm run dev
 ```
 

@@ -19,5 +19,6 @@ public record ReparacionResponse(
         LocalDateTime fechaEntrega,
         String observaciones,
         DiagnosticoResponse diagnostico,
-        List<RepuestoUsadoResponse> repuestosUsados) {
+        List<RepuestoUsadoResponse> repuestosUsados,
+        List<EventoReparacionResponse> historial) {
 }

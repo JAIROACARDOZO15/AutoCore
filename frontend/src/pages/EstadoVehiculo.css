@@ -1,0 +1,128 @@
+.vehicle-status-main {
+  background:
+    radial-gradient(circle at 92% 0%, rgba(249, 115, 22, .055), transparent 27%),
+    #faf8f5;
+}
+
+.vehicle-status-hero {
+  display: flex;
+  min-height: 185px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  overflow: hidden;
+  padding: 28px 36px;
+  margin: 0 0 22px;
+  border-radius: 20px;
+  color: #fff;
+  background:
+    radial-gradient(circle at 78% 20%, rgba(255, 141, 54, .42), transparent 31%),
+    linear-gradient(112deg, #292524 0%, #7c2d12 57%, #f97316 100%);
+  box-shadow: 0 17px 34px rgba(124, 45, 18, .14);
+}
+
+.vehicle-status-hero-copy { max-width: 650px; position: relative; z-index: 1; }
+.vehicle-status-hero-copy > span { color: #fed7aa; font-size: 10px; font-weight: 850; letter-spacing: 1.65px; }
+.vehicle-status-hero-copy h2 { margin: 10px 0 8px; font-size: clamp(24px, 3vw, 34px); letter-spacing: -.7px; }
+.vehicle-status-hero-copy p { max-width: 550px; margin: 0; color: rgba(255,255,255,.82); font-size: 13px; line-height: 1.7; }
+.vehicle-status-hero-art { flex: 0 0 180px; text-align: center; font-size: 82px; filter: drop-shadow(0 12px 12px rgba(0,0,0,.25)); }
+
+.vehicle-status-stats { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; margin-bottom: 20px; }
+.vehicle-status-stats article { min-width: 0; padding: 17px 19px; border: 1px solid #e9e3dc; border-radius: 15px; background: #fff; box-shadow: 0 7px 18px rgba(41,37,36,.035); }
+.vehicle-status-stats span, .vehicle-status-stats small { display: block; color: #897d74; font-size: 11px; }
+.vehicle-status-stats strong { display: block; margin: 5px 0 2px; color: #292524; font-size: 25px; line-height: 1.1; }
+
+.vehicle-status-filters { display: flex; flex-wrap: wrap; gap: 9px; margin: 0 0 18px; }
+.vehicle-status-filters button { max-width: 100%; padding: 9px 13px; border: 1px solid #eadfd5; border-radius: 999px; background: #fff; color: #65564d; font: inherit; font-size: 11px; font-weight: 700; cursor: pointer; }
+.vehicle-status-filters button:hover, .vehicle-status-filters button.selected { border-color: #f97316; background: #fff1e7; color: #c2410c; }
+
+.vehicle-status-list { display: grid; gap: 17px; }
+.vehicle-repair-card { min-width: 0; padding: 22px; border: 1px solid #e9e3dc; border-radius: 18px; background: #fff; box-shadow: 0 8px 22px rgba(41,37,36,.045); }
+.vehicle-repair-heading { display: flex; align-items: center; gap: 14px; padding-bottom: 18px; border-bottom: 1px solid #f0ece8; }
+.vehicle-repair-icon { display: flex; flex: 0 0 54px; width: 54px; height: 54px; align-items: center; justify-content: center; border-radius: 15px; background: #fff1e7; font-size: 27px; }
+.vehicle-repair-title { min-width: 0; flex: 1; }
+.vehicle-repair-title > span { color: #c2410c; font-size: 9px; font-weight: 850; letter-spacing: 1.1px; }
+.vehicle-repair-title h2 { margin: 4px 0; color: #292524; font-size: 18px; }
+.vehicle-repair-title p { margin: 0; color: #897d74; font-size: 12px; line-height: 1.5; }
+.vehicle-repair-badge { flex: 0 0 auto; padding: 8px 11px; border-radius: 999px; background: #fff4dc; color: #9a5b08; font-size: 10px; font-weight: 800; }
+.vehicle-repair-badge.en_reparacion, .vehicle-repair-badge.esperando_aprobacion { background: #fff1e7; color: #c2410c; }
+.vehicle-repair-badge.finalizada, .vehicle-repair-badge.entregado { background: #e8f7ee; color: #167443; }
+.vehicle-repair-badge.rechazado { background: #feeceb; color: #b42318; }
+
+.vehicle-progress { position: relative; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 5px; padding: 18px 0 22px; margin: 0; list-style: none; }
+.vehicle-progress::before { position: absolute; top: 34px; right: 8%; left: 8%; height: 2px; background: #eee7e0; content: ''; }
+.vehicle-progress li { position: relative; z-index: 1; display: flex; min-width: 0; align-items: center; flex-direction: column; gap: 8px; text-align: center; }
+.vehicle-progress-marker { display: flex; width: 31px; height: 31px; align-items: center; justify-content: center; border: 2px solid #e9e3dc; border-radius: 50%; background: #fff; color: #a89b90; font-size: 11px; font-weight: 800; }
+.vehicle-progress li.done .vehicle-progress-marker { border-color: #f97316; background: #f97316; color: #fff; }
+.vehicle-progress li.current .vehicle-progress-marker { border-color: #f97316; box-shadow: 0 0 0 4px #fff1e7; color: #c2410c; }
+.vehicle-progress li small { color: #9a8d82; font-size: 9px; line-height: 1.35; }
+.vehicle-progress li.done small, .vehicle-progress li.current small { color: #5c4030; font-weight: 750; }
+
+.vehicle-activity { padding: 16px 0 18px; border-bottom: 1px solid #f0ece8; }
+.vehicle-activity-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vehicle-activity-heading .vehicle-detail-label { margin-bottom: 4px; }
+.vehicle-activity-heading h3 { margin: 0; color: #40342d; font-size: 14px; }
+.vehicle-activity-heading > small { color: #9a8d82; font-size: 10px; }
+.vehicle-activity-list { display: grid; gap: 0; padding: 10px 0 0; margin: 0; list-style: none; }
+.vehicle-activity-list li { position: relative; display: grid; grid-template-columns: 17px minmax(0, 1fr) auto; align-items: start; gap: 10px; padding: 10px 0; }
+.vehicle-activity-list li:not(:last-child)::before { position: absolute; top: 23px; bottom: -10px; left: 6px; width: 1px; background: #f0d5c3; content: ''; }
+.vehicle-activity-dot { position: relative; z-index: 1; width: 13px; height: 13px; margin-top: 3px; border: 3px solid #fff1e7; border-radius: 50%; background: #f97316; }
+.vehicle-activity-copy { display: grid; gap: 3px; }
+.vehicle-activity-copy strong { color: #40342d; font-size: 11px; line-height: 1.45; }
+.vehicle-activity-copy span { color: #897d74; font-size: 10px; }
+.vehicle-activity-list time { color: #8a776a; font-size: 10px; white-space: nowrap; }
+.vehicle-activity-note { margin: 9px 0 0; color: #9a8d82; font-size: 10px; line-height: 1.5; }
+
+.vehicle-repair-details { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.vehicle-repair-details > section { min-width: 0; padding: 15px; border: 1px solid #f0ece8; border-radius: 13px; background: #fffdfa; }
+.vehicle-detail-label { display: block; margin-bottom: 9px; color: #c2410c; font-size: 9px; font-weight: 850; letter-spacing: 1.05px; }
+.vehicle-repair-details p { margin: 6px 0 0; color: #65564d; font-size: 11px; line-height: 1.55; overflow-wrap: anywhere; }
+.vehicle-repair-details p strong { color: #40342d; }
+.vehicle-repair-details p.vehicle-detail-muted { color: #9a8d82; }
+.vehicle-used-parts { display: grid; gap: 8px; padding: 0; margin: 0; list-style: none; }
+.vehicle-used-parts li { display: flex; justify-content: space-between; gap: 12px; color: #65564d; font-size: 11px; }
+.vehicle-used-parts li strong { color: #40342d; white-space: nowrap; }
+.vehicle-quote-total { display: block; color: #292524; font-size: 20px; }
+.vehicle-quote-state { font-weight: 750; }
+.vehicle-quote-state.pending { color: #b76a0b; }
+.vehicle-quote-state.approved { color: #167443; }
+.vehicle-quote-state.declined { color: #b42318; }
+.vehicle-quote-detail button, .vehicle-status-message button { display: inline-flex; align-items: center; gap: 9px; padding: 9px 12px; margin-top: 10px; border: 0; border-radius: 9px; background: #f97316; color: #fff; font: inherit; font-size: 11px; font-weight: 800; cursor: pointer; }
+.vehicle-quote-detail button:hover, .vehicle-status-message button:hover { background: #ea580c; }
+.vehicle-ready-note, .vehicle-delivered-note, .vehicle-repair-rejected { margin-top: 14px; padding: 12px 14px; border-radius: 11px; background: #eaf7ee; color: #17633d; font-size: 11px; line-height: 1.55; }
+.vehicle-delivered-note { background: #f4f0eb; color: #65564d; }
+.vehicle-repair-rejected { margin: 16px 0; background: #fff1f0; color: #a12620; }
+.vehicle-status-footnote { margin: 17px 0; color: #9a8d82; font-size: 10px; text-align: right; }
+
+.vehicle-status-message { display: flex; min-height: 210px; align-items: center; justify-content: center; flex-direction: column; padding: 30px; border: 1px solid #e9e3dc; border-radius: 17px; background: #fff; text-align: center; }
+.vehicle-status-message strong { color: #40342d; font-size: 16px; }
+.vehicle-status-message p { max-width: 520px; margin: 8px 0; color: #897d74; font-size: 12px; line-height: 1.6; }
+.vehicle-status-message.vehicle-status-error { border-color: #f4c7c4; background: #fffafa; }
+.vehicle-status-error strong { color: #a12620; }
+.vehicle-status-spinner { width: 30px; height: 30px; margin-bottom: 12px; border: 3px solid #ffeadb; border-top-color: #f97316; border-radius: 50%; animation: vehicle-spin .8s linear infinite; }
+.vehicle-status-empty-icon { margin-bottom: 10px; font-size: 37px; }
+@keyframes vehicle-spin { to { transform: rotate(360deg); } }
+
+@media (max-width: 1050px) {
+  .vehicle-status-stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .vehicle-status-hero { min-height: 150px; padding: 22px; }
+  .vehicle-status-hero-art { flex-basis: 90px; font-size: 56px; }
+  .vehicle-repair-card { padding: 15px; }
+  .vehicle-repair-heading { align-items: flex-start; flex-wrap: wrap; }
+  .vehicle-repair-badge { margin-left: 68px; }
+  .vehicle-progress { grid-template-columns: repeat(3, minmax(0, 1fr)); row-gap: 17px; }
+  .vehicle-progress::before { display: none; }
+  .vehicle-repair-details { grid-template-columns: 1fr; }
+  .vehicle-activity-list li { grid-template-columns: 17px minmax(0, 1fr); }
+  .vehicle-activity-list time { grid-column: 2; }
+}
+
+@media (max-width: 440px) {
+  .vehicle-status-stats { gap: 9px; }
+  .vehicle-status-stats article { padding: 13px; }
+  .vehicle-status-hero-art { display: none; }
+  .vehicle-repair-title h2 { font-size: 16px; }
+}

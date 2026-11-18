@@ -20,8 +20,8 @@ body {
   min-height: 100vh;
   width: 100%;
   display: flex;
-  background: #f4f7fb;
-  color: #172b4d;
+  background: #FAF8F5;
+  color: #292524;
 }
 
 /* =========================
@@ -34,7 +34,7 @@ body {
   left: 0;
   bottom: 0;
 
-  width: 260px;
+  width: 255px;
 
   display: flex;
   flex-direction: column;
@@ -42,13 +42,13 @@ body {
   background:
     radial-gradient(
       circle at 30% 10%,
-      rgba(23, 105, 224, 0.18),
+      rgba(249, 115, 22, 0.18),
       transparent 30%
     ),
     linear-gradient(
       160deg,
-      #0b1f3a 0%,
-      #07172d 100%
+      #292524 0%,
+      #1C1917 100%
     );
 
   color: white;
@@ -56,7 +56,7 @@ body {
   z-index: 100;
 
   box-shadow:
-    8px 0 30px rgba(11, 31, 58, 0.08);
+    8px 0 30px rgba(41, 37, 36, 0.08);
 }
 
 /* LOGO */
@@ -176,15 +176,15 @@ body {
   background:
     linear-gradient(
       135deg,
-      #1769e0,
-      #0d58c7
+      #F97316,
+      #EA580C
     );
 
   color: white;
 
   box-shadow:
     0 8px 20px
-    rgba(23, 105, 224, 0.25);
+    rgba(249, 115, 22, 0.25);
 }
 
 /* LOGOUT */
@@ -234,11 +234,11 @@ body {
 ========================= */
 
 .tech-main {
-  width: calc(100% - 260px);
+  width: calc(100% - 255px);
 
   min-height: 100vh;
 
-  margin-left: 260px;
+  margin-left: 255px;
 
   padding:
     35px 45px 50px;
@@ -265,7 +265,7 @@ body {
 
   margin-bottom: 6px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 10px;
   font-weight: 800;
@@ -276,7 +276,7 @@ body {
 .tech-header h1 {
   margin: 0;
 
-  color: #102542;
+  color: #292524;
 
   font-size: 30px;
   font-weight: 800;
@@ -285,7 +285,7 @@ body {
 .tech-header p {
   margin: 7px 0 0;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 13px;
 }
@@ -317,8 +317,8 @@ body {
   background:
     linear-gradient(
       135deg,
-      #1769e0,
-      #0d58c7
+      #F97316,
+      #EA580C
     );
 
   color: white;
@@ -330,7 +330,7 @@ body {
 .tech-user-info strong {
   display: block;
 
-  color: #1d304b;
+  color: #3a312c;
 
   font-size: 13px;
 }
@@ -340,7 +340,7 @@ body {
 
   margin-top: 3px;
 
-  color: #8b98a9;
+  color: #897d74;
 
   font-size: 10px;
   font-weight: 700;
@@ -367,14 +367,14 @@ body {
   background:
     radial-gradient(
       circle at 80% 30%,
-      rgba(58, 151, 255, 0.25),
+      rgba(249, 115, 22, 0.25),
       transparent 30%
     ),
     linear-gradient(
       120deg,
-      #0b1f3a 0%,
-      #0d3260 60%,
-      #1769e0 100%
+      #292524 0%,
+      #7C2D12 60%,
+      #F97316 100%
     );
 
   color: white;
@@ -383,7 +383,7 @@ body {
 
   box-shadow:
     0 15px 35px
-    rgba(11, 31, 58, 0.15);
+    rgba(41, 37, 36, 0.15);
 }
 
 .tech-welcome > div:first-child {
@@ -476,7 +476,7 @@ body {
 
   box-shadow:
     0 7px 20px
-    rgba(11, 31, 58, 0.045);
+    rgba(41, 37, 36, 0.045);
 
   transition:
     transform 0.2s ease,
@@ -489,11 +489,11 @@ body {
 
   box-shadow:
     0 12px 25px
-    rgba(11, 31, 58, 0.08);
+    rgba(41, 37, 36, 0.08);
 }
 
 .tech-card span {
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 12px;
   font-weight: 600;
@@ -502,7 +502,7 @@ body {
 .tech-card strong {
   margin-top: 5px;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 30px;
   font-weight: 800;
@@ -530,7 +530,7 @@ body {
 
   box-shadow:
     0 7px 20px
-    rgba(11, 31, 58, 0.045);
+    rgba(41, 37, 36, 0.045);
 
   overflow: hidden;
 }
@@ -555,7 +555,7 @@ body {
 
   margin-bottom: 5px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 9px;
   font-weight: 800;
@@ -566,7 +566,7 @@ body {
 .tech-panel-header h2 {
   margin: 0;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 18px;
 }
@@ -576,7 +576,7 @@ body {
 
   background: transparent;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 12px;
   font-weight: 700;
@@ -620,7 +620,7 @@ body {
 .tech-repair strong {
   display: block;
 
-  color: #26384f;
+  color: #413833;
 
   font-size: 12px;
 }
@@ -630,13 +630,13 @@ body {
 
   margin-top: 4px;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 11px;
 }
 
 .tech-vehicle {
-  color: #69788d;
+  color: #776a60;
 
   font-size: 12px;
 }
@@ -655,13 +655,121 @@ body {
 }
 
 .tech-status.progress {
-  background: #edf5ff;
-  color: #1769e0;
+  background: #FFF1E8;
+  color: #F97316;
 }
 
 .tech-status.pending {
   background: #fff5e8;
   color: #c47712;
+}
+
+.tech-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1.65fr) minmax(240px, .75fr);
+  align-items: stretch;
+  gap: 20px;
+}
+
+.tech-empty,
+.tech-empty-state {
+  padding: 30px 24px;
+  color: #81756c;
+  font-size: 13px;
+  text-align: center;
+}
+
+.tech-empty-state span {
+  display: block;
+  margin-bottom: 10px;
+  font-size: 32px;
+}
+
+.tech-empty-state strong {
+  display: block;
+  color: #292524;
+  font-size: 14px;
+}
+
+.tech-empty-state p {
+  margin: 7px 0 0;
+  color: #897d74;
+  font-size: 12px;
+}
+
+.tech-progress-panel {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+  padding: 25px 20px;
+  border: 1px solid #eee5dc;
+  border-radius: 17px;
+  background: linear-gradient(150deg, #fff 10%, #fff7f0 100%);
+  box-shadow: 0 7px 20px rgba(72, 42, 24, .05);
+  text-align: center;
+}
+
+.tech-progress-kicker {
+  color: #c2410c;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.35px;
+}
+
+.tech-progress-panel h2 {
+  margin: 7px 0 18px;
+  color: #292524;
+  font-size: 18px;
+}
+
+.tech-progress-ring {
+  display: grid;
+  width: 132px;
+  height: 132px;
+  place-items: center;
+  border-radius: 50%;
+  background: conic-gradient(#f97316 var(--progress), #f1e8df 0);
+  position: relative;
+}
+
+.tech-progress-ring::before {
+  content: "";
+  position: absolute;
+  inset: 11px;
+  border-radius: 50%;
+  background: #fff;
+}
+
+.tech-progress-ring strong {
+  z-index: 1;
+  color: #292524;
+  font-size: 27px;
+}
+
+.tech-progress-panel p {
+  margin: 13px 0 18px;
+  color: #81756c;
+  font-size: 12px;
+}
+
+.tech-progress-panel button {
+  width: 100%;
+  padding: 11px 12px;
+  border: 0;
+  border-radius: 10px;
+  background: #f97316;
+  color: white;
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 750;
+  cursor: pointer;
+  transition: background .18s ease, transform .18s ease;
+}
+
+.tech-progress-panel button:hover {
+  background: #ea580c;
+  transform: translateY(-1px);
 }
 
 /* =========================
@@ -678,6 +786,14 @@ body {
   .tech-stats {
     grid-template-columns:
       repeat(2, 1fr);
+  }
+
+  .tech-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .tech-progress-panel {
+    min-height: 270px;
   }
 
 }
@@ -811,4 +927,56 @@ body {
     display: none;
   }
 
+}
+
+/* Navegación clara de AutoCore con naranja como único acento. */
+.tech-sidebar {
+  background: #fffaf5;
+  color: #292524;
+  border-right: 1px solid #eee4dc;
+  box-shadow: 5px 0 22px rgba(72, 42, 24, .045);
+}
+
+.tech-logo {
+  border-bottom-color: #f0e5dc;
+}
+
+.tech-logo span {
+  color: #292524;
+}
+
+.tech-menu-title {
+  color: #a39589;
+}
+
+.tech-menu {
+  color: #665a51;
+}
+
+.tech-menu:hover {
+  background: #fff1e8;
+  color: #9a3412;
+}
+
+.tech-menu.active {
+  background: linear-gradient(135deg, #f97316, #ea580c);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(249, 115, 22, .2);
+}
+
+.tech-logout {
+  border-top-color: #f0e5dc;
+  color: #665a51;
+}
+
+.tech-logout:hover {
+  color: #c2410c;
+}
+
+.tech-navigation {
+  scrollbar-width: none;
+}
+
+.tech-navigation::-webkit-scrollbar {
+  width: 0;
 }

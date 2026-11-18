@@ -1,0 +1,162 @@
+/* Navegación común para todas las áreas de AutoCore. */
+:root {
+  --autocore-orange: #f97316;
+  --autocore-orange-deep: #c2410c;
+  --autocore-cream: #fffaf5;
+  --autocore-ink: #292524;
+}
+
+aside.sidebar,
+aside.client-sidebar,
+aside.tech-sidebar,
+aside.inventory-sidebar,
+aside.clientes-sidebar,
+aside.reparaciones-sidebar,
+aside.ordenes-sidebar,
+aside.ventas-sidebar,
+aside.reportes-sidebar,
+.clientes-page aside.sidebar {
+  background: linear-gradient(180deg, #c2410c 0%, #9a3412 100%) !important;
+  color: #fff !important;
+  border-right: 1px solid rgba(124, 45, 18, .28) !important;
+  box-shadow: 5px 0 22px rgba(124, 45, 18, .12) !important;
+}
+
+:is(aside.sidebar .sidebar-logo,
+aside.client-sidebar .client-logo,
+aside.tech-sidebar .tech-logo,
+aside.inventory-sidebar .inventory-logo,
+aside.clientes-sidebar .clientes-logo,
+aside.reparaciones-sidebar .reparaciones-logo,
+aside.ordenes-sidebar .ordenes-sidebar-logo,
+aside.ventas-sidebar .ventas-sidebar-logo,
+aside.reportes-sidebar .reportes-logo,
+.clientes-page aside.sidebar .sidebar-logo) {
+  height: 100px !important;
+  min-height: 100px !important;
+}
+
+:is(aside.sidebar .sidebar-menu,
+aside.client-sidebar .client-navigation,
+aside.tech-sidebar .tech-navigation,
+aside.inventory-sidebar .inventory-menu,
+aside.clientes-sidebar .clientes-menu,
+aside.reparaciones-sidebar .reparaciones-menu,
+aside.ordenes-sidebar .ordenes-menu,
+aside.ventas-sidebar .ventas-menu,
+aside.reportes-sidebar .reportes-menu,
+.clientes-page aside.sidebar .sidebar-menu) {
+  scrollbar-width: none !important;
+}
+
+:is(aside.sidebar .sidebar-menu,
+aside.client-sidebar .client-navigation,
+aside.tech-sidebar .tech-navigation,
+aside.inventory-sidebar .inventory-menu,
+aside.clientes-sidebar .clientes-menu,
+aside.reparaciones-sidebar .reparaciones-menu,
+aside.ordenes-sidebar .ordenes-menu,
+aside.ventas-sidebar .ventas-menu,
+aside.reportes-sidebar .reportes-menu,
+.clientes-page aside.sidebar .sidebar-menu)::-webkit-scrollbar {
+  width: 0 !important;
+}
+
+:is(aside.sidebar .menu-item,
+aside.client-sidebar .client-menu,
+aside.tech-sidebar .tech-menu,
+aside.inventory-sidebar .inventory-menu-item,
+aside.clientes-sidebar .clientes-menu-item,
+aside.reparaciones-sidebar .reparaciones-menu-item,
+aside.ordenes-sidebar .ordenes-menu-item,
+aside.ventas-sidebar .ventas-menu-item,
+aside.reportes-sidebar .reportes-menu-item,
+.clientes-page aside.sidebar .menu-item) {
+  height: 46px !important;
+  min-height: 46px !important;
+  margin-bottom: 4px !important;
+  border-radius: 10px !important;
+  font-size: 13px !important;
+}
+
+aside.sidebar :is(.sidebar-logo, .sidebar-logo span),
+aside.client-sidebar :is(.client-logo, .client-logo span),
+aside.tech-sidebar :is(.tech-logo, .tech-logo span),
+aside.inventory-sidebar :is(.inventory-logo, .inventory-logo span),
+aside.clientes-sidebar :is(.clientes-logo, .clientes-logo span),
+aside.reparaciones-sidebar :is(.reparaciones-logo, .reparaciones-logo span),
+aside.ordenes-sidebar :is(.ordenes-sidebar-logo, .ordenes-sidebar-logo span),
+aside.ventas-sidebar :is(.ventas-sidebar-logo, .ventas-sidebar-logo span),
+aside.reportes-sidebar :is(.reportes-logo, .reportes-logo span) {
+  color: #fff !important;
+  border-bottom-color: rgba(255, 255, 255, .16) !important;
+}
+
+aside.sidebar :is(.menu-title),
+aside.client-sidebar .client-menu-title,
+aside.tech-sidebar .tech-menu-title,
+aside.inventory-sidebar .inventory-menu-title,
+aside.clientes-sidebar .clientes-menu-title,
+aside.reparaciones-sidebar .reparaciones-menu-title,
+aside.ordenes-sidebar .ordenes-menu-title,
+aside.ventas-sidebar .ventas-menu-title,
+aside.reportes-sidebar .reportes-menu-title,
+.clientes-page aside.sidebar .menu-title {
+  color: rgba(255, 255, 255, .68) !important;
+}
+
+:is(aside.sidebar .menu-item,
+aside.client-sidebar .client-menu,
+aside.tech-sidebar .tech-menu,
+aside.inventory-sidebar .inventory-menu-item,
+aside.clientes-sidebar .clientes-menu-item,
+aside.reparaciones-sidebar .reparaciones-menu-item,
+aside.ordenes-sidebar .ordenes-menu-item,
+aside.ventas-sidebar .ventas-menu-item,
+aside.reportes-sidebar .reportes-menu-item,
+.clientes-page aside.sidebar .menu-item) {
+  color: rgba(255, 255, 255, .9) !important;
+}
+
+:is(aside.sidebar .menu-item,
+aside.client-sidebar .client-menu,
+aside.tech-sidebar .tech-menu,
+aside.inventory-sidebar .inventory-menu-item,
+aside.clientes-sidebar .clientes-menu-item,
+aside.reparaciones-sidebar .reparaciones-menu-item,
+aside.ordenes-sidebar .ordenes-menu-item,
+aside.ventas-sidebar .ventas-menu-item,
+aside.reportes-sidebar .reportes-menu-item,
+.clientes-page aside.sidebar .menu-item):hover {
+  background: rgba(255, 255, 255, .14) !important;
+  color: #fff !important;
+}
+
+:is(aside.sidebar .menu-item.active,
+aside.client-sidebar .client-menu.active,
+aside.tech-sidebar .tech-menu.active,
+aside.inventory-sidebar .inventory-menu-item.active,
+aside.clientes-sidebar .clientes-menu-item.active,
+aside.reparaciones-sidebar .reparaciones-menu-item.active,
+aside.ordenes-sidebar .ordenes-menu-item.active,
+aside.ventas-sidebar .ventas-menu-item.active,
+aside.reportes-sidebar .reportes-menu-item.active,
+.clientes-page aside.sidebar .menu-item.active) {
+  background: #f97316 !important;
+  color: #fff !important;
+  box-shadow: 0 8px 18px rgba(66, 25, 5, .2) !important;
+}
+
+:is(aside.sidebar .logout-button,
+aside.client-sidebar .client-logout,
+aside.tech-sidebar .tech-logout,
+aside.inventory-sidebar .inventory-logout,
+aside.clientes-sidebar .clientes-logout,
+aside.reparaciones-sidebar .reparaciones-logout,
+aside.ordenes-sidebar .ordenes-logout,
+aside.ventas-sidebar .ventas-logout,
+aside.reportes-sidebar .reportes-logout,
+.clientes-page aside.sidebar .logout-button) {
+  color: rgba(255, 255, 255, .88) !important;
+  border-top-color: rgba(255, 255, 255, .18) !important;
+}

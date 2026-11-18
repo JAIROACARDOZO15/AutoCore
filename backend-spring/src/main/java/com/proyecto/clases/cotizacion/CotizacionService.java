@@ -13,6 +13,7 @@ import com.proyecto.clases.pedido.PedidoRepository;
 import com.proyecto.clases.reparacion.EstadoReparacion;
 import com.proyecto.clases.reparacion.Reparacion;
 import com.proyecto.clases.reparacion.ReparacionRepository;
+import com.proyecto.clases.reparacion.HistorialReparacionService;
 import com.proyecto.clases.repuesto.Repuesto;
 import com.proyecto.clases.repuesto.RepuestoRepository;
 
@@ -23,16 +24,19 @@ public class CotizacionService {
     private final ReparacionRepository reparacionRepository;
     private final RepuestoRepository repuestoRepository;
     private final PedidoRepository pedidoRepository;
+    private final HistorialReparacionService historialService;
 
     public CotizacionService(
             CotizacionRepository repository,
             ReparacionRepository reparacionRepository,
             RepuestoRepository repuestoRepository,
-            PedidoRepository pedidoRepository) {
+            PedidoRepository pedidoRepository,
+            HistorialReparacionService historialService) {
         this.repository = repository;
         this.reparacionRepository = reparacionRepository;
         this.repuestoRepository = repuestoRepository;
         this.pedidoRepository = pedidoRepository;
+        this.historialService = historialService;
     }
 
     public List<CotizacionResponse> findAll(Long reparacionId, Long clienteId) {
@@ -58,9 +62,12 @@ public class CotizacionService {
         Cotizacion cotizacion = new Cotizacion();
         cotizacion.setReparacion(reparacion);
         aplicar(cotizacion, request);
+        cotizacion = repository.save(cotizacion);
         reparacion.setEstado(EstadoReparacion.ESPERANDO_APROBACION);
+        historialService.registrar(reparacion, "COTIZACION_ENVIADA",
+                "Cotización #" + cotizacion.getId() + " enviada al cliente para revisión.");
         reparacionRepository.save(reparacion);
-        return toResponse(repository.save(cotizacion));
+        return toResponse(cotizacion);
     }
 
     public CotizacionResponse update(Long id, CotizacionRequest request) {
@@ -90,10 +97,11 @@ public class CotizacionService {
             cotizacion.getReparacion().setEstado(EstadoReparacion.ESPERANDO_APROBACION);
         }
 
-        if (debeVolverARevision) {
-            reparacionRepository.save(cotizacion.getReparacion());
-        }
-        return toResponse(repository.save(cotizacion));
+        cotizacion = repository.save(cotizacion);
+        historialService.registrar(cotizacion.getReparacion(), "COTIZACION_ACTUALIZADA",
+                "Cotización #" + cotizacion.getId() + " actualizada para revisión del cliente.");
+        reparacionRepository.save(cotizacion.getReparacion());
+        return toResponse(cotizacion);
     }
 
     public CotizacionResponse aprobar(Long id) {
@@ -108,6 +116,8 @@ public class CotizacionService {
         Cotizacion cotizacion = getOrThrow(id);
         verificarPendiente(cotizacion, "eliminar");
         cotizacion.getReparacion().setEstado(EstadoReparacion.COTIZACION_PENDIENTE);
+        historialService.registrar(cotizacion.getReparacion(), "COTIZACION_ELIMINADA",
+                "Se retiró la cotización #" + cotizacion.getId() + "; el servicio vuelve a preparación de cotización.");
         reparacionRepository.save(cotizacion.getReparacion());
         repository.delete(cotizacion);
     }
@@ -123,6 +133,9 @@ public class CotizacionService {
         Reparacion reparacion = cotizacion.getReparacion();
         reparacion.setEstado(
                 aprobada ? EstadoReparacion.EN_REPARACION : EstadoReparacion.RECHAZADO);
+        historialService.registrar(reparacion,
+                aprobada ? "COTIZACION_APROBADA" : "COTIZACION_RECHAZADA",
+                "El cliente " + (aprobada ? "aprobó" : "rechazó") + " la cotización #" + cotizacion.getId() + ".");
         reparacionRepository.save(reparacion);
 
         if (aprobada) {

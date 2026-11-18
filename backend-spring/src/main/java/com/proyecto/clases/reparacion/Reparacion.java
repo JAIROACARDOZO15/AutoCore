@@ -44,4 +44,6 @@ public class Reparacion {
 
     private List<RepuestoReparacion> repuestosUsados = new ArrayList<>();
 
+    private List<EventoReparacion> historial = new ArrayList<>();
+
 }

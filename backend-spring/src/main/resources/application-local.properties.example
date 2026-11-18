@@ -1,6 +1,6 @@
 # Copia este archivo como application-local.properties y agrega la URI completa de Atlas.
 # No incluyas este archivo local en Git ni compartas la URI con contraseña.
-spring.data.mongodb.uri=mongodb+srv://Jacmen15:TU_NUEVA_CONTRASENA@cluster0.dqdzt.mongodb.net/autocore?retryWrites=true&w=majority&appName=Cluster0
+spring.data.mongodb.uri=mongodb+srv://USUARIO:CLAVE_CODIFICADA@CLUSTER.mongodb.net/autocore?retryWrites=true&w=majority
 
 # Genera una clave aleatoria de al menos 32 bytes para desarrollo local.
 autocore.jwt.secret=CAMBIA_ESTA_CLAVE_POR_UNA_DE_32_CARACTERES_O_MAS

@@ -1,6 +1,8 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientes,
   obtenerRepuestos,
@@ -424,129 +426,7 @@ function Reportes() {
   return (
     <div className="reportes-page">
 
-      <aside className="reportes-sidebar">
-
-        <div className="reportes-logo">
-
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-
-        </div>
-
-        <nav className="reportes-menu">
-
-          <p className="reportes-menu-title">
-            ADMINISTRACIÓN
-          </p>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/dashboard')
-            }
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/clientes')
-            }
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/inventario')
-            }
-          >
-            <span>▣</span>
-            Inventario
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/reparaciones')
-            }
-          >
-            <span>🔧</span>
-            Reparaciones
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/ordenes')
-            }
-          >
-            <span>▤</span>
-            Órdenes
-          </button>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/ventas')
-            }
-          >
-            <span>▥</span>
-            Ventas
-          </button>
-
-          <button
-            className="reportes-menu-item active"
-          >
-            <span>▦</span>
-            Reportes
-          </button>
-
-          <p className="reportes-menu-title reportes-system">
-            SISTEMA
-          </p>
-
-          <button
-            className="reportes-menu-item"
-            onClick={() =>
-              navigate('/configuracion')
-            }
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-
-        </nav>
-
-        <button
-          className="reportes-logout"
-          onClick={cerrarSesion}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="reports" onLogout={cerrarSesion} />
 
       <main className="reportes-main">
 

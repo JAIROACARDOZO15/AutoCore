@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientePorUsuario,
   obtenerEquipos,
@@ -165,62 +167,9 @@ function MisVehiculos() {
     }
   }
 
-  const volver = () => navigate('/dashboard')
-
   return (
     <div className="client-dashboard">
-      <aside className="client-sidebar">
-        <div className="client-logo">
-          <img src="/logo.png" alt="AutoCore" />
-          <span>AutoCore</span>
-        </div>
-
-        <nav className="client-navigation">
-          <p className="client-menu-title">MI CUENTA</p>
-
-          <button className="client-menu" onClick={volver}>
-            <span>⌂</span> Inicio
-          </button>
-
-          <button
-            className="client-menu active"
-            onClick={() => navigate('/mis-vehiculos')}
-          >
-            <span>🚗</span> Mis vehículos
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-reparaciones')}
-          >
-            <span>🔧</span> Mis reparaciones
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-cotizaciones')}
-          >
-            <span>▤</span> Mis cotizaciones
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-ordenes')}
-          >
-            <span>▧</span> Mis órdenes
-          </button>
-        </nav>
-
-        <button
-          className="client-logout"
-          onClick={() => {
-            localStorage.removeItem('usuario')
-            navigate('/')
-          }}
-        >
-          <span>↪</span> Cerrar sesión
-        </button>
-      </aside>
+      <AutoCoreSidebar active="vehicles" />
 
       <main className="client-main">
         <header className="client-header">

@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientePorUsuario,
   obtenerReparaciones,
@@ -159,23 +161,7 @@ function MisOrdenes() {
 
   return (
     <div className="client-dashboard orders-page">
-      <aside className="client-sidebar">
-        <div className="client-logo">
-          <img src="/logo.png" alt="AutoCore" />
-          <span>AutoCore</span>
-        </div>
-
-        <nav className="client-navigation">
-          <p className="client-menu-title">MI CUENTA</p>
-          <button className="client-menu" onClick={() => navigate('/dashboard')}><span>⌂</span> Inicio</button>
-          <button className="client-menu" onClick={() => navigate('/mis-vehiculos')}><span>🚗</span> Mis vehículos</button>
-          <button className="client-menu" onClick={() => navigate('/mis-reparaciones')}><span>🔧</span> Mis reparaciones</button>
-          <button className="client-menu" onClick={() => navigate('/mis-cotizaciones')}><span>▤</span> Mis cotizaciones</button>
-          <button className="client-menu active" onClick={() => navigate('/mis-ordenes')}><span>▧</span> Mis órdenes</button>
-        </nav>
-
-        <button className="client-logout" onClick={cerrarSesion}><span>↪</span> Cerrar sesión</button>
-      </aside>
+      <AutoCoreSidebar active="clientOrders" onLogout={cerrarSesion} />
 
       <main className="client-main orders-main">
         <header className="client-header">

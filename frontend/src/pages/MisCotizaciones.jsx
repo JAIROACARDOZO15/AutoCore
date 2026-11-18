@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientePorUsuario,
   obtenerReparaciones,
@@ -127,24 +129,7 @@ function MisCotizaciones() {
 
   return (
     <div className="client-dashboard">
-      <aside className="client-sidebar">
-        <div className="client-logo">
-          <img src="/logo.png" alt="AutoCore" />
-          <span>AutoCore</span>
-        </div>
-        <nav className="client-navigation">
-          <p className="client-menu-title">MI CUENTA</p>
-          <button className="client-menu" onClick={() => navigate('/dashboard')}><span>⌂</span> Inicio</button>
-          <button className="client-menu" onClick={() => navigate('/mis-vehiculos')}><span>🚗</span> Mis vehículos</button>
-          <button className="client-menu" onClick={() => navigate('/mis-reparaciones')}><span>🔧</span> Mis reparaciones</button>
-          <button className="client-menu active"><span>▤</span> Mis cotizaciones</button>
-          <button className="client-menu" onClick={() => navigate('/mis-ordenes')}><span>▧</span> Mis órdenes</button>
-        </nav>
-        <button className="client-logout" onClick={() => {
-          localStorage.removeItem('usuario')
-          navigate('/')
-        }}><span>↪</span> Cerrar sesión</button>
-      </aside>
+      <AutoCoreSidebar active="quotes" />
 
       <main className="client-main quotes-main">
         <header className="client-header">
@@ -200,7 +185,6 @@ function MisCotizaciones() {
             <div className="quotes-list">
               {cotizaciones.map(cotizacion => {
                 const estado = estadoCotizacion(cotizacion)
-                const detalles = cotizacion.detalles || []
                 return (
                   <article className={`quote-card quote-card-${estado.clase}`} key={cotizacion.id}>
                     <div className="quote-card-top">

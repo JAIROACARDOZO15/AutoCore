@@ -1,11 +1,16 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
+import { obtenerReparaciones } from '../services/api'
+
 import './DashboardTecnicoC.css'
 
 function DashboardTecnico() {
   const navigate = useNavigate()
   const [usuario, setUsuario] = useState(null)
+  const [reparaciones, setReparaciones] = useState([])
+  const [cargando, setCargando] = useState(true)
 
   useEffect(() => {
     const usuarioGuardado =
@@ -37,6 +42,27 @@ function DashboardTecnico() {
 
   }, [navigate])
 
+  useEffect(() => {
+    if (!usuario?.id) return
+
+    let activo = true
+    obtenerReparaciones()
+      .then(datos => {
+        if (!activo) return
+        setReparaciones((datos || []).filter(item =>
+          Number(item.tecnicoId ?? item.tecnico?.id) === Number(usuario.id)
+        ))
+      })
+      .catch(() => {
+        if (activo) setReparaciones([])
+      })
+      .finally(() => {
+        if (activo) setCargando(false)
+      })
+
+    return () => { activo = false }
+  }, [usuario])
+
   const cerrarSesion = () => {
     localStorage.removeItem('usuario')
     navigate('/')
@@ -47,78 +73,18 @@ function DashboardTecnico() {
     usuario?.email ||
     'Técnico'
 
+  const finalizadas = reparaciones.filter(item =>
+    ['FINALIZADA', 'ENTREGADO'].includes(String(item.estado || '').toUpperCase())
+  ).length
+  const enProceso = reparaciones.filter(item =>
+    String(item.estado || '').toUpperCase().includes('REPARACION')
+  ).length
+  const pendientes = Math.max(reparaciones.length - finalizadas - enProceso, 0)
+
   return (
     <div className="tech-dashboard">
 
-      <aside className="tech-sidebar">
-
-        <div className="tech-logo">
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-        </div>
-
-        <nav className="tech-navigation">
-
-          <p className="tech-menu-title">
-            MI TALLER
-          </p>
-
-          <button
-            className="tech-menu active"
-            onClick={() =>
-              navigate('/dashboard')
-            }
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="tech-menu"
-            onClick={() =>
-              navigate('/reparaciones')
-            }
-          >
-            <span>🔧</span>
-            Mis reparaciones
-          </button>
-
-          <button
-            className="tech-menu"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <p className="tech-menu-title tech-system">
-            CUENTA
-          </p>
-
-          <button className="tech-menu">
-            <span>♙</span>
-            Mi perfil
-          </button>
-
-        </nav>
-
-        <button
-          className="tech-logout"
-          onClick={cerrarSesion}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="dashboard" onLogout={cerrarSesion} />
 
       <main className="tech-main">
 
@@ -197,7 +163,7 @@ function DashboardTecnico() {
             </span>
 
             <strong>
-              3
+              {pendientes}
             </strong>
 
             <small>
@@ -213,7 +179,7 @@ function DashboardTecnico() {
             </span>
 
             <strong>
-              2
+              {enProceso}
             </strong>
 
             <small>
@@ -229,7 +195,7 @@ function DashboardTecnico() {
             </span>
 
             <strong>
-              8
+              {finalizadas}
             </strong>
 
             <small>
@@ -240,7 +206,8 @@ function DashboardTecnico() {
 
         </section>
 
-        <section className="tech-panel">
+        <section className="tech-workspace">
+        <div className="tech-panel">
 
           <div className="tech-panel-header">
 
@@ -266,50 +233,39 @@ function DashboardTecnico() {
 
           </div>
 
-          <div className="tech-repair">
-
-            <div>
-              <strong>
-                #REP-001
-              </strong>
-
-              <span>
-                Juan García
-              </span>
+          {cargando ? (
+            <p className="tech-empty">Cargando trabajos asignados…</p>
+          ) : reparaciones.length ? reparaciones.slice(0, 6).map(item => (
+            <div className="tech-repair" key={item.id}>
+              <div>
+                <strong>Reparación #{item.id}</strong>
+                <span>{item.clienteNombre || item.cliente?.nombre || 'Cliente'}</span>
+              </div>
+              <div className="tech-vehicle">
+                {[item.equipoMarca, item.equipoModelo].filter(Boolean).join(' ') || item.equipoTipo || 'Vehículo'}
+              </div>
+              <b className={`tech-status ${String(item.estado || '').toUpperCase().includes('REPARACION') ? 'progress' : 'pending'}`}>
+                {String(item.estado || 'Pendiente').replaceAll('_', ' ')}
+              </b>
             </div>
-
-            <div className="tech-vehicle">
-              Toyota Corolla
+          )) : (
+            <div className="tech-empty-state">
+              <span>🧰</span>
+              <strong>Sin trabajos asignados</strong>
+              <p>Cuando te asignen una reparación aparecerá aquí.</p>
             </div>
+          )}
+        </div>
 
-            <b className="tech-status progress">
-              En proceso
-            </b>
-
+        <aside className="tech-progress-panel">
+          <span className="tech-progress-kicker">RESUMEN DE HOY</span>
+          <h2>Mi jornada</h2>
+          <div className="tech-progress-ring" style={{ '--progress': `${reparaciones.length ? Math.round((finalizadas / reparaciones.length) * 100) : 0}%` }}>
+            <strong>{reparaciones.length ? Math.round((finalizadas / reparaciones.length) * 100) : 0}%</strong>
           </div>
-
-          <div className="tech-repair">
-
-            <div>
-              <strong>
-                #REP-002
-              </strong>
-
-              <span>
-                Ana Rodríguez
-              </span>
-            </div>
-
-            <div className="tech-vehicle">
-              Mazda 3
-            </div>
-
-            <b className="tech-status pending">
-              Pendiente
-            </b>
-
-          </div>
-
+          <p>{finalizadas} de {reparaciones.length} trabajos finalizados</p>
+          <button onClick={() => navigate('/reparaciones')}>Abrir mis reparaciones →</button>
+        </aside>
         </section>
 
       </main>

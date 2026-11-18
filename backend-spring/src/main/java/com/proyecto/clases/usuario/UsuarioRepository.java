@@ -11,6 +11,8 @@ public interface UsuarioRepository extends MongoRepository<Usuario, Long> {
 
     boolean existsByEmail(String email);
 
+    Optional<Usuario> findFirstByEmail(String email);
+
     boolean existsByEmailAndIdNot(String email, Long id);
 
     boolean existsByEmailAndPasswordAndActivoTrue(String email, String password);

@@ -1,6 +1,8 @@
 
 import { useEffect, useState, useCallback } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientePorUsuario,
   obtenerReparaciones,
@@ -172,41 +174,7 @@ function MisReparaciones() {
 
   return (
     <div className="client-dashboard">
-      <aside className="client-sidebar">
-        <div className="client-logo">
-          <img src="/logo.png" alt="AutoCore" />
-          <span>AutoCore</span>
-        </div>
-
-        <nav className="client-navigation">
-          <p className="client-menu-title">MI CUENTA</p>
-          <button className="client-menu" onClick={() => navigate('/dashboard')}>
-            <span>⌂</span> Inicio
-          </button>
-          <button className="client-menu" onClick={() => navigate('/mis-vehiculos')}>
-            <span>🚗</span> Mis vehículos
-          </button>
-          <button className="client-menu active">
-            <span>🔧</span> Mis reparaciones
-          </button>
-          <button className="client-menu" onClick={() => navigate('/mis-cotizaciones')}>
-            <span>▤</span> Mis cotizaciones
-          </button>
-          <button className="client-menu" onClick={() => navigate('/mis-ordenes')}>
-            <span>▧</span> Mis órdenes
-          </button>
-        </nav>
-
-        <button
-          className="client-logout"
-          onClick={() => {
-            localStorage.removeItem('usuario')
-            navigate('/')
-          }}
-        >
-          <span>↪</span> Cerrar sesión
-        </button>
-      </aside>
+      <AutoCoreSidebar active="myRepairs" />
 
       <main className="client-main repairs-main">
         <header className="client-header">

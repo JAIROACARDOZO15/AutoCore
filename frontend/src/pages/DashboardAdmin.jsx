@@ -1,11 +1,20 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
+import {
+  obtenerClientes,
+  obtenerReparaciones,
+  obtenerRepuestos,
+  obtenerPedidos
+} from '../services/api'
+
 import './DashboardAdminC.css'
 
 function DashboardAdmin() {
   const navigate = useNavigate()
   const [usuario, setUsuario] = useState(null)
+  const [resumen, setResumen] = useState({ clientes: [], reparaciones: [], repuestos: [], pedidos: [] })
 
   useEffect(() => {
     const usuarioGuardado =
@@ -37,6 +46,26 @@ function DashboardAdmin() {
 
   }, [navigate])
 
+  useEffect(() => {
+    let activo = true
+    Promise.all([
+      obtenerClientes(),
+      obtenerReparaciones(),
+      obtenerRepuestos(),
+      obtenerPedidos()
+    ]).then(([clientes, reparaciones, repuestos, pedidos]) => {
+      if (activo) setResumen({
+        clientes: clientes || [],
+        reparaciones: reparaciones || [],
+        repuestos: repuestos || [],
+        pedidos: pedidos || []
+      })
+    }).catch(() => {
+      if (activo) setResumen({ clientes: [], reparaciones: [], repuestos: [], pedidos: [] })
+    })
+    return () => { activo = false }
+  }, [])
+
   const cerrarSesion = () => {
     localStorage.removeItem('usuario')
     navigate('/')
@@ -47,128 +76,19 @@ function DashboardAdmin() {
     usuario?.email ||
     'Administrador'
 
+  const reparacionesActivas = resumen.reparaciones.filter(item =>
+    !['FINALIZADA', 'ENTREGADO', 'RECHAZADO'].includes(String(item.estado || '').toUpperCase())
+  )
+  const inventarioBajo = resumen.repuestos.filter(item => Number(item.stock || 0) <= 10)
+  const ingresos = resumen.pedidos.reduce((total, item) => total + Number(item.total || 0), 0)
+  const formatoDinero = valor => new Intl.NumberFormat('es-CO', {
+    style: 'currency', currency: 'COP', maximumFractionDigits: 0
+  }).format(valor)
+
   return (
     <div className="dashboard-page">
 
-      <aside className="sidebar">
-
-        <div className="sidebar-logo">
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-        </div>
-
-        <nav className="sidebar-menu">
-
-          <p className="menu-title">
-            ADMINISTRACIÓN
-          </p>
-
-          <button className="menu-item active">
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/clientes')
-            }
-          >
-            <span>👥</span>
-            Clientes
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/inventario')
-            }
-          >
-            <span>📦</span>
-            Inventario
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/reparaciones')
-            }
-          >
-            <span>🔧</span>
-            Reparaciones
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/ordenes')
-            }
-          >
-            <span>▤</span>
-            Órdenes
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/ventas')
-            }
-          >
-            <span>▥</span>
-            Ventas
-          </button>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/reportes')
-            }
-          >
-            <span>▦</span>
-            Reportes
-          </button>
-
-          <p className="menu-title menu-title-bottom">
-            SISTEMA
-          </p>
-
-          <button
-            className="menu-item"
-            onClick={() =>
-              navigate('/configuracion')
-            }
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-
-        </nav>
-
-        <button
-          className="logout-button"
-          onClick={cerrarSesion}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="dashboard" onLogout={cerrarSesion} />
 
       <main className="dashboard-main">
 
@@ -253,7 +173,7 @@ function DashboardAdmin() {
               </span>
 
               <strong>
-                45
+                {resumen.clientes.length}
               </strong>
 
               <small>
@@ -273,7 +193,7 @@ function DashboardAdmin() {
               </span>
 
               <strong>
-                128
+                {resumen.repuestos.length}
               </strong>
 
               <small>
@@ -293,7 +213,7 @@ function DashboardAdmin() {
               </span>
 
               <strong>
-                17
+                {reparacionesActivas.length}
               </strong>
 
               <small>
@@ -313,7 +233,7 @@ function DashboardAdmin() {
               </span>
 
               <strong>
-                $2.8M
+                {formatoDinero(ingresos)}
               </strong>
 
               <small>
@@ -322,6 +242,49 @@ function DashboardAdmin() {
             </div>
           </div>
 
+        </section>
+
+        <section className="admin-overview-grid">
+          <div className="admin-overview-panel">
+            <div className="admin-overview-heading">
+              <div>
+                <span>SEGUIMIENTO DEL TALLER</span>
+                <h2>Reparaciones recientes</h2>
+              </div>
+              <button onClick={() => navigate('/reparaciones')}>Ver todas →</button>
+            </div>
+            {resumen.reparaciones.slice(0, 4).map(item => (
+              <div className="admin-overview-row" key={item.id}>
+                <span className="admin-row-icon">🔧</span>
+                <div className="admin-row-main">
+                  <strong>Reparación #{item.id}</strong>
+                  <small>{item.equipoMarca || item.equipo?.marca || 'Vehículo'} {item.equipoModelo || item.equipo?.modelo || ''}</small>
+                </div>
+                <b className={`admin-state ${String(item.estado || '').toUpperCase().includes('REPARACION') ? 'in-progress' : 'waiting'}`}>
+                  {String(item.estado || 'Recibido').replaceAll('_', ' ')}
+                </b>
+              </div>
+            ))}
+            {!resumen.reparaciones.length && <p className="admin-overview-empty">Aún no hay reparaciones registradas.</p>}
+          </div>
+
+          <div className="admin-overview-panel stock-panel">
+            <div className="admin-overview-heading">
+              <div>
+                <span>ALERTA DE EXISTENCIAS</span>
+                <h2>Inventario bajo</h2>
+              </div>
+              <button onClick={() => navigate('/inventario')}>Inventario →</button>
+            </div>
+            {inventarioBajo.slice(0, 4).map(item => (
+              <div className="stock-overview-row" key={item.id}>
+                <span className="stock-dot" />
+                <strong>{item.nombre || item.descripcion || `Repuesto #${item.id}`}</strong>
+                <b>{Number(item.stock || 0)} uds.</b>
+              </div>
+            ))}
+            {!inventarioBajo.length && <p className="admin-overview-empty">No hay repuestos con stock bajo.</p>}
+          </div>
         </section>
 
         <section className="dashboard-grid">
@@ -346,9 +309,17 @@ function DashboardAdmin() {
 
               <div className="table-row">
 
+                <strong>
+                  👥 Clientes
+                </strong>
+
+                <span>
+                  Gestionar clientes y vehículos
+                </span>
+
                 <button
                   onClick={() =>
-                    navigate('/usuarios')
+                    navigate('/clientes')
                   }
                 >
                   Abrir →

@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerOrdenes,
   cambiarEstadoReparacion
@@ -17,6 +19,18 @@ function Ordenes() {
   const [filtroEstado, setFiltroEstado] = useState('TODOS')
   const [cargando, setCargando] = useState(true)
 
+  const cargarOrdenes = async () => {
+    try {
+      const datos = await obtenerOrdenes()
+      setOrdenes(datos || [])
+    } catch (error) {
+      console.error(error)
+      alert(error.message || 'No fue posible cargar las órdenes.')
+    } finally {
+      setCargando(false)
+    }
+  }
+
   useEffect(() => {
 
     const usuarioGuardado =
@@ -27,35 +41,13 @@ function Ordenes() {
       return
     }
 
-    cargarOrdenes()
+    const timeoutId = window.setTimeout(() => {
+      void cargarOrdenes()
+    }, 0)
+
+    return () => window.clearTimeout(timeoutId)
 
   }, [navigate])
-
-  const cargarOrdenes = async () => {
-
-    try {
-
-      setCargando(true)
-
-      const datos = await obtenerOrdenes()
-
-      setOrdenes(datos || [])
-
-    } catch (error) {
-
-      console.error(error)
-
-      alert(
-        error.message ||
-        'No fue posible cargar las órdenes.'
-      )
-
-    } finally {
-
-      setCargando(false)
-
-    }
-  }
 
   const cambiarEstado = async (orden, nuevoEstado) => {
 
@@ -194,112 +186,7 @@ function Ordenes() {
 
     <div className="ordenes-page">
 
-      <aside className="ordenes-sidebar">
-
-        <div className="ordenes-sidebar-logo">
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-        </div>
-
-        <nav className="ordenes-menu">
-
-          <p className="ordenes-menu-title">
-            MENÚ PRINCIPAL
-          </p>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/dashboard')}
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/inventario')}
-          >
-            <span>▣</span>
-            Inventario
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/reparaciones')}
-          >
-            <span>🔧</span>
-            Reparaciones
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/clientes')}
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/inventario')}
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button className="ordenes-menu-item active">
-            <span>▤</span>
-            Órdenes
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/ventas')}
-          >
-            <span>▥</span>
-            Ventas
-          </button>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/reportes')}
-          >
-            <span>▦</span>
-            Reportes
-          </button>
-
-          <p className="ordenes-menu-title ordenes-system">
-            SISTEMA
-          </p>
-
-          <button
-            className="ordenes-menu-item"
-            onClick={() => navigate('/configuracion')}
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-
-        </nav>
-
-        <button
-          className="ordenes-logout"
-          onClick={() => {
-            localStorage.removeItem('usuario')
-            navigate('/')
-          }}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="orders" />
 
       <main className="ordenes-main">
 

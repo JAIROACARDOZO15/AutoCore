@@ -1,6 +1,8 @@
 
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerClientePorUsuario,
   obtenerEquipos,
@@ -137,12 +139,35 @@ function DashboardCliente() {
     return !['FINALIZADA', 'ENTREGADO', 'RECHAZADO'].includes(estado)
   })
 
-  const reparacionActual = [...reparaciones]
+  const reparacionesRecientes = [...reparaciones]
     .sort((a, b) => {
       const fechaA = new Date(a.fechaIngreso || 0).getTime()
       const fechaB = new Date(b.fechaIngreso || 0).getTime()
       return fechaB - fechaA
-    })[0]
+    })
+  const reparacionActual = reparacionesRecientes.find(item =>
+    !['FINALIZADA', 'ENTREGADO', 'RECHAZADO'].includes(String(item.estado || '').toUpperCase())
+  ) || reparacionesRecientes[0]
+
+  const vehiculoPrincipal = vehiculos[0]
+  const tipoEquipoPrincipal = String(vehiculoPrincipal?.tipo || '').toLowerCase()
+  const marcasVehiculares = /toyota|mazda|chevrolet|renault|nissan|hyundai|kia|ford|volkswagen|suzuki|bmw|mercedes|honda|subaru|jeep|mitsubishi|audi|volvo/
+  const esVehiculoPrincipal = Boolean(vehiculoPrincipal) && (
+    /veh[ií]culo|carro|autom[oó]vil|moto/.test(tipoEquipoPrincipal) ||
+    marcasVehiculares.test(String(vehiculoPrincipal.marca || ''))
+  )
+
+  const pasosReparacion = ['Recibido', 'Diagnóstico', 'Cotización', 'Reparación', 'Listo para recoger', 'Entregado']
+  const estadoActual = String(reparacionActual?.estado || '').toUpperCase()
+  const pasoActual = ({
+    RECIBIDO: 0,
+    EN_DIAGNOSTICO: 1,
+    COTIZACION_PENDIENTE: 2,
+    ESPERANDO_APROBACION: 2,
+    EN_REPARACION: 3,
+    FINALIZADA: 4,
+    ENTREGADO: 5
+  })[estadoActual] ?? -1
 
   const cotizacionesPendientes = cotizaciones.filter(
     item => item.aprobada == null
@@ -161,79 +186,7 @@ function DashboardCliente() {
 
   return (
     <div className="client-dashboard">
-      <aside className="client-sidebar">
-        <div className="client-logo">
-          <img src="/logo.png" alt="AutoCore" />
-          <span>AutoCore</span>
-        </div>
-
-        <nav className="client-navigation">
-          <p className="client-menu-title">MI CUENTA</p>
-
-          <button
-            className="client-menu active"
-            onClick={() => navigate('/dashboard')}
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-vehiculos')}
-          >
-            <span>🚗</span>
-            Mis vehículos
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-reparaciones')}
-          >
-            <span>🔧</span>
-            Mis reparaciones
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-cotizaciones')}
-          >
-            <span>▤</span>
-            Mis cotizaciones
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mis-ordenes')}
-          >
-            <span>▧</span>
-            Mis órdenes
-          </button>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/catalogo')}
-          >
-            <span>⚙</span>
-            Catálogo
-          </button>
-
-          <p className="client-menu-title client-system">CUENTA</p>
-
-          <button
-            className="client-menu"
-            onClick={() => navigate('/mi-perfil')}
-          >
-            <span>♙</span>
-            Mi perfil
-          </button>
-        </nav>
-
-        <button className="client-logout" onClick={cerrarSesion}>
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-      </aside>
+      <AutoCoreSidebar active="dashboard" onLogout={cerrarSesion} />
 
       <main className="client-main">
         <header className="client-header">
@@ -297,6 +250,57 @@ function DashboardCliente() {
           </section>
         ) : (
           <>
+            <section className="client-panel client-status-at-a-glance">
+              <div className="client-panel-header">
+                <div>
+                  <span>SEGUIMIENTO EN VIVO</span>
+                  <h2>Estado de mi vehículo</h2>
+                </div>
+                <button onClick={() => navigate('/estado-vehiculo')}>Ver historial →</button>
+              </div>
+
+              {reparacionActual ? (
+                <div className="client-repair-detail">
+                  <div className="client-repair">
+                    <div className="client-car-icon">🚘</div>
+                    <div>
+                      <strong>{[
+                        reparacionActual.equipoMarca,
+                        reparacionActual.equipoModelo
+                      ].filter(Boolean).join(' ') || reparacionActual.equipoTipo || 'Vehículo registrado'}</strong>
+                      <span>{reparacionActual.fallaReportada || 'Servicio de mantenimiento en el taller'}</span>
+                      <small>Reparación #{reparacionActual.id} · Técnico: {reparacionActual.tecnicoNombre || 'Por asignar'}</small>
+                    </div>
+                    <b className={`client-status ${
+                      ['FINALIZADA', 'ENTREGADO'].includes(estadoActual) ? 'completed' : 'progress'
+                    }`}>
+                      {formatoEstado(reparacionActual.estado)}
+                    </b>
+                  </div>
+                  {pasoActual >= 0 ? (
+                    <div className="client-repair-timeline" aria-label="Avance de la reparación">
+                      {pasosReparacion.map((paso, indice) => (
+                        <div
+                          className={`client-timeline-step ${indice < pasoActual ? 'done' : ''} ${indice === pasoActual ? 'current' : ''}`}
+                          key={paso}
+                        >
+                          <span className="timeline-marker">{indice < pasoActual ? '✓' : indice + 1}</span>
+                          <small>{paso}</small>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="client-status-rejected">Este servicio fue detenido. Consulta el detalle o comunícate con el taller.</p>
+                  )}
+                </div>
+              ) : (
+                <div className="client-status-empty">
+                  <p>Aún no hay reparaciones para tus vehículos.</p>
+                  <button onClick={() => navigate('/mis-reparaciones')}>Solicitar reparación →</button>
+                </div>
+              )}
+            </section>
+
             <section className="client-stats">
               <div className="client-card">
                 <span>Mis vehículos</span>
@@ -325,56 +329,30 @@ function DashboardCliente() {
               </div>
             </section>
 
-            <section className="client-panel">
-              <div className="client-panel-header">
-                <div>
-                  <span>SERVICIO</span>
-                  <h2>Mi reparación actual</h2>
+            {vehiculoPrincipal && (
+              <section className="client-featured-vehicle">
+                <div className="featured-vehicle-art" aria-hidden="true">
+                  {esVehiculoPrincipal ? '🚘' : '🧰'}
                 </div>
-
-                <button onClick={() => navigate('/mis-reparaciones')}>
-                  Ver detalle →
+                <div className="featured-vehicle-info">
+                  <span className="client-section-eyebrow">
+                    {esVehiculoPrincipal ? 'TU VEHÍCULO PRINCIPAL' : 'TU EQUIPO REGISTRADO'}
+                  </span>
+                  <h2>
+                    {[vehiculoPrincipal.marca, vehiculoPrincipal.modelo]
+                      .filter(Boolean).join(' ') || vehiculoPrincipal.tipo || 'Vehículo registrado'}
+                  </h2>
+                  <p>
+                  {vehiculoPrincipal.serial
+                    ? `${esVehiculoPrincipal ? 'Placa o serial' : 'Serial'}: ${vehiculoPrincipal.serial}`
+                    : `Registro #${vehiculoPrincipal.id}`}
+                  </p>
+                </div>
+                <button onClick={() => navigate('/mis-vehiculos')}>
+                  Ver vehículos <span aria-hidden="true">→</span>
                 </button>
-              </div>
-
-              {reparacionActual ? (
-                <div className="client-repair">
-                  <div className="client-car-icon">🔧</div>
-
-                  <div>
-                    <strong>
-                      {[
-                        reparacionActual.equipoMarca,
-                        reparacionActual.equipoModelo
-                      ].filter(Boolean).join(' ') ||
-                        reparacionActual.equipoTipo ||
-                        'Vehículo registrado'}
-                    </strong>
-
-                    <span>
-                      {reparacionActual.fallaReportada ||
-                        'Sin descripción registrada'}
-                    </span>
-
-                    <small>
-                      Reparación #{reparacionActual.id}
-                    </small>
-                  </div>
-
-                  <b className={`client-status ${
-                    ['FINALIZADA', 'ENTREGADO'].includes(
-                      String(reparacionActual.estado || '').toUpperCase()
-                    ) ? 'completed' : 'progress'
-                  }`}>
-                    {formatoEstado(reparacionActual.estado)}
-                  </b>
-                </div>
-              ) : (
-                <div style={{ padding: 24 }}>
-                  <p>No tienes reparaciones registradas actualmente.</p>
-                </div>
-              )}
-            </section>
+              </section>
+            )}
 
             <section className="client-panel" style={{ marginTop: 24 }}>
               <div className="client-panel-header">

@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom'
+import { useEffect } from 'react'
 
 import Login from './pages/Login'
 import Dashboard from './pages/Dashboard'
@@ -12,10 +13,24 @@ import MisVehiculos from './pages/MisVehiculos'
 import MisReparaciones from './pages/MisReparaciones'
 import MisCotizaciones from './pages/MisCotizaciones'
 import MisOrdenes from './pages/MisOrdenes'
+import EstadoVehiculo from './pages/EstadoVehiculo'
+import PageErrorBoundary from './components/PageErrorBoundary'
+import './role-layout.css'
+
+function ScrollToTop() {
+  const { pathname } = useLocation()
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' })
+  }, [pathname])
+
+  return null
+}
 
 function App() {
   return (
     <BrowserRouter>
+      <ScrollToTop />
       <Routes>
 
         <Route
@@ -80,6 +95,11 @@ function App() {
 <Route
   path="/mis-ordenes"
   element={<MisOrdenes />}
+/>
+
+<Route
+  path="/estado-vehiculo"
+  element={<PageErrorBoundary><EstadoVehiculo /></PageErrorBoundary>}
 />
 
       </Routes>

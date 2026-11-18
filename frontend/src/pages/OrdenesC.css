@@ -1,15 +1,15 @@
 .ordenes-page {
   min-height: 100vh;
-  background: #f4f7fb;
+  background: #FAF8F5;
   display: flex;
-  color: #09244a;
+  color: #292524;
 }
 
 .ordenes-sidebar {
   width: 255px;
   min-width: 255px;
   min-height: 100vh;
-  background: #071d38;
+  background: #1C1917;
   color: white;
   display: flex;
   flex-direction: column;
@@ -89,9 +89,9 @@
 }
 
 .ordenes-menu-item.active {
-  background: #1769e0;
+  background: #F97316;
   color: white;
-  box-shadow: 0 8px 20px rgba(23,105,224,.28);
+  box-shadow: 0 8px 20px rgba(249, 115, 22,.28);
 }
 
 .ordenes-logout {
@@ -128,7 +128,7 @@
 
 .ordenes-header-label {
   margin: 0 0 5px;
-  color: #1769e0;
+  color: #F97316;
   font-size: 12px;
   font-weight: 900;
   letter-spacing: 1.7px;
@@ -173,14 +173,14 @@
   right: 8px;
   width: 6px;
   height: 6px;
-  background: #1769e0;
+  background: #F97316;
   border-radius: 50%;
 }
 
 .ordenes-avatar {
   width: 45px;
   height: 45px;
-  background: #1769e0;
+  background: #F97316;
   color: white;
   border-radius: 11px;
   display: flex;
@@ -237,7 +237,7 @@
 
 .orden-stat-icon.blue {
   background: #eaf2ff;
-  color: #1769e0;
+  color: #F97316;
 }
 
 .orden-stat-icon.orange {
@@ -292,7 +292,7 @@
 }
 
 .ordenes-panel-header > div > span {
-  color: #1769e0;
+  color: #F97316;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 1.5px;
@@ -305,18 +305,18 @@
 
 .nueva-orden-button {
   border: 0;
-  background: #1769e0;
+  background: #F97316;
   color: white;
   border-radius: 11px;
   padding: 14px 20px;
   font-size: 13px;
   font-weight: 800;
   cursor: pointer;
-  box-shadow: 0 8px 20px rgba(23,105,224,.2);
+  box-shadow: 0 8px 20px rgba(249, 115, 22,.2);
 }
 
 .nueva-orden-button:hover {
-  background: #0f5ccc;
+  background: #EA580C;
 }
 
 .ordenes-filtros {
@@ -347,7 +347,7 @@
   outline: none;
   width: 100%;
   font-size: 13px;
-  color: #173557;
+  color: #51453d;
 }
 
 .ordenes-search input::placeholder {
@@ -390,7 +390,7 @@
 .ordenes-table td {
   padding: 15px 18px;
   border-bottom: 1px solid #edf1f5;
-  color: #4f647e;
+  color: #786e67;
   font-size: 12px;
   white-space: nowrap;
 }
@@ -400,7 +400,7 @@
 }
 
 .orden-number {
-  color: #1769e0;
+  color: #F97316;
   font-size: 12px;
 }
 
@@ -415,7 +415,7 @@
   height: 34px;
   border-radius: 10px;
   background: #eaf2ff;
-  color: #1769e0;
+  color: #F97316;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -431,7 +431,7 @@
 
 .orden-cliente strong,
 .orden-equipo strong {
-  color: #193a60;
+  color: #51453d;
   font-size: 12px;
 }
 
@@ -453,7 +453,7 @@
   height: 28px;
   border-radius: 8px;
   background: #eef5ff;
-  color: #1769e0;
+  color: #F97316;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -462,7 +462,7 @@
 
 .orden-tecnico strong {
   font-size: 12px;
-  color: #425b78;
+  color: #786e67;
 }
 
 .sin-tecnico {
@@ -506,7 +506,7 @@
 
 .orden-status.repairing {
   background: #eaf2ff;
-  color: #1769e0;
+  color: #F97316;
 }
 
 .orden-status.finished,
@@ -532,7 +532,7 @@
 }
 
 .orden-action-select:hover {
-  border-color: #1769e0;
+  border-color: #F97316;
 }
 
 .ordenes-loading,
@@ -555,7 +555,7 @@
 }
 
 .ordenes-empty strong {
-  color: #49617b;
+  color: #786e67;
   font-size: 14px;
 }
 

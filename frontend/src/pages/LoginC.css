@@ -22,15 +22,15 @@
   background:
     radial-gradient(
       circle at 8% 18%,
-      rgba(23, 105, 224, 0.14),
+      rgba(249, 115, 22, 0.14),
       transparent 28%
     ),
     radial-gradient(
       circle at 92% 82%,
-      rgba(23, 105, 224, 0.10),
+      rgba(249, 115, 22, 0.10),
       transparent 30%
     ),
-    #f4f7fb;
+    #FAF8F5;
 
   font-family:
     Inter,
@@ -59,7 +59,7 @@
   top: -180px;
   left: -150px;
 
-  background: rgba(23, 105, 224, 0.08);
+  background: rgba(249, 115, 22, 0.08);
 
   filter: blur(2px);
 }
@@ -71,7 +71,7 @@
   right: -210px;
   bottom: -220px;
 
-  background: rgba(11, 31, 58, 0.06);
+  background: rgba(41, 37, 36, 0.06);
 
   filter: blur(2px);
 }
@@ -100,8 +100,8 @@
   z-index: 2;
 
   box-shadow:
-    0 35px 90px rgba(11, 31, 58, 0.16),
-    0 12px 35px rgba(11, 31, 58, 0.07);
+    0 35px 90px rgba(41, 37, 36, 0.16),
+    0 12px 35px rgba(41, 37, 36, 0.07);
 }
 
 
@@ -125,13 +125,13 @@
   background:
     radial-gradient(
       circle at 50% 30%,
-      rgba(23, 105, 224, 0.27),
+      rgba(249, 115, 22, 0.27),
       transparent 36%
     ),
     linear-gradient(
       145deg,
-      #0c2444 0%,
-      #07172d 100%
+      #292524 0%,
+      #1C1917 100%
     );
 
   overflow: hidden;
@@ -164,7 +164,7 @@
   right: -180px;
   bottom: -180px;
 
-  border: 1px solid rgba(23, 105, 224, 0.20);
+  border: 1px solid rgba(249, 115, 22, 0.20);
 
   border-radius: 50%;
 }
@@ -175,7 +175,7 @@
   width: 220px;
   height: 220px;
 
-  background: rgba(23, 105, 224, 0.20);
+  background: rgba(249, 115, 22, 0.20);
 
   filter: blur(75px);
 
@@ -245,8 +245,8 @@
   background:
     linear-gradient(
       90deg,
-      #1769e0,
-      #3d9cff
+      #F97316,
+      #F97316
     );
 }
 
@@ -300,15 +300,15 @@
 
   border-radius: 13px;
 
-  color: #1769e0;
+  color: #F97316;
 
-  background: #edf5ff;
+  background: #FFF1E8;
 
   font-size: 24px;
   font-weight: 800;
 
   box-shadow:
-    0 8px 20px rgba(23, 105, 224, 0.08);
+    0 8px 20px rgba(249, 115, 22, 0.08);
 }
 
 .welcome-icon span {
@@ -331,7 +331,7 @@
 
   margin-bottom: 8px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 12px;
   font-weight: 800;
@@ -342,7 +342,7 @@
 .login-header h2 {
   margin: 0;
 
-  color: #102542;
+  color: #292524;
 
   font-size: 36px;
   line-height: 1.15;
@@ -423,7 +423,7 @@ form {
 
   background: transparent;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-family: inherit;
 
@@ -493,12 +493,12 @@ form {
 }
 
 .input-wrapper input:focus {
-  border-color: #1769e0;
+  border-color: #F97316;
 
   background: #ffffff;
 
   box-shadow:
-    0 0 0 3px rgba(23, 105, 224, 0.09);
+    0 0 0 3px rgba(249, 115, 22, 0.09);
 }
 
 .input-wrapper input::placeholder {
@@ -608,9 +608,9 @@ form {
 }
 
 .password-toggle:hover {
-  color: #1769e0;
+  color: #F97316;
 
-  background: #edf5ff;
+  background: #FFF1E8;
 }
 
 
@@ -691,8 +691,8 @@ form {
   background:
     linear-gradient(
       135deg,
-      #1769e0 0%,
-      #0b58c9 100%
+      #F97316 0%,
+      #EA580C 100%
     );
 
   color: #ffffff;
@@ -705,7 +705,7 @@ form {
   cursor: pointer;
 
   box-shadow:
-    0 10px 22px rgba(23, 105, 224, 0.22);
+    0 10px 22px rgba(249, 115, 22, 0.22);
 
   transition:
     transform 0.2s ease,
@@ -717,7 +717,7 @@ form {
   transform: translateY(-2px);
 
   box-shadow:
-    0 14px 30px rgba(23, 105, 224, 0.28);
+    0 14px 30px rgba(249, 115, 22, 0.28);
 
   filter: brightness(1.04);
 }
@@ -803,7 +803,7 @@ form {
 
   background: transparent;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-family: inherit;
 

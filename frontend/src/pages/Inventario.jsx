@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerRepuestos,
   crearRepuesto,
@@ -581,129 +583,7 @@ function Inventario() {
 
       {/* SIDEBAR */}
 
-      <aside className="inventory-sidebar">
-
-        <div className="inventory-logo">
-
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-
-        </div>
-
-        <nav className="inventory-menu">
-
-          <p className="inventory-menu-title">
-            MENÚ PRINCIPAL
-          </p>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/dashboard')
-            }
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="inventory-menu-item active"
-          >
-            <span>▣</span>
-            Inventario
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/reparaciones')
-            }
-          >
-            <span>🔧</span>
-            Reparaciones
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/clientes')
-            }
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/ordenes')
-            }
-          >
-            <span>▤</span>
-            Órdenes
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/ventas')
-            }
-          >
-            <span>▥</span>
-            Ventas
-          </button>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/reportes')
-            }
-          >
-            <span>▦</span>
-            Reportes
-          </button>
-
-          <p className="inventory-menu-title inventory-system">
-            SISTEMA
-          </p>
-
-          <button
-            className="inventory-menu-item"
-            onClick={() =>
-              navigate('/configuracion')
-            }
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-
-        </nav>
-
-        <button
-          className="inventory-logout"
-          onClick={cerrarSesion}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="inventory" onLogout={cerrarSesion} />
 
       {/* MAIN */}
 

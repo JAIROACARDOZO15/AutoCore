@@ -33,19 +33,22 @@ public class ReparacionService {
     private final TecnicoRepository tecnicoRepository;
     private final RepuestoRepository repuestoRepository;
     private final PedidoRepository pedidoRepository;
+    private final HistorialReparacionService historialService;
 
     public ReparacionService(
         ReparacionRepository repository,
         EquipoRepository equipoRepository,
         TecnicoRepository tecnicoRepository,
         RepuestoRepository repuestoRepository,
-        PedidoRepository pedidoRepository) {
+        PedidoRepository pedidoRepository,
+        HistorialReparacionService historialService) {
 
     this.repository = repository;
     this.equipoRepository = equipoRepository;
     this.tecnicoRepository = tecnicoRepository;
     this.repuestoRepository = repuestoRepository;
     this.pedidoRepository = pedidoRepository;
+    this.historialService = historialService;
 }
 
     public List<ReparacionResponse> findAll(EstadoReparacion estado, Long tecnicoId, Long clienteId) {
@@ -63,6 +66,9 @@ public class ReparacionService {
         reparacion.setFallaReportada(request.fallaReportada());
         reparacion.setObservaciones(request.observaciones());
         reparacion.setEstado(EstadoReparacion.RECIBIDO);
+        reparacion.setFechaIngreso(LocalDateTime.now());
+        reparacion = repository.save(reparacion);
+        historialService.registrar(reparacion, "REPARACION_CREADA", "Vehículo recibido y solicitud de reparación registrada.");
         return toResponse(repository.save(reparacion));
     }
 
@@ -75,6 +81,7 @@ public class ReparacionService {
         }
         reparacion.setFallaReportada(request.fallaReportada());
         reparacion.setObservaciones(request.observaciones());
+        historialService.registrar(reparacion, "REPARACION_ACTUALIZADA", "Se actualizaron los datos del servicio.");
         return toResponse(repository.save(reparacion));
     }
 
@@ -82,6 +89,8 @@ public class ReparacionService {
         Reparacion reparacion = getOrThrow(id);
         verificarEditable(reparacion);
         reparacion.setTecnico(buscarTecnico(tecnicoId));
+        String tecnico = reparacion.getTecnico().getUsuario().getNombre();
+        historialService.registrar(reparacion, "TECNICO_ASIGNADO", "Técnico asignado: " + tecnico + ".");
         return toResponse(repository.save(reparacion));
     }
 
@@ -119,6 +128,8 @@ public ReparacionResponse cambiarEstado(
     }
 
     reparacion.setEstado(nuevo);
+    historialService.registrar(reparacion, "ESTADO_ACTUALIZADO", "El estado del servicio cambió de "
+            + actual.name().replace('_', ' ') + " a " + nuevo.name().replace('_', ' ') + ".");
 
     return toResponse(repository.save(reparacion));
 }
@@ -140,8 +151,10 @@ public ReparacionResponse cambiarEstado(
         }
         diagnostico.setHallazgos(request.hallazgos());
         diagnostico.setSolucionPropuesta(request.solucionPropuesta());
+        historialService.registrar(reparacion, "DIAGNOSTICO_REGISTRADO", "Se registró o actualizó el diagnóstico del vehículo.");
         if (estado == EstadoReparacion.EN_DIAGNOSTICO) {
             reparacion.setEstado(EstadoReparacion.COTIZACION_PENDIENTE);
+            historialService.registrar(reparacion, "ESTADO_ACTUALIZADO", "El servicio avanzó a preparación de cotización.");
         }
         if (diagnostico.getFechaDiagnostico() == null) {
             diagnostico.setFechaDiagnostico(LocalDateTime.now());
@@ -171,6 +184,8 @@ public ReparacionResponse cambiarEstado(
         linea.setRepuesto(repuesto);
         linea.setCantidadUsada(request.cantidadUsada());
         reparacion.getRepuestosUsados().add(linea);
+        historialService.registrar(reparacion, "REPUESTO_AGREGADO", "Repuesto utilizado: " + repuesto.getNombre()
+                + " (cantidad " + request.cantidadUsada() + ").");
         repository.save(reparacion);
         return toResponse(reparacion);
     }
@@ -187,6 +202,8 @@ public ReparacionResponse cambiarEstado(
         repuesto.setStock(repuesto.getStock() + linea.getCantidadUsada());
         repuestoRepository.save(repuesto);
         reparacion.getRepuestosUsados().remove(linea);
+        historialService.registrar(reparacion, "REPUESTO_RETIRADO", "Se retiró el repuesto " + repuesto.getNombre()
+                + " del registro de uso.");
         return toResponse(repository.save(reparacion));
     }
 
@@ -264,6 +281,11 @@ public ReparacionResponse cambiarEstado(
                 r.getRepuestosUsados().stream()
                         .map(l -> new RepuestoUsadoResponse(l.getId(), l.getRepuesto().getId(),
                                 l.getRepuesto().getNombre(), l.getCantidadUsada()))
+                        .toList(),
+                r.getHistorial() == null ? List.of() : r.getHistorial().stream()
+                        .map(evento -> new EventoReparacionResponse(evento.getFecha(), evento.getTipo(),
+                                evento.getDescripcion(), evento.getActorNombre(), evento.getActorCorreo(),
+                                evento.getActorRol()))
                         .toList());
     }
 

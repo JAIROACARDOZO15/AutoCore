@@ -1,16 +1,55 @@
-# React + Vite
+# Frontend AutoCore
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Interfaz de AutoCore construida con React 19, React Router y Vite 8. Contiene los portales de administrador, técnico y cliente.
 
-Currently, two official plugins are available:
+## Requisitos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- Node.js compatible con Vite 8.
+- npm.
+- API Spring Boot activa en `http://localhost:8080`.
 
-## React Compiler
+## Instalación y ejecución
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Desde la carpeta `frontend`:
 
-## Expanding the ESLint configuration
+```powershell
+npm ci
+npm run dev
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+Abre la dirección que imprime Vite (normalmente `http://localhost:5173`). La URL de API está definida en `src/services/api.js` como `http://localhost:8080/api`.
+
+## Rutas de la interfaz
+
+| Ruta | Vista |
+|---|---|
+| `/` | Inicio de sesión |
+| `/dashboard` | Panel seleccionado por rol |
+| `/clientes` | Gestión de clientes y sus vehículos |
+| `/inventario`, `/repuestos` | Catálogo e inventario de repuestos |
+| `/reparaciones` | Órdenes de reparación, asignación y estados |
+| `/ordenes` | Seguimiento de órdenes |
+| `/ventas` | Cotizaciones, pedidos y documento imprimible |
+| `/reportes` | Indicadores y reportes |
+| `/mis-vehiculos` | Vehículos del cliente |
+| `/estado-vehiculo` | Seguimiento por vehículo: etapas, diagnóstico, técnico, repuestos y cotización |
+| `/mis-reparaciones` | Reparaciones del cliente |
+| `/mis-cotizaciones` | Revisión y respuesta a cotizaciones |
+| `/mis-ordenes` | Pedidos y órdenes del cliente |
+
+Las opciones visibles de la barra lateral se seleccionan con el rol guardado en la sesión. El acceso y los datos también dependen del JWT y de los recursos que responda el backend.
+
+## Sesión y llamadas a API
+
+`src/services/api.js` centraliza las llamadas HTTP. Para las rutas protegidas agrega el token guardado en `localStorage` como encabezado `Authorization: Bearer <token>`. El inicio de sesión guarda token y usuario; cerrar sesión borra ambos.
+
+## Scripts disponibles
+
+```powershell
+npm run dev       # servidor de desarrollo
+npm run build     # bundle de producción en dist/
+npm run preview   # vista previa del bundle
+npm run lint      # ESLint
+```
+
+Para instrucciones de base de datos, backend y cuentas de demostración, consulta el [README principal](../README.md).

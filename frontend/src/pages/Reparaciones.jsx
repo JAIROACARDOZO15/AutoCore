@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
+
+import AutoCoreSidebar from '../components/AutoCoreSidebar'
 import {
   obtenerReparaciones,
   obtenerEquipos,
@@ -616,129 +618,7 @@ const guardarDiagnostico = async (e) => {
 
     <div className="reparaciones-page">
 
-      <aside className="reparaciones-sidebar">
-
-        <div className="reparaciones-logo">
-
-          <img
-            src="/logo.png"
-            alt="AutoCore"
-          />
-
-          <span>
-            AutoCore
-          </span>
-
-        </div>
-
-        <nav className="reparaciones-menu">
-
-          <p className="reparaciones-menu-title">
-            MENÚ PRINCIPAL
-          </p>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/dashboard')
-            }
-          >
-            <span>⌂</span>
-            Inicio
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/inventario')
-            }
-          >
-            <span>▣</span>
-            Inventario
-          </button>
-
-          <button
-            className="reparaciones-menu-item active"
-          >
-            <span>🔧</span>
-            Reparaciones
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/clientes')
-            }
-          >
-            <span>♙</span>
-            Clientes
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/repuestos')
-            }
-          >
-            <span>⚙</span>
-            Repuestos
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/ordenes')
-            }
-          >
-            <span>▤</span>
-            Órdenes
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/ventas')
-            }
-          >
-            <span>▥</span>
-            Ventas
-          </button>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/reportes')
-            }
-          >
-            <span>▦</span>
-            Reportes
-          </button>
-
-          <p className="reparaciones-menu-title reparaciones-system">
-            SISTEMA
-          </p>
-
-          <button
-            className="reparaciones-menu-item"
-            onClick={() =>
-              navigate('/configuracion')
-            }
-          >
-            <span>⚙</span>
-            Configuración
-          </button>
-
-        </nav>
-
-        <button
-          className="reparaciones-logout"
-          onClick={cerrarSesion}
-        >
-          <span>↪</span>
-          Cerrar sesión
-        </button>
-
-      </aside>
+      <AutoCoreSidebar active="repairs" onLogout={cerrarSesion} />
 
       <main className="reparaciones-main">
 

@@ -21,9 +21,9 @@ body {
 
   display: flex;
 
-  background: #f4f7fb;
+  background: #FAF8F5;
 
-  color: #172b4d;
+  color: #292524;
 }
 
 /* =========================
@@ -37,7 +37,7 @@ body {
   left: 0;
   bottom: 0;
 
-  width: 260px;
+  width: 255px;
 
   display: flex;
   flex-direction: column;
@@ -45,13 +45,13 @@ body {
   background:
     radial-gradient(
       circle at 30% 10%,
-      rgba(23, 105, 224, 0.18),
+      rgba(249, 115, 22, 0.18),
       transparent 30%
     ),
     linear-gradient(
       160deg,
-      #0b1f3a 0%,
-      #07172d 100%
+      #292524 0%,
+      #1C1917 100%
     );
 
   color: white;
@@ -170,15 +170,15 @@ body {
   background:
     linear-gradient(
       135deg,
-      #1769e0,
-      #0d58c7
+      #F97316,
+      #EA580C
     );
 
   color: white;
 
   box-shadow:
     0 8px 20px
-    rgba(23,105,224,0.25);
+    rgba(249, 115, 22,0.25);
 }
 
 .reportes-logout {
@@ -229,7 +229,7 @@ body {
 
   min-height: 100vh;
 
-  margin-left: 260px;
+  margin-left: 255px;
 
   padding:
     35px 45px 50px;
@@ -253,7 +253,7 @@ body {
 .reportes-header-label {
   margin: 0 0 6px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 10px;
   font-weight: 800;
@@ -264,7 +264,7 @@ body {
 .reportes-header h1 {
   margin: 0;
 
-  color: #102542;
+  color: #292524;
 
   font-size: 30px;
   font-weight: 800;
@@ -273,7 +273,7 @@ body {
 .reportes-header-description {
   margin: 7px 0 0;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 13px;
 }
@@ -303,8 +303,8 @@ body {
   background:
     linear-gradient(
       135deg,
-      #1769e0,
-      #0d58c7
+      #F97316,
+      #EA580C
     );
 
   color: white;
@@ -316,7 +316,7 @@ body {
 .reportes-user strong {
   display: block;
 
-  color: #1d304b;
+  color: #3a312c;
 
   font-size: 13px;
 }
@@ -326,7 +326,7 @@ body {
 
   margin-top: 3px;
 
-  color: #8b98a9;
+  color: #897d74;
 
   font-size: 10px;
   font-weight: 700;
@@ -360,7 +360,7 @@ body {
 
   box-shadow:
     0 5px 18px
-    rgba(11,31,58,0.04);
+    rgba(41, 37, 36,0.04);
 }
 
 .reportes-toolbar > div {
@@ -372,7 +372,7 @@ body {
 }
 
 .reportes-toolbar span {
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 10px;
   font-weight: 800;
@@ -395,7 +395,7 @@ body {
 
   background: white;
 
-  color: #26384f;
+  color: #413833;
 
   font-family: inherit;
 
@@ -407,7 +407,7 @@ body {
 }
 
 .reportes-toolbar select:focus {
-  border-color: #1769e0;
+  border-color: #F97316;
 }
 
 .reportes-refresh {
@@ -423,8 +423,8 @@ body {
   background:
     linear-gradient(
       135deg,
-      #1769e0,
-      #0d58c7
+      #F97316,
+      #EA580C
     );
 
   color: white;
@@ -488,7 +488,7 @@ body {
 
   background: transparent;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-weight: 700;
 
@@ -520,7 +520,7 @@ body {
 .loading-spinner {
   font-size: 35px;
 
-  color: #1769e0;
+  color: #F97316;
 
   animation:
     spin 1s linear infinite;
@@ -530,7 +530,7 @@ body {
   margin:
     15px 0 5px;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 20px;
 }
@@ -538,7 +538,7 @@ body {
 .reportes-loading p {
   margin: 0;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 12px;
 }
@@ -588,7 +588,7 @@ body {
 
   box-shadow:
     0 7px 20px
-    rgba(11,31,58,0.045);
+    rgba(41, 37, 36,0.045);
 }
 
 .report-stat-icon {
@@ -608,8 +608,8 @@ body {
 }
 
 .report-stat-icon.blue {
-  background: #edf5ff;
-  color: #1769e0;
+  background: #FFF1E8;
+  color: #F97316;
 }
 
 .report-stat-icon.purple {
@@ -630,7 +630,7 @@ body {
 .report-stat span {
   display: block;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 11px;
 }
@@ -640,7 +640,7 @@ body {
 
   margin-top: 4px;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 27px;
   font-weight: 800;
@@ -689,7 +689,7 @@ body {
 
   box-shadow:
     0 7px 20px
-    rgba(11,31,58,0.045);
+    rgba(41, 37, 36,0.045);
 
   overflow: hidden;
 }
@@ -716,7 +716,7 @@ body {
 
   margin-bottom: 5px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 9px;
   font-weight: 800;
@@ -727,7 +727,7 @@ body {
 .report-panel-header h2 {
   margin: 0;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 18px;
 }
@@ -737,7 +737,7 @@ body {
 
   background: transparent;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 11px;
   font-weight: 700;
@@ -761,9 +761,9 @@ body {
 
   border-radius: 10px;
 
-  background: #edf5ff;
+  background: #FFF1E8;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 14px;
   font-weight: 800;
@@ -800,7 +800,7 @@ body {
 }
 
 .quote-row strong {
-  color: #26384f;
+  color: #413833;
 
   font-size: 13px;
 }
@@ -942,7 +942,7 @@ body {
 .inventory-warning strong {
   display: block;
 
-  color: #26384f;
+  color: #413833;
 
   font-size: 11px;
 }
@@ -950,7 +950,7 @@ body {
 .inventory-warning p {
   margin: 4px 0 0;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 10px;
 }
@@ -1000,7 +1000,7 @@ body {
 }
 
 .repair-dot.progress {
-  background: #1769e0;
+  background: #F97316;
 }
 
 .repair-dot.completed {
@@ -1014,7 +1014,7 @@ body {
 .repair-report-info strong {
   display: block;
 
-  color: #26384f;
+  color: #413833;
 
   font-size: 12px;
 }
@@ -1032,7 +1032,7 @@ body {
 .repair-report-item > b {
   text-align: right;
 
-  color: #172b4d;
+  color: #292524;
 
   font-size: 15px;
 }
@@ -1063,13 +1063,13 @@ body {
 }
 
 .indicator-item span {
-  color: #69788d;
+  color: #776a60;
 
   font-size: 12px;
 }
 
 .indicator-item strong {
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 19px;
 }
@@ -1106,7 +1106,7 @@ body {
 
   background: #fafbfd;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 9px;
   font-weight: 800;
@@ -1123,7 +1123,7 @@ body {
   padding:
     15px 20px;
 
-  color: #69788d;
+  color: #776a60;
 
   font-size: 11px;
 
@@ -1136,7 +1136,7 @@ body {
 }
 
 .report-table td strong {
-  color: #26384f;
+  color: #413833;
 }
 
 .report-status {
@@ -1188,7 +1188,7 @@ body {
 .report-empty strong {
   margin-top: 10px;
 
-  color: #26384f;
+  color: #413833;
 
   font-size: 14px;
 }
@@ -1197,7 +1197,7 @@ body {
   margin:
     5px 0 0;
 
-  color: #8995a5;
+  color: #897d74;
 
   font-size: 11px;
 }

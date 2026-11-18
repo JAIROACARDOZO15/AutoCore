@@ -45,6 +45,7 @@ public class DatosIniciales implements ApplicationRunner {
     @Override
     public void run(ApplicationArguments args) {
         if (usuarioRepository.count() > 0) {
+            migrarMuestrasDeTaller();
             return;
         }
 
@@ -52,31 +53,104 @@ public class DatosIniciales implements ApplicationRunner {
 
         Usuario carlos = crearUsuario("Carlos Pérez", "carlos@taller.com", "tec123", Rol.TECNICO);
         Usuario maria = crearUsuario("María López", "maria@taller.com", "tec123", Rol.TECNICO);
-        crearTecnico(carlos, "Hardware PC", "3001234567");
-        Tecnico tecnicoMaria = crearTecnico(maria, "Celulares", "3009876543");
+        crearTecnico(carlos, "Mecánica general", "3001234567");
+        Tecnico tecnicoMaria = crearTecnico(maria, "Frenos y mantenimiento", "3009876543");
 
         Usuario juan = crearUsuario("Juan García", "juan@mail.com", "cli123", Rol.CLIENTE);
         Usuario ana = crearUsuario("Ana Rodríguez", "ana@mail.com", "cli123", Rol.CLIENTE);
         Cliente clienteJuan = crearCliente(juan, "3112223344", "Cra 27 #36-50, Bucaramanga", "1098765432");
         Cliente clienteAna = crearCliente(ana, "3225556677", "Cll 45 #23-10, Bucaramanga", "1097654321");
 
-        crearEquipo(clienteJuan, "PC", "Dell", "Inspiron 15", "DLL-2024-001", "Laptop Dell pantalla 15 pulgadas");
-        Equipo galaxy = crearEquipo(clienteJuan, "Celular", "Samsung", "Galaxy S23", "SAM-2024-002",
-                "Celular Samsung con pantalla rota");
-        crearEquipo(clienteAna, "Tablet", "Apple", "iPad Air", "APL-2024-003", "iPad que no enciende");
+        crearEquipo(clienteJuan, "Vehículo", "Toyota", "Corolla", "TOY-2024-001", "Sedán para mantenimiento general");
+        Equipo galaxy = crearEquipo(clienteJuan, "Vehículo", "Renault", "Logan", "REN-2024-002",
+                "Sedán con revisión de frenos pendiente");
+        crearEquipo(clienteAna, "Vehículo", "Kia", "Picanto", "KIA-2024-003", "Vehículo compacto para mantenimiento");
 
-        crearRepuesto("Pantalla LCD 15\"", "Pantalla de reemplazo para laptop 15 pulgadas", "185000.00", 5);
-        crearRepuesto("Batería Samsung S23", "Batería original Samsung Galaxy S23", "95000.00", 10);
-        crearRepuesto("Conector de carga iPad", "Puerto de carga Lightning", "45000.00", 8);
-        crearRepuesto("Pasta térmica", "Pasta térmica para procesador", "15000.00", 20);
-        crearRepuesto("Disco SSD 256GB", "Disco sólido SATA 2.5\"", "120000.00", 7);
+        crearRepuesto("Filtro de aceite Toyota Corolla", "Filtro de aceite para motor Toyota Corolla", "28000.00", 12);
+        crearRepuesto("Pastillas de freno delanteras", "Juego de pastillas de freno para eje delantero", "95000.00", 10);
+        crearRepuesto("Bujía de encendido", "Bujía para motor a gasolina", "25000.00", 8);
+        crearRepuesto("Aceite de motor 5W-30", "Lubricante sintético para motor de automóvil", "45000.00", 20);
+        crearRepuesto("Filtro de aire del motor", "Filtro de aire para sistema de admisión", "32000.00", 7);
 
         Reparacion reparacion = new Reparacion();
         reparacion.setEquipo(galaxy);
         reparacion.setTecnico(tecnicoMaria);
-        reparacion.setFallaReportada("Pantalla rota, no responde al tacto después de caída");
+        reparacion.setFallaReportada("Revisión de frenos y mantenimiento preventivo");
         reparacion.setEstado(EstadoReparacion.EN_DIAGNOSTICO);
         reparacionRepository.save(reparacion);
+    }
+
+    /** Actualiza únicamente los registros de demostración originales de la app, conservando sus IDs. */
+    private void migrarMuestrasDeTaller() {
+        boolean baseDeDemostracion = usuarioRepository.findAll().stream()
+                .anyMatch(usuario -> "admin@taller.com".equalsIgnoreCase(usuario.getEmail()));
+        if (!baseDeDemostracion) {
+            return;
+        }
+
+        for (Equipo equipo : equipoRepository.findAll()) {
+            switch (String.valueOf(equipo.getSerial())) {
+                case "DLL-2024-001" -> actualizarEquipoDemo(equipo, "Vehículo", "Toyota", "Corolla",
+                        "TOY-2024-001", "Sedán para mantenimiento general");
+                case "SAM-2024-002" -> actualizarEquipoDemo(equipo, "Vehículo", "Renault", "Logan",
+                        "REN-2024-002", "Sedán con revisión de frenos pendiente");
+                case "APL-2024-003" -> actualizarEquipoDemo(equipo, "Vehículo", "Kia", "Picanto",
+                        "KIA-2024-003", "Vehículo compacto para mantenimiento");
+                default -> { }
+            }
+        }
+
+        actualizarRepuestoDemo("Pantalla LCD 15\"", "Filtro de aceite Toyota Corolla",
+                "Filtro de aceite para motor Toyota Corolla", "28000.00", 12);
+        actualizarRepuestoDemo("Batería Samsung S23", "Pastillas de freno delanteras",
+                "Juego de pastillas de freno para eje delantero", "95000.00", 10);
+        actualizarRepuestoDemo("Conector de carga iPad", "Bujía de encendido",
+                "Bujía para motor a gasolina", "25000.00", 8);
+        actualizarRepuestoDemo("Pasta térmica", "Aceite de motor 5W-30",
+                "Lubricante sintético para motor de automóvil", "45000.00", 20);
+        actualizarRepuestoDemo("Disco SSD 256GB", "Filtro de aire del motor",
+                "Filtro de aire para sistema de admisión", "32000.00", 7);
+
+        for (Tecnico tecnico : tecnicoRepository.findAll()) {
+            if ("Hardware PC".equalsIgnoreCase(tecnico.getEspecialidad())) {
+                tecnico.setEspecialidad("Mecánica general");
+                tecnicoRepository.save(tecnico);
+            } else if ("Celulares".equalsIgnoreCase(tecnico.getEspecialidad())) {
+                tecnico.setEspecialidad("Frenos y mantenimiento");
+                tecnicoRepository.save(tecnico);
+            }
+        }
+
+        for (Reparacion reparacion : reparacionRepository.findAll()) {
+            if ("Pantalla rota, no responde al tacto después de caída".equals(reparacion.getFallaReportada())) {
+                reparacion.setFallaReportada("Revisión de frenos y mantenimiento preventivo");
+                reparacionRepository.save(reparacion);
+            }
+        }
+    }
+
+    private void actualizarEquipoDemo(Equipo equipo, String tipo, String marca, String modelo,
+            String serial, String descripcion) {
+        equipo.setTipo(tipo);
+        equipo.setMarca(marca);
+        equipo.setModelo(modelo);
+        equipo.setSerial(serial);
+        equipo.setDescripcion(descripcion);
+        equipoRepository.save(equipo);
+    }
+
+    private void actualizarRepuestoDemo(String nombreAnterior, String nombreNuevo, String descripcion,
+            String precio, int stock) {
+        repuestoRepository.findAll().stream()
+                .filter(repuesto -> nombreAnterior.equals(repuesto.getNombre()))
+                .findFirst()
+                .ifPresent(repuesto -> {
+                    repuesto.setNombre(nombreNuevo);
+                    repuesto.setDescripcion(descripcion);
+                    repuesto.setPrecio(new BigDecimal(precio));
+                    repuesto.setStock(stock);
+                    repuestoRepository.save(repuesto);
+                });
     }
 
     private Usuario crearUsuario(String nombre, String email, String password, Rol rol) {

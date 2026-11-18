@@ -1,0 +1,175 @@
+.autocore-sidebar {
+  position: fixed;
+  z-index: 100;
+  inset: 0 auto 0 0;
+  display: flex;
+  width: 255px;
+  min-height: 100vh;
+  flex-direction: column;
+  background: linear-gradient(180deg, #c2410c 0%, #9a3412 100%);
+  color: #fff;
+  border-right: 1px solid rgba(124, 45, 18, .28);
+  box-shadow: 5px 0 22px rgba(124, 45, 18, .12);
+}
+
+.autocore-sidebar-brand {
+  display: flex;
+  height: 78px;
+  min-height: 78px;
+  align-items: center;
+  gap: 11px;
+  padding: 0 21px;
+  border-bottom: 1px solid rgba(255, 255, 255, .16);
+}
+
+.autocore-sidebar-brand img {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+}
+
+.autocore-sidebar-brand span {
+  color: #fff;
+  font-size: 21px;
+  font-weight: 800;
+  letter-spacing: -.45px;
+}
+
+.autocore-sidebar-navigation {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px 13px 10px;
+  scrollbar-width: none;
+}
+
+.autocore-sidebar-navigation::-webkit-scrollbar {
+  width: 0;
+}
+
+.autocore-sidebar-section {
+  margin: 0 10px 7px;
+  color: rgba(255, 255, 255, .68);
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.25px;
+}
+
+.autocore-sidebar-system {
+  margin-top: 13px;
+}
+
+.autocore-sidebar-link {
+  display: flex;
+  width: 100%;
+  height: 39px;
+  min-height: 39px;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 3px;
+  padding: 0 11px;
+  border: 0;
+  border-radius: 9px;
+  background: transparent;
+  color: rgba(255, 255, 255, .9);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+  transition: background .16s ease, color .16s ease, transform .16s ease;
+}
+
+.autocore-sidebar-link:hover {
+  background: rgba(255, 255, 255, .14);
+  color: #fff;
+  transform: translateX(2px);
+}
+
+.autocore-sidebar-link.active {
+  background: #f97316;
+  color: #fff;
+  box-shadow: 0 7px 16px rgba(66, 25, 5, .2);
+}
+
+.autocore-sidebar-icon {
+  display: inline-flex;
+  width: 21px;
+  min-width: 21px;
+  justify-content: center;
+  font-size: 15px;
+}
+
+.autocore-sidebar-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.autocore-sidebar-logout {
+  display: flex;
+  height: 49px;
+  min-height: 49px;
+  align-items: center;
+  gap: 12px;
+  margin: 0 13px 9px;
+  padding: 0 11px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, .18);
+  background: transparent;
+  color: rgba(255, 255, 255, .9);
+  font-family: inherit;
+  font-size: 12px;
+  font-weight: 650;
+  text-align: left;
+  cursor: pointer;
+}
+
+.autocore-sidebar-logout:hover {
+  color: #fff;
+}
+
+@media (max-width: 850px) {
+  .autocore-sidebar {
+    width: 75px;
+  }
+
+  .autocore-sidebar-brand {
+    justify-content: center;
+    padding: 0;
+  }
+
+  .autocore-sidebar-brand span,
+  .autocore-sidebar-section,
+  .autocore-sidebar-label {
+    display: none;
+  }
+
+  .autocore-sidebar-navigation {
+    padding: 15px 9px;
+  }
+
+  .autocore-sidebar-link,
+  .autocore-sidebar-logout {
+    justify-content: center;
+    gap: 0;
+    padding: 0;
+  }
+
+  .autocore-sidebar-logout {
+    margin-right: 9px;
+    margin-left: 9px;
+  }
+
+  .dashboard-main,
+  .client-main,
+  .tech-main,
+  .inventory-main,
+  .clientes-main,
+  .reparaciones-main,
+  .ordenes-main,
+  .ventas-main,
+  .reportes-main {
+    width: calc(100% - 75px) !important;
+    margin-left: 75px !important;
+  }
+}

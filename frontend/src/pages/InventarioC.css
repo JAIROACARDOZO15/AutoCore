@@ -5,8 +5,8 @@
 .inventario-page {
   min-height: 100vh;
   display: flex;
-  background: #f4f7fb;
-  color: #10233f;
+  background: #FAF8F5;
+  color: #292524;
 }
 
 /* =========================
@@ -16,7 +16,7 @@
 .inventory-sidebar {
   width: 255px;
   min-height: 100vh;
-  background: linear-gradient(180deg, #0b1f3a 0%, #08182d 100%);
+  background: linear-gradient(180deg, #292524 0%, #1C1917 100%);
   color: white;
   display: flex;
   flex-direction: column;
@@ -98,9 +98,9 @@
 }
 
 .inventory-menu-item.active {
-  background: linear-gradient(135deg, #1769e0, #1260d2);
+  background: linear-gradient(135deg, #F97316, #EA580C);
   color: white;
-  box-shadow: 0 8px 20px rgba(23, 105, 224, 0.25);
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.25);
 }
 
 .inventory-logout {
@@ -147,7 +147,7 @@
 
 .inventory-label {
   margin: 0 0 7px;
-  color: #1769e0;
+  color: #F97316;
   font-size: 11px;
   font-weight: 900;
   letter-spacing: 1.5px;
@@ -155,7 +155,7 @@
 
 .inventory-header h1 {
   margin: 0;
-  color: #0d2850;
+  color: #3a312c;
   font-size: 34px;
   line-height: 1.1;
   letter-spacing: -1px;
@@ -192,7 +192,7 @@
   width: 6px;
   height: 6px;
   border-radius: 50%;
-  background: #1769e0;
+  background: #F97316;
 }
 
 .inventory-user {
@@ -207,7 +207,7 @@
   width: 44px;
   height: 44px;
   border-radius: 12px;
-  background: linear-gradient(135deg, #1769e0, #0756bf);
+  background: linear-gradient(135deg, #F97316, #EA580C);
   color: white;
   display: flex;
   justify-content: center;
@@ -218,7 +218,7 @@
 
 .inventory-user strong {
   display: block;
-  color: #17365f;
+  color: #3a312c;
   font-size: 13px;
 }
 
@@ -266,8 +266,8 @@
 }
 
 .summary-icon.blue {
-  background: #edf4ff;
-  color: #1769e0;
+  background: #FFF1E8;
+  color: #F97316;
 }
 
 .summary-icon.green {
@@ -295,7 +295,7 @@
 .inventory-summary-card strong {
   display: block;
   margin-top: 3px;
-  color: #122e52;
+  color: #3a312c;
   font-size: 25px;
 }
 
@@ -326,7 +326,7 @@
 }
 
 .section-label {
-  color: #1769e0;
+  color: #F97316;
   font-size: 10px;
   font-weight: 900;
   letter-spacing: 1.3px;
@@ -334,7 +334,7 @@
 
 .inventory-content-header h2 {
   margin: 5px 0 0;
-  color: #15345c;
+  color: #3a312c;
   font-size: 20px;
 }
 
@@ -342,7 +342,7 @@
   border: none;
   border-radius: 10px;
   padding: 12px 18px;
-  background: linear-gradient(135deg, #1769e0, #0759c9);
+  background: linear-gradient(135deg, #F97316, #EA580C);
   color: white;
   font-size: 13px;
   font-weight: 800;
@@ -350,13 +350,13 @@
   align-items: center;
   gap: 7px;
   cursor: pointer;
-  box-shadow: 0 7px 16px rgba(23, 105, 224, 0.2);
+  box-shadow: 0 7px 16px rgba(249, 115, 22, 0.2);
   transition: 0.2s ease;
 }
 
 .add-part-button:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 20px rgba(23, 105, 224, 0.28);
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.28);
 }
 
 .add-part-button span {
@@ -389,9 +389,9 @@
 }
 
 .search-box:focus-within {
-  border-color: #1769e0;
+  border-color: #F97316;
   background: white;
-  box-shadow: 0 0 0 3px rgba(23, 105, 224, 0.08);
+  box-shadow: 0 0 0 3px rgba(249, 115, 22, 0.08);
 }
 
 .search-box span {
@@ -404,7 +404,7 @@
   border: none;
   outline: none;
   background: transparent;
-  color: #263e5d;
+  color: #51453d;
   font-size: 12px;
 }
 
@@ -436,8 +436,8 @@
 }
 
 .filter-buttons button.selected {
-  background: #edf4ff;
-  color: #1769e0;
+  background: #FFF1E8;
+  color: #F97316;
   border-color: #c8dcfa;
 }
 
@@ -471,7 +471,7 @@
 .inventory-table td {
   padding: 15px 25px;
   border-bottom: 1px solid #f0f3f6;
-  color: #4c6078;
+  color: #71655d;
   font-size: 12px;
 }
 
@@ -497,7 +497,7 @@
   width: 38px;
   height: 38px;
   border-radius: 10px;
-  background: #edf4ff;
+  background: #FFF1E8;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -506,7 +506,7 @@
 
 .part-name strong {
   display: block;
-  color: #203a5d;
+  color: #51453d;
   font-size: 12px;
 }
 
@@ -532,11 +532,11 @@
 }
 
 .price {
-  color: #183a63;
+  color: #51453d;
 }
 
 .stock-number strong {
-  color: #274362;
+  color: #51453d;
 }
 
 .stock-number span {
@@ -621,9 +621,9 @@
 }
 
 .action-button.edit:hover {
-  background: #edf4ff;
+  background: #FFF1E8;
   border-color: #c8dcfa;
-  color: #1769e0;
+  color: #F97316;
 }
 
 .action-button.delete:hover {
@@ -647,7 +647,7 @@
 
 .no-results h3 {
   margin: 12px 0 5px;
-  color: #264261;
+  color: #51453d;
 }
 
 .no-results p {
@@ -670,7 +670,7 @@
 }
 
 .inventory-footer strong {
-  color: #405773;
+  color: #776a60;
 }
 
 .pagination {
@@ -694,9 +694,9 @@
 }
 
 .pagination .page-active {
-  background: #1769e0;
+  background: #F97316;
   color: white;
-  border-color: #1769e0;
+  border-color: #F97316;
 }
 
 /* =========================================================
@@ -786,7 +786,7 @@
 .modal-header span {
   display: block;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 10px;
 
@@ -798,7 +798,7 @@
 .modal-header h2 {
   margin: 5px 0 0;
 
-  color: #102e53;
+  color: #3a312c;
 
   font-size: 22px;
 
@@ -815,9 +815,9 @@
 
   border-radius: 9px;
 
-  background: #f3f6fa;
+  background: #FAF8F5;
 
-  color: #6e7e92;
+  color: #776a60;
 
   font-size: 23px;
 
@@ -837,7 +837,7 @@
 .modal-close:hover {
   background: #e8eef6;
 
-  color: #193b65;
+  color: #51453d;
 
   transform: rotate(3deg);
 }
@@ -871,7 +871,7 @@
 .form-group label {
   margin-bottom: 7px;
 
-  color: #405773;
+  color: #776a60;
 
   font-size: 12px;
 
@@ -894,7 +894,7 @@
 
   background: #fafbfd;
 
-  color: #263f5d;
+  color: #51453d;
 
   font-family: inherit;
 
@@ -910,12 +910,12 @@
 
 .form-group input:focus,
 .form-group select:focus {
-  border-color: #1769e0;
+  border-color: #F97316;
 
   background: #ffffff;
 
   box-shadow:
-    0 0 0 3px rgba(23, 105, 224, 0.08);
+    0 0 0 3px rgba(249, 115, 22, 0.08);
 }
 
 .form-group input::placeholder {
@@ -962,7 +962,7 @@
 
   border-radius: 10px;
 
-  background: #edf4ff;
+  background: #FFF1E8;
 
   display: flex;
 
@@ -976,7 +976,7 @@
 .stock-preview strong {
   display: block;
 
-  color: #294663;
+  color: #51453d;
 
   font-size: 12px;
 }
@@ -986,7 +986,7 @@
 
   margin-top: 3px;
 
-  color: #1769e0;
+  color: #F97316;
 
   font-size: 11px;
 
@@ -1045,21 +1045,21 @@
 
   background: linear-gradient(
     135deg,
-    #1769e0,
-    #0759c9
+    #F97316,
+    #EA580C
   );
 
   color: white;
 
   box-shadow:
-    0 7px 16px rgba(23, 105, 224, 0.20);
+    0 7px 16px rgba(249, 115, 22, 0.20);
 }
 
 .save-button:hover {
   transform: translateY(-1px);
 
   box-shadow:
-    0 10px 20px rgba(23, 105, 224, 0.28);
+    0 10px 20px rgba(249, 115, 22, 0.28);
 }
 
 /* =========================
